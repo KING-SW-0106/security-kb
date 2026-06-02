@@ -1,0 +1,67 @@
+# ============================================
+# 网安知识库 - MkDocs Material 配置
+# 运行: mkdocs serve    （本地预览）
+# 部署: mkdocs gh-deploy （推到 GitHub Pages）
+# ============================================
+
+site_name: 网安知识库
+site_description: 从零开始的网络空间安全学习笔记
+site_author: 我自己
+
+theme:
+  name: material
+  language: zh
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-night
+        name: 切换暗色模式
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/weather-sunny
+        name: 切换亮色模式
+  features:
+    - navigation.instant      # 页面秒切，不回服务器
+    - navigation.tracking     # URL跟随当前阅读位置
+    - navigation.top          # 返回顶部按钮
+    - navigation.indexes      # 目录可以点
+    - search.suggest          # 搜索建议
+    - search.highlight        # 搜索结果高亮
+    - search.share            # 分享搜索结果链接
+    - content.code.copy       # 代码块复制按钮
+
+# 左边导航菜单
+nav:
+  - 🏠 起点: 起点-从这里开始.md
+  - 📊 目录与进度: 00-目录与进度.md
+  - 🔴 层0-A C语言指针与内存: 01-C语言-指针与内存.md
+  - 🔴 层0-B Python安全工具: 02-Python-安全工具速通.md
+  - 🔴 层1 计算机体系: 03-计算机体系-程序如何运行.md
+  - 🔴 层2 网络协议: 04-网络协议-数据如何传输.md
+  - 🟡 层3-A 密码学: 05-密码学-加密与解密.md
+  - 🟡 层3-B Web安全: 06-Web安全-漏洞与防御.md
+  - 🟡 层3-C 二进制安全: 07-二进制安全-内存攻击.md
+  - 🟢 层4 渗透实战: 08-渗透实战-从信息收集到提权.md
+
+# Markdown 扩展
+markdown_extensions:
+  - admonition       # 提示框 !!! note
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys    # 键盘图标 ++ctrl+alt+del++
+  - pymdownx.tasklist:
+      custom_checkbox: true   # 好看的复选框
+  - toc:
+      permalink: true  # 标题旁边显示 # 锚链接
+
+# 插件
+plugins:
+  - search:
+      lang: zh
