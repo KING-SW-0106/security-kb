@@ -1,0 +1,2535 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="从零开始的网络空间安全学习笔记">
+      
+      
+        <meta name="author" content="我自己">
+      
+      
+        <link rel="canonical" href="https://king-sw-0106.github.io/security-kb/03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB-%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C/">
+      
+      
+        <link rel="prev" href="../02-Python-%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7%E9%80%9F%E9%80%9A/">
+      
+      
+        <link rel="next" href="../04-%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>🔴 层1 计算机体系 - 网安知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#03" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="网安知识库" class="md-header__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            网安知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🔴 层1 计算机体系
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="网安知识库" class="md-nav__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    网安知识库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏠 起点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-%E7%9B%AE%E5%BD%95%E4%B8%8E%E8%BF%9B%E5%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 目录与进度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-C%E8%AF%AD%E8%A8%80-%E6%8C%87%E9%92%88%E4%B8%8E%E5%86%85%E5%AD%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-A C语言指针与内存
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-Python-%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-B Python安全工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层1 计算机体系
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层1 计算机体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 📌 冯诺依曼结构——计算机的骨架
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 📌 冯诺依曼结构——计算机的骨架">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：餐厅后厨的运作方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📌 寄存器——CPU 的临时草稿纸
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 📌 寄存器——CPU 的临时草稿纸">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：组装家具时的操作台
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x86-64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 x86-64 核心寄存器全部解析
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 安全人必须刻在脑子里的四个寄存器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手看寄存器
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 指令执行周期——CPU 的呼吸
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 指令执行周期——CPU 的呼吸">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：流水线工人
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 一个具体例子
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📌 栈帧结构——函数调用底层真相
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📌 栈帧结构——函数调用底层真相">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：你看书时接到电话
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 函数调用的完整汇编过程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add3-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图解：调用 add(3, 4) 时栈的完整变化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 为什么栈溢出能控制程序——现在用汇编语言说
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 自己生成汇编看看
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 📌 调用约定——函数之间怎么传话
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 📌 调用约定——函数之间怎么传话">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：公司之间的公文格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x86-64-system-v-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 x86-64 System V 调用约定（Linux 标准）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x86-32-cdecl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x86 (32位) cdecl 调用约定（对比）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 手写一个遵循调用约定的函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-x86-64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 汇编速查——x86-64 核心指令
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 汇编速查——x86-64 核心指令">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 每条指令配一个生活类比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 最值得记住的三条指令的等价实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 看懂一段真实的汇编
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 从 C 代码到二进制——编译全流程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 从 C 代码到二进制——编译全流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：出版一本书的过程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 手动走一遍全流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 安全关键：编译选项如何影响漏洞
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 操作系统管的三件事
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 操作系统管的三件事">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：物业公司管理写字楼
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 虚拟内存——最重要的安全概念之一
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 🧪 动手：写一个 CPU 模拟器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 🧪 动手：写一个 CPU 模拟器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 扩展实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐视频
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#04-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步：打开 04-网络协议-数据如何传输.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层2 网络协议
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E5%AF%86%E7%A0%81%E5%AD%A6-%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-A 密码学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Web%E5%AE%89%E5%85%A8-%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-B Web安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8-%E5%86%85%E5%AD%98%E6%94%BB%E5%87%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-C 二进制安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98-%E4%BB%8E%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%88%B0%E6%8F%90%E6%9D%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟢 层4 渗透实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 📌 冯诺依曼结构——计算机的骨架
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 📌 冯诺依曼结构——计算机的骨架">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：餐厅后厨的运作方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手验证
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📌 寄存器——CPU 的临时草稿纸
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 📌 寄存器——CPU 的临时草稿纸">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：组装家具时的操作台
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x86-64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 x86-64 核心寄存器全部解析
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 安全人必须刻在脑子里的四个寄存器
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手看寄存器
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 指令执行周期——CPU 的呼吸
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 指令执行周期——CPU 的呼吸">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：流水线工人
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 一个具体例子
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📌 栈帧结构——函数调用底层真相
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📌 栈帧结构——函数调用底层真相">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：你看书时接到电话
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 函数调用的完整汇编过程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#add3-4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图解：调用 add(3, 4) 时栈的完整变化
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 为什么栈溢出能控制程序——现在用汇编语言说
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 自己生成汇编看看
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 📌 调用约定——函数之间怎么传话
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 📌 调用约定——函数之间怎么传话">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：公司之间的公文格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x86-64-system-v-linux" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 x86-64 System V 调用约定（Linux 标准）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#x86-32-cdecl" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        x86 (32位) cdecl 调用约定（对比）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 手写一个遵循调用约定的函数
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-x86-64" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 汇编速查——x86-64 核心指令
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 汇编速查——x86-64 核心指令">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 每条指令配一个生活类比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 最值得记住的三条指令的等价实现
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 看懂一段真实的汇编
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-c" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 从 C 代码到二进制——编译全流程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 从 C 代码到二进制——编译全流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：出版一本书的过程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 手动走一遍全流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 安全关键：编译选项如何影响漏洞
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 操作系统管的三件事
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 操作系统管的三件事">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：物业公司管理写字楼
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 虚拟内存——最重要的安全概念之一
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-cpu" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        9. 🧪 动手：写一个 CPU 模拟器
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="9. 🧪 动手：写一个 CPU 模拟器">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 扩展实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐视频
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#04-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步：打开 04-网络协议-数据如何传输.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="03">03 · 计算机体系——程序如何运行<a class="headerlink" href="#03" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>⏪ 前置知识：</strong> C语言·指针与内存（01）——必须理解栈和指针的概念
+<strong>⏩ 学完后解锁：</strong> 二进制安全（07）的全部内容、网络协议（04）
+<strong>⏱ 预计用时：</strong> 6-8 小时（建议分 4-5 天慢慢消化，这是全书第二难的章节）
+<strong>🎯 核心目标：</strong> 能看着汇编指令说出"这一行做了什么"，能画出函数调用时栈帧的每一字节变化</p>
+</blockquote>
+<hr />
+<h2 id="_1">🚪 门前检查<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>在开始本章之前，你必须能回答以下问题。答不上来？回到 01 章重新看。</strong></p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能画出栈帧结构图，标出：高地址、低地址、buf、返回地址、RBP 的位置</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释为什么往 buf[16] 写 100 字节会覆盖返回地址</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道"指针存的是地址"以及 <code>*p</code> 是什么意思</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能用 <code>gcc</code> 编译一个简单的 <code>.c</code> 文件</li>
+</ul>
+<blockquote>
+<p>如果上面有任何一项不确定——<strong>现在回去看 01 章</strong>，特别是 §4"栈与堆"那一节。本章默认你已经理解 01 章的全部内容。</p>
+</blockquote>
+<hr />
+<h2 id="_2">📊 本章进度<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>知识点</th>
+<th style="text-align: center;">预计用时</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>3.1</td>
+<td>📌 冯诺依曼结构——计算机的骨架</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>3.2</td>
+<td>📌 寄存器全家福——CPU 的草稿纸</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>3.3</td>
+<td>指令执行周期——取指·译码·执行</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>3.4</td>
+<td>📌 栈帧结构——函数调用底层真相</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>3.5</td>
+<td>📌 调用约定——参数怎么传</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>3.6</td>
+<td>汇编速查——x86-64 核心指令</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>3.7</td>
+<td>从 C 代码到二进制——编译全流程</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>3.8</td>
+<td>操作系统管的三件事</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>3.9</td>
+<td>🧪 手写一个 CPU 模拟器</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1">1. 📌 冯诺依曼结构——计算机的骨架<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="_3">🏪 生活场景：餐厅后厨的运作方式<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>想象你走进一家餐厅的后厨：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>厨师（CPU）站在操作台前。
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>操作台（内存）上摊着一本菜谱（程序）和一堆食材（数据）。
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>冰箱（硬盘）里存着更多食材，但取一次要花时间。
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>厨师的手（总线）在操作台和冰箱之间搬运东西。
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>厨师的工作循环：
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  1. 看一眼菜谱当前这一行：&quot;打两个鸡蛋&quot;
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>  2. 理解这是什么意思
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>  3. 从操作台上拿鸡蛋，打散，倒进锅里
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  4. 看菜谱下一行：&quot;加盐少许&quot;
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  → 回到第 1 步
+</code></pre></div>
+<p>这个场景就是冯诺依曼结构的全部。没有魔法，没有"人工智能"——<strong>计算机就是一个不断"取指令→理解→执行→取下一条"的机器，每秒做几十亿次。</strong></p>
+<h3 id="_4">🔍 技术原理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>冯诺伊曼结构由五个核心部件组成：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌──────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│                     冯·诺依曼结构                          │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│                                                           │
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│   ┌──────────┐                    ┌──────────┐             │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│   │          │   地址总线(Address) │          │             │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│   │   CPU    │ ←────────────────→ │  内存    │             │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│   │          │   数据总线(Data)    │          │             │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│   │ ┌──────┐ │                    │ 指令和数据│             │
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│   │ │寄存器│ │                    │ 混在一起放│             │
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│   │ └──────┘ │                    │          │             │
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│   │ ┌──────┐ │                    └──────────┘             │
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│   │ │ ALU  │ │    运算器——做加减乘除、比较、逻辑运算           │
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│   │ └──────┘ │                                              │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│   │ ┌──────┐ │                                              │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│   │ │控制单元│ │    取指令、译码、控制数据流动                  │
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│   │ └──────┘ │                                              │
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>│   └──────────┘                                              │
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>│                                                           │
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>│   输入设备(键盘/鼠标/网卡) ──→ CPU ←── 输出设备(显示器/网卡)    │
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>│   硬盘(长久存储) ←─────────→ 内存 ←─────────→ CPU             │
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>└──────────────────────────────────────────────────────────┘
+</code></pre></div>
+<p><strong>最重要的结论：指令和数据在内存里没有区别——都是一堆字节。</strong> CPU 把它们当指令执行就是指令，当数据读就是数据。内存地址 <code>0x401000</code> 处的一个字节 <code>0xC3</code>，如果你把它当数据读，它就是数字 195；如果 RIP（指令指针）指向它，CPU 就把它当 <code>ret</code> 指令来执行。</p>
+<p><strong>这就是 shellcode 的原理：</strong> 攻击者把自己构造的字节（数据）放到内存中，然后设法让 CPU 的 RIP 指向这些字节，CPU 就会把它们当成指令来乖乖执行。</p>
+<h3 id="_5">💻 动手验证<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># 任意一个程序都是字节组成的</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>xxd<span class="w"> </span>/bin/ls<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-5
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="c1"># 输出: 00000000: 7f45 4c46 0201 0100 0000 0000 0000 0000  .ELF............</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="c1"># 这是 ELF（Linux可执行文件）的头部</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># 前四个字节 7f 45 4c 46 = 0x7f &#39;E&#39; &#39;L&#39; &#39;F&#39;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="c1"># 这既是数据（可以用眼睛读），也是程序（CPU 会执行后面的机器码）</span>
+</code></pre></div>
+<hr />
+<h2 id="2-cpu">2. 📌 寄存器——CPU 的临时草稿纸<a class="headerlink" href="#2-cpu" title="Permanent link">&para;</a></h2>
+<h3 id="_6">🏪 生活场景：组装家具时的操作台<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>你在家组装一个宜家衣柜。说明书（程序）放在左边，螺丝木板（数据）散在面前。你的<strong>手边只能同时放 5-6 个零件</strong>。你需要不断在零件堆和手边空间之间搬运。</p>
+<p><strong>寄存器就是手边那 5-6 个位置。</strong> 数量极少（x86-64 有 16 个通用寄存器），但速度极快（1 个 CPU 周期就能读写）。内存相当于你身后的零件堆——空间很大（几个 GB），但每次转身去拿（读内存）要花几十到几百个 CPU 周期。</p>
+<h3 id="x86-64">🔍 x86-64 核心寄存器全部解析<a class="headerlink" href="#x86-64" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>┌─────────────────────────────────────────────────────────────────┐
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>│                     x86-64 寄存器 完整地图                        │
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>│                                                                  │
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>│  64位:  RAX RBX RCX RDX RSI RDI RBP RSP R8-R15                  │
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>│         │   │   │   │   │   │   │   │   │                        │
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>│  32位:  EAX EBX ECX EDX ESI EDI EBP ESP R8D-R15D                │
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>│         │   │   │   │   │   │   │   │   │                        │
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>│  16位:  AX  BX  CX  DX  SI  DI  BP  SP  R8W-R15W               │
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>│         │   │   │   │   │   │   │   │   │                        │
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>│  8位:   AL  BL  CL  DL  SIL DIL BPL SPL R8B-R15B               │
+<a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a>│         AH  BH  CH  DH                                           │
+<a id="__codelineno-3-12" name="__codelineno-3-12" href="#__codelineno-3-12"></a>│                                                                  │
+<a id="__codelineno-3-13" name="__codelineno-3-13" href="#__codelineno-3-13"></a>│  ★ RAX  → 函数返回值放在这。call 一个函数回来，答案在 RAX 里       │
+<a id="__codelineno-3-14" name="__codelineno-3-14" href="#__codelineno-3-14"></a>│  ★ RSP  → 栈顶指针。永远指向当前栈的&quot;最顶上&quot;（最低地址）           │
+<a id="__codelineno-3-15" name="__codelineno-3-15" href="#__codelineno-3-15"></a>│  ★ RBP  → 栈底指针。当前函数的参照物，&quot;局部变量 = RBP - N&quot;         │
+<a id="__codelineno-3-16" name="__codelineno-3-16" href="#__codelineno-3-16"></a>│  ★ RIP  → 指令指针。下一条要执行的指令的地址。                     │
+<a id="__codelineno-3-17" name="__codelineno-3-17" href="#__codelineno-3-17"></a>│           ★ 这是攻击者最想控制的寄存器——控制 RIP 就控制了程序     │
+<a id="__codelineno-3-18" name="__codelineno-3-18" href="#__codelineno-3-18"></a>│                                                                  │
+<a id="__codelineno-3-19" name="__codelineno-3-19" href="#__codelineno-3-19"></a>│  传参（前6个参数）:                                               │
+<a id="__codelineno-3-20" name="__codelineno-3-20" href="#__codelineno-3-20"></a>│  RDI = 第1个参数  ← &quot;Destination Index&quot;                          │
+<a id="__codelineno-3-21" name="__codelineno-3-21" href="#__codelineno-3-21"></a>│  RSI = 第2个参数  ← &quot;Source Index&quot;                               │
+<a id="__codelineno-3-22" name="__codelineno-3-22" href="#__codelineno-3-22"></a>│  RDX = 第3个参数                                                  │
+<a id="__codelineno-3-23" name="__codelineno-3-23" href="#__codelineno-3-23"></a>│  RCX = 第4个参数                                                  │
+<a id="__codelineno-3-24" name="__codelineno-3-24" href="#__codelineno-3-24"></a>│  R8  = 第5个参数                                                  │
+<a id="__codelineno-3-25" name="__codelineno-3-25" href="#__codelineno-3-25"></a>│  R9  = 第6个参数                                                  │
+<a id="__codelineno-3-26" name="__codelineno-3-26" href="#__codelineno-3-26"></a>│  第7个+ → 用栈传                                                  │
+<a id="__codelineno-3-27" name="__codelineno-3-27" href="#__codelineno-3-27"></a>│                                                                  │
+<a id="__codelineno-3-28" name="__codelineno-3-28" href="#__codelineno-3-28"></a>│  RFLAGS → 状态标志位：ZF(结果为零)、SF(结果为负)、CF(进位)          │
+<a id="__codelineno-3-29" name="__codelineno-3-29" href="#__codelineno-3-29"></a>│           比较指令(cmp)就是在设置这些位，条件跳转(je/jg)在检测它们   │
+<a id="__codelineno-3-30" name="__codelineno-3-30" href="#__codelineno-3-30"></a>└─────────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h3 id="_7">🔥 安全人必须刻在脑子里的四个寄存器<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>寄存器</th>
+<th>全称</th>
+<th>干嘛的</th>
+<th>安全意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RIP</td>
+<td>Instruction Pointer</td>
+<td>下一条指令在哪</td>
+<td>★ 控制了 RIP = 控制了程序。所有代码执行漏洞的终极目标</td>
+</tr>
+<tr>
+<td>RSP</td>
+<td>Stack Pointer</td>
+<td>栈顶在哪</td>
+<td>push/pop/call/ret 都在操作 RSP</td>
+</tr>
+<tr>
+<td>RBP</td>
+<td>Base Pointer</td>
+<td>当前栈帧参照物</td>
+<td>局部变量都是 <code>[rbp-N]</code>，溢出会覆盖旧的 RBP</td>
+</tr>
+<tr>
+<td>RAX</td>
+<td>Accumulator</td>
+<td>函数返回值</td>
+<td>ret2libc 攻击中 system() 的返回值放在这</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_8">💻 动手看寄存器<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="c1"># 写一个最简单的程序</span>
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="nb">echo</span><span class="w"> </span><span class="s1">&#39;int main() { return 42; }&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>ret42.c
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>gcc<span class="w"> </span>-g<span class="w"> </span>-o<span class="w"> </span>ret42<span class="w"> </span>ret42.c
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="c1"># 在 GDB 里看寄存器</span>
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>gdb<span class="w"> </span>./ret42<span class="w"> </span>-q
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>start<span class="w">              </span><span class="c1"># 开始并停在 main</span>
+<a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>i<span class="w"> </span>r<span class="w">                </span><span class="c1"># 查看所有寄存器</span>
+<a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>ni<span class="w">                 </span><span class="c1"># 执行一条指令</span>
+<a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>i<span class="w"> </span>r<span class="w"> </span>rax<span class="w">            </span><span class="c1"># 看看 RAX 的值变化</span>
+<a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>finish<span class="w">             </span><span class="c1"># 执行到 main 返回</span>
+<a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>i<span class="w"> </span>r<span class="w"> </span>rax<span class="w">            </span><span class="c1"># RAX = 42 —— 这就是返回值！</span>
+</code></pre></div>
+<hr />
+<h2 id="3-cpu">3. 指令执行周期——CPU 的呼吸<a class="headerlink" href="#3-cpu" title="Permanent link">&para;</a></h2>
+<h3 id="_9">🏪 生活场景：流水线工人<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>工厂流水线上有个工人，他的工作循环只有三步：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>① 伸手从传送带上拿一个工件（取指 Fetch）
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>② 看看标签：这个要钻孔还是打磨（译码 Decode）
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>③ 操作机器完成工序（执行 Execute）
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>→ 回到①
+</code></pre></div>
+<p><strong>这个循环 CPU 每秒做 30-40 亿次（3-4 GHz）。</strong> 每个步骤只需要不到 1 纳秒。你的 Python 程序最终也是被翻译成这些基本步骤来执行的。</p>
+<h3 id="_10">🔍 一个具体例子<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="c1">; C 代码: x = a + b;</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="c1">; 假设 a 在 [rbp-4], b 在 [rbp-8], x 在 [rbp-12]</span>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="c1">; CPU 做的事，分三步：</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="c1">; ① mov eax, [rbp-4]     ; 取指: RIP→这条指令</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="c1">;                           ; 译码: 这是 mov，从内存加载到寄存器</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="c1">;                           ; 执行: 从地址 rbp-4 读 4 字节 → 放入 eax</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a><span class="c1">;                           ; RIP = RIP + 3（这条指令长 3 字节）</span>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1">; ② add eax, [rbp-8]     ; 取指: RIP→这条指令</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="c1">;                           ; 译码: 这是 add，源操作数在内存</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="c1">;                           ; 执行: eax = eax + [内存 rbp-8]</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="c1">;                           ; RIP = RIP + 3</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="c1">; ③ mov [rbp-12], eax    ; 取指: RIP→这条指令</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a><span class="c1">;                           ; 译码: 这是 mov，目标在内存</span>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="c1">;                           ; 执行: 把 eax 的值存入地址 rbp-12</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="c1">;                           ; RIP = RIP + 3</span>
+</code></pre></div>
+<p>每一条指令执行后，RIP 自动指向下一条——这就是程序"顺序执行"的本质。而 <code>call</code>、<code>jmp</code>、<code>ret</code> 这些指令就是<strong>主动修改 RIP</strong>，让 CPU 跳到别处执行。</p>
+<hr />
+<h2 id="4">4. 📌 栈帧结构——函数调用底层真相<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>⚠️ <strong>这是连接 C 语言和汇编的桥梁。</strong> 01 章你看到了栈溢出能覆盖返回地址。本章你来看"返回地址"到底是怎么被压入栈、怎么被取出来的——以及为什么 <code>call</code>/<code>ret</code> 就是对 RIP 和 RSP 的操作。</p>
+</blockquote>
+<h3 id="_11">🏪 生活场景：你看书时接到电话<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>你在书房看一本小说（main 函数在执行），看到第 42 页。突然电话响了。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>1. 你在第 42 页夹一个书签（保存返回地址到栈上）
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>   → call 指令做的事：push RIP（把下一条指令的地址压栈）
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>2. 你接起电话：&quot;喂？&quot;（跳转到接电话的处理流程）
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>   → jmp func（RIP = func 的地址）
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>3. 你处理电话里的事（执行 func 的代码）
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>   → 新栈帧建立，局部变量分配
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>4. 处理完了，你挂电话（func 执行 ret）
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a>   → pop RIP（从栈上取出之前保存的地址，放回 RIP）
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a>5. 你翻到书签那一页（第 43 页），继续看书
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a>   → RIP 回到了 call 的下一条指令
+</code></pre></div>
+<h3 id="_12">🔍 函数调用的完整汇编过程<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1">// 源代码</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="kt">int</span><span class="w"> </span><span class="nf">add</span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">result</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">result</span><span class="p">;</span>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="p">}</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">3</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">4</span><span class="p">;</span>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">z</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">add</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="w"> </span><span class="n">y</span><span class="p">);</span><span class="w">   </span><span class="c1">// ★ 调用发生在这里</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a><span class="p">}</span>
+</code></pre></div>
+<p>对应的汇编（简化，64 位 Linux）：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1">; ===== main 函数中调用 add =====</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a><span class="nf">section</span><span class="w"> </span><span class="no">.text</span>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="nl">main:</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="c1">; ... main 的栈帧已建立 ...</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-4</span><span class="p">],</span><span class="w"> </span><span class="mi">3</span><span class="w">     </span><span class="c1">; x = 3</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-8</span><span class="p">],</span><span class="w"> </span><span class="mi">4</span><span class="w">     </span><span class="c1">; y = 4</span>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="c1">; --- 准备调用 add(3, 4) ---</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-8</span><span class="p">]</span><span class="w">   </span><span class="c1">; eax = y = 4</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">edx</span><span class="p">,</span><span class="w"> </span><span class="no">eax</span><span class="w">                  </span><span class="c1">; edx = 4 (第3个参数？不——对)</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-4</span><span class="p">]</span><span class="w">   </span><span class="c1">; eax = x = 3</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">esi</span><span class="p">,</span><span class="w"> </span><span class="no">edx</span><span class="w">                  </span><span class="c1">; esi = 4 (第2个参数)</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">edi</span><span class="p">,</span><span class="w"> </span><span class="no">eax</span><span class="w">                  </span><span class="c1">; edi = 3 (第1个参数)</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="nf">call</span><span class="w">   </span><span class="no">add</span><span class="w">                       </span><span class="c1">; ★ ① push RIP  ② jmp add</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">    </span><span class="c1">; --- add 返回后 ---</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-12</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w">  </span><span class="c1">; z = add的返回值(在eax里)</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="c1">; ===== add 函数内部 =====</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="nl">add:</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">    </span><span class="nf">push</span><span class="w">   </span><span class="no">rbp</span><span class="w">                       </span><span class="c1">; ① 保存 main 的 RBP</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">rbp</span><span class="p">,</span><span class="w"> </span><span class="no">rsp</span><span class="w">                  </span><span class="c1">; ② 建立自己的栈帧：RBP = RSP</span>
+<a id="__codelineno-9-23" name="__codelineno-9-23" href="#__codelineno-9-23"></a><span class="w">    </span><span class="nf">sub</span><span class="w">    </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="w">                   </span><span class="c1">; ③ 给局部变量分配 16 字节空间</span>
+<a id="__codelineno-9-24" name="__codelineno-9-24" href="#__codelineno-9-24"></a>
+<a id="__codelineno-9-25" name="__codelineno-9-25" href="#__codelineno-9-25"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-20</span><span class="p">],</span><span class="w"> </span><span class="no">edi</span><span class="w">  </span><span class="c1">; ④ 把第1个参数(3)存到栈上</span>
+<a id="__codelineno-9-26" name="__codelineno-9-26" href="#__codelineno-9-26"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-24</span><span class="p">],</span><span class="w"> </span><span class="no">esi</span><span class="w">  </span><span class="c1">; ⑤ 把第2个参数(4)存到栈上</span>
+<a id="__codelineno-9-27" name="__codelineno-9-27" href="#__codelineno-9-27"></a>
+<a id="__codelineno-9-28" name="__codelineno-9-28" href="#__codelineno-9-28"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">edx</span><span class="p">,</span><span class="w"> </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-20</span><span class="p">]</span><span class="w">  </span><span class="c1">; edx = 3</span>
+<a id="__codelineno-9-29" name="__codelineno-9-29" href="#__codelineno-9-29"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-24</span><span class="p">]</span><span class="w">  </span><span class="c1">; eax = 4</span>
+<a id="__codelineno-9-30" name="__codelineno-9-30" href="#__codelineno-9-30"></a><span class="w">    </span><span class="nf">add</span><span class="w">    </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="no">edx</span><span class="w">                  </span><span class="c1">; eax = 3 + 4 = 7</span>
+<a id="__codelineno-9-31" name="__codelineno-9-31" href="#__codelineno-9-31"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-4</span><span class="p">],</span><span class="w"> </span><span class="no">eax</span><span class="w">   </span><span class="c1">; result = 7</span>
+<a id="__codelineno-9-32" name="__codelineno-9-32" href="#__codelineno-9-32"></a>
+<a id="__codelineno-9-33" name="__codelineno-9-33" href="#__codelineno-9-33"></a><span class="w">    </span><span class="nf">mov</span><span class="w">    </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-4</span><span class="p">]</span><span class="w">   </span><span class="c1">; 返回值 = 7 (放入 eax)</span>
+<a id="__codelineno-9-34" name="__codelineno-9-34" href="#__codelineno-9-34"></a>
+<a id="__codelineno-9-35" name="__codelineno-9-35" href="#__codelineno-9-35"></a><span class="w">    </span><span class="nf">leave</span><span class="w">                            </span><span class="c1">; ⑥ mov rsp, rbp; pop rbp</span>
+<a id="__codelineno-9-36" name="__codelineno-9-36" href="#__codelineno-9-36"></a><span class="w">    </span><span class="nf">ret</span><span class="w">                              </span><span class="c1">; ⑦ pop RIP (从栈上取出返回地址)</span>
+</code></pre></div>
+<h3 id="add3-4">图解：调用 add(3, 4) 时栈的完整变化<a class="headerlink" href="#add3-4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>调用前 (main 的栈)                   进入 add 后                      add 返回前
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>高地址                               高地址                          高地址
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>┌──────────────┐                     ┌──────────────┐                ┌──────────────┐
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>│ main 的 y=4  │ rbp-8               │ main 的 y=4  │                │ main 的 y=4  │
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>│ main 的 x=3  │ rbp-4               │ main 的 x=3  │                │ main 的 x=3  │
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>│ main 的旧RBP │                     │ main 的旧RBP │                │ main 的旧RBP │
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>├──────────────┤                     ├──────────────┤                ├──────────────┤
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>│ 返回地址     │ ← call 压入          │ 返回地址     │                │ 返回地址     │
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>│ (main 的     │                     │ (下一条指令)  │                │              │
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>│  下一条指令)  │                     ├──────────────┤                ├──────────────┤
+<a id="__codelineno-10-12" name="__codelineno-10-12" href="#__codelineno-10-12"></a>│              │                     │ main 的旧RBP │ ← RBP 指向这   │ main 的旧RBP │
+<a id="__codelineno-10-13" name="__codelineno-10-13" href="#__codelineno-10-13"></a>│ ...          │ ← RSP               ├──────────────┤                ├──────────────┤
+<a id="__codelineno-10-14" name="__codelineno-10-14" href="#__codelineno-10-14"></a>│              │                     │ result=7     │ rbp-4          │ result=7     │
+<a id="__codelineno-10-15" name="__codelineno-10-15" href="#__codelineno-10-15"></a>│              │                     │ b=4          │ rbp-24         │ b=4          │
+<a id="__codelineno-10-16" name="__codelineno-10-16" href="#__codelineno-10-16"></a>│              │                     │ a=3          │ rbp-20         │ a=3          │
+<a id="__codelineno-10-17" name="__codelineno-10-17" href="#__codelineno-10-17"></a>│              │                     │ ...          │ ← RSP          │ ...          │
+<a id="__codelineno-10-18" name="__codelineno-10-18" href="#__codelineno-10-18"></a>低地址                               低地址                          低地址
+<a id="__codelineno-10-19" name="__codelineno-10-19" href="#__codelineno-10-19"></a>
+<a id="__codelineno-10-20" name="__codelineno-10-20" href="#__codelineno-10-20"></a>                                                                    ret 后:
+<a id="__codelineno-10-21" name="__codelineno-10-21" href="#__codelineno-10-21"></a>                                                                    RSP ↑ 弹走返回地址
+<a id="__codelineno-10-22" name="__codelineno-10-22" href="#__codelineno-10-22"></a>                                                                    RIP = 返回地址
+<a id="__codelineno-10-23" name="__codelineno-10-23" href="#__codelineno-10-23"></a>                                                                    RBP = main 的旧RBP
+</code></pre></div>
+<h3 id="_13">🔥 为什么栈溢出能控制程序——现在用汇编语言说<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>buf 在栈上的位置：RBP - 64（假设 64 字节）
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>攻击者往 buf 写了 100 字节：
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>  byte 0-63   → 填满 buf               ← 正常范围
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>  byte 64-71  → 覆盖 [rbp-?] 的变量     ← 破坏其他局部变量
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>  byte 72-79  → 覆盖 旧的 RBP            ← 破坏了栈帧链
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  byte 80-87  → 覆盖 ★返回地址★          ← 控制了 ret 的目标！
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>当 func 执行 ret 指令时：
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>  ret = pop RIP = 从 RSP 指向的位置读 8 字节 → 写入 RIP
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>  这 8 字节是攻击者写入的！→ RIP 变成攻击者指定的值 → 程序被劫持！
+</code></pre></div>
+<h3 id="_14">💻 自己生成汇编看看<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 写一个简单的函数调用</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>test.c<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="s">int add(int a, int b) { return a + b; }</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a><span class="s">int main() {</span>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="s">    int x = 3, y = 4;</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a><span class="s">    return add(x, y);</span>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a><span class="s">}</span>
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a><span class="s">EOF</span>
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a><span class="c1"># -S: 只编译不汇编，生成 .s 汇编文件</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>gcc<span class="w"> </span>-S<span class="w"> </span>-masm<span class="o">=</span>intel<span class="w"> </span>test.c<span class="w"> </span>-o<span class="w"> </span>test.s
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a><span class="c1"># -O0: 不优化，汇编代码和 C 代码有清晰的对应关系</span>
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>gcc<span class="w"> </span>-S<span class="w"> </span>-O0<span class="w"> </span>-masm<span class="o">=</span>intel<span class="w"> </span>test.c<span class="w"> </span>-o<span class="w"> </span>test_O0.s
+<a id="__codelineno-12-15" name="__codelineno-12-15" href="#__codelineno-12-15"></a>
+<a id="__codelineno-12-16" name="__codelineno-12-16" href="#__codelineno-12-16"></a><span class="c1"># 打开 test_O0.s，找到 call add 那行</span>
+<a id="__codelineno-12-17" name="__codelineno-12-17" href="#__codelineno-12-17"></a><span class="c1"># 看看它前后的 push/mov/call/leave/ret</span>
+</code></pre></div>
+<h3 id="_15">🧪 小实验<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<ol>
+<li>把 add 函数的参数从 2 个增加到 8 个，重新生成汇编。前 6 个在寄存器里，第 7、8 个在哪？（在栈上！）</li>
+<li>用 <code>-O2</code> 编译，看看优化后的汇编和 <code>-O0</code> 有什么不同？（优化后可能完全看不到栈帧了）</li>
+<li>在 GDB 里 <code>disas main</code> 和 <code>disas add</code>，对照着上面的图解一步步 <code>ni</code>，看 RSP 和 RBP 的变化</li>
+</ol>
+<hr />
+<h2 id="5">5. 📌 调用约定——函数之间怎么传话<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="_16">🏪 生活场景：公司之间的公文格式<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<p>中国公司和美国公司做生意。如果中国公司发中文合同，美国公司发英文合同——双方都得翻译，容易出错。于是国际商会制定了一个标准：国际贸易合同统一用英文，格式统一为"双方信息→条款→签名→日期"。</p>
+<p><strong>调用约定就是函数之间的"标准合同格式"。</strong> 它规定：
+- 参数按什么顺序传、用寄存器还是用栈
+- 返回值放哪
+- 谁负责清理栈</p>
+<h3 id="x86-64-system-v-linux">🔍 x86-64 System V 调用约定（Linux 标准）<a class="headerlink" href="#x86-64-system-v-linux" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>前 6 个整数/指针参数 → 依次放入: RDI, RSI, RDX, RCX, R8, R9
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>浮点参数 → 放入 XMM0-XMM7
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>第 7 个及以后的参数 → 从右向左压栈
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>返回值 → 放在 RAX（整数/指针）或 XMM0（浮点）
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>调用者负责: 保存 RAX, RCX, RDX, RSI, RDI, R8-R11（易失寄存器）
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>被调用者负责: 保存 RBX, RBP, R12-R15（调用结束后要恢复原值）
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>清理栈: 调用者负责（如果有栈传参的话）
+</code></pre></div>
+<h3 id="x86-32-cdecl">x86 (32位) cdecl 调用约定（对比）<a class="headerlink" href="#x86-32-cdecl" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>所有参数 → 从右向左全部压栈！
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>返回值 → 放在 EAX
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>调用者负责清理栈（add esp, N）
+</code></pre></div>
+<p><strong>安全意义：32 位和 64 位的攻击手法完全不同。</strong> 32 位全部用栈传参，你控制了栈就控制了参数；64 位前 6 个参数用寄存器，你需要先找到 <code>pop rdi; ret</code> 这样的 gadget 来设置寄存器。</p>
+<h3 id="_17">💻 手写一个遵循调用约定的函数<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="c1">; 在汇编里调用 printf(&quot;Hello %s\n&quot;, name)</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="c1">; 遵循 System V 调用约定</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="nf">section</span><span class="w"> </span><span class="no">.data</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="w">    </span><span class="nf">fmt</span><span class="w"> </span><span class="no">db</span><span class="w"> </span><span class="err">&quot;</span><span class="no">Hello</span><span class="w"> </span><span class="nv">%s</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w">     </span><span class="c1">; 格式字符串</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="w">    </span><span class="nf">name</span><span class="w"> </span><span class="no">db</span><span class="w"> </span><span class="err">&quot;</span><span class="no">World</span><span class="err">&quot;</span><span class="p">,</span><span class="w"> </span><span class="mi">0</span><span class="w">           </span><span class="c1">; 参数</span>
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a><span class="nf">section</span><span class="w"> </span><span class="no">.text</span>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a><span class="w">    </span><span class="nf">global</span><span class="w"> </span><span class="no">main</span>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a><span class="w">    </span><span class="nf">extern</span><span class="w"> </span><span class="no">printf</span>
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a><span class="nl">main:</span>
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a><span class="w">    </span><span class="c1">; 第1个参数: 格式字符串 → RDI</span>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a><span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rel</span><span class="w"> </span><span class="no">fmt</span><span class="p">]</span>
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a><span class="w">    </span><span class="c1">; 第2个参数: name → RSI</span>
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a><span class="w">    </span><span class="nf">lea</span><span class="w"> </span><span class="no">rsi</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">rel</span><span class="w"> </span><span class="no">name</span><span class="p">]</span>
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a><span class="w">    </span><span class="c1">; AL = 0 (没有浮点参数)</span>
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a><span class="w">    </span><span class="nf">xor</span><span class="w"> </span><span class="no">eax</span><span class="p">,</span><span class="w"> </span><span class="no">eax</span>
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a><span class="w">    </span><span class="nf">call</span><span class="w"> </span><span class="no">printf</span>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a><span class="w">    </span><span class="c1">; 返回值在 EAX 里</span>
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a><span class="w">    </span><span class="nf">ret</span>
+</code></pre></div>
+<hr />
+<h2 id="6-x86-64">6. 汇编速查——x86-64 核心指令<a class="headerlink" href="#6-x86-64" title="Permanent link">&para;</a></h2>
+<h3 id="_18">💻 每条指令配一个生活类比<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>指令</th>
+<th>含义</th>
+<th>生活类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>mov dst, src</code></td>
+<td>dst = src</td>
+<td>把东西从一个地方搬到另一个地方</td>
+</tr>
+<tr>
+<td><code>push src</code></td>
+<td>RSP-=8; [RSP]=src</td>
+<td>把盘子放在盘子摞最顶上</td>
+</tr>
+<tr>
+<td><code>pop dst</code></td>
+<td>dst=[RSP]; RSP+=8</td>
+<td>从盘子摞最顶上取一个盘子</td>
+</tr>
+<tr>
+<td><code>lea dst, [addr]</code></td>
+<td>dst = addr（取地址，不读内存）</td>
+<td>抄下门牌号，不进门</td>
+</tr>
+<tr>
+<td><code>add a, b</code></td>
+<td>a = a + b</td>
+<td>往杯子里加水</td>
+</tr>
+<tr>
+<td><code>sub a, b</code></td>
+<td>a = a - b</td>
+<td>从杯子里倒出水</td>
+</tr>
+<tr>
+<td><code>cmp a, b</code></td>
+<td>比较 a 和 b（设标志位）</td>
+<td>用秤称两个东西谁重</td>
+</tr>
+<tr>
+<td><code>jmp addr</code></td>
+<td>RIP = addr</td>
+<td>跳到书里另一页</td>
+</tr>
+<tr>
+<td><code>je addr</code></td>
+<td>如果相等就跳</td>
+<td>如果两袋米一样重，就去 A 仓库</td>
+</tr>
+<tr>
+<td><code>jne addr</code></td>
+<td>如果不相等就跳</td>
+<td>重量不同就去 B 仓库</td>
+</tr>
+<tr>
+<td><code>call func</code></td>
+<td>push RIP; jmp func</td>
+<td>在书上夹书签，翻到另一页</td>
+</tr>
+<tr>
+<td><code>ret</code></td>
+<td>pop RIP</td>
+<td>看书签，翻回原来那页</td>
+</tr>
+<tr>
+<td><code>leave</code></td>
+<td>mov RSP,RBP; pop RBP</td>
+<td>收拾桌面，恢复之前的布置</td>
+</tr>
+<tr>
+<td><code>nop</code></td>
+<td>什么也不做</td>
+<td>发呆一秒</td>
+</tr>
+<tr>
+<td><code>xor a, a</code></td>
+<td>a = 0（比 mov a,0 快）</td>
+<td>清空容器</td>
+</tr>
+<tr>
+<td><code>test a, a</code></td>
+<td>a &amp; a（设标志位，不改变 a）</td>
+<td>照镜子看看自己</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_19">🔥 最值得记住的三条指令的等价实现<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="c1">; call func  等价于:</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="nf">push</span><span class="w"> </span><span class="no">rip</span><span class="w">        </span><span class="c1">; 先保存返回地址</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="nf">jmp</span><span class="w"> </span><span class="no">func</span><span class="w">        </span><span class="c1">; 再跳转</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="c1">; 但你不能在汇编里直接写 push rip——CPU 不允许</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1">; ret  等价于:</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rip</span><span class="w">         </span><span class="c1">; 从栈上取出返回地址</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="c1">; 同样，你不能直接写 pop rip</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="c1">; leave  等价于:</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a><span class="nf">mov</span><span class="w"> </span><span class="no">rsp</span><span class="p">,</span><span class="w"> </span><span class="no">rbp</span><span class="w">    </span><span class="c1">; 把栈顶移到栈底（回收局部变量空间）</span>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="nf">pop</span><span class="w"> </span><span class="no">rbp</span><span class="w">         </span><span class="c1">; 恢复调用者的 RBP</span>
+</code></pre></div>
+<h3 id="_20">💻 看懂一段真实的汇编<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="c1">; C 代码:</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="c1">; if (x &gt; 10) {</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="c1">;     printf(&quot;big\n&quot;);</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="c1">; } else {</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a><span class="c1">;     printf(&quot;small\n&quot;);</span>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1">; }</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="c1">; 对应汇编（x 在 [rbp-4]）:</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="w">    </span><span class="nf">cmp</span><span class="w">    </span><span class="no">DWORD</span><span class="w"> </span><span class="no">PTR</span><span class="w"> </span><span class="p">[</span><span class="no">rbp-4</span><span class="p">],</span><span class="w"> </span><span class="mi">10</span><span class="w">    </span><span class="c1">; 比较 x 和 10</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a><span class="w">    </span><span class="nf">jle</span><span class="w">    </span><span class="no">.L2</span><span class="w">                       </span><span class="c1">; 如果 x &lt;= 10，跳到 .L2</span>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="w">    </span><span class="c1">; x &gt; 10 的分支</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="w">    </span><span class="nf">lea</span><span class="w">    </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">str_big</span><span class="p">]</span><span class="w">           </span><span class="c1">; rdi = &quot;big\n&quot; 的地址</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="w">    </span><span class="nf">call</span><span class="w">   </span><span class="no">puts</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a><span class="w">    </span><span class="nf">jmp</span><span class="w">    </span><span class="no">.L3</span><span class="w">                       </span><span class="c1">; 跳过 else 分支</span>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="nl">.L2:</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="w">    </span><span class="c1">; x &lt;= 10 的分支</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a><span class="w">    </span><span class="nf">lea</span><span class="w">    </span><span class="no">rdi</span><span class="p">,</span><span class="w"> </span><span class="p">[</span><span class="no">str_small</span><span class="p">]</span><span class="w">         </span><span class="c1">; rdi = &quot;small\n&quot; 的地址</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a><span class="w">    </span><span class="nf">call</span><span class="w">   </span><span class="no">puts</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="nl">.L3:</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="w">    </span><span class="c1">; if-else 结束，继续执行</span>
+</code></pre></div>
+<hr />
+<h2 id="7-c">7. 从 C 代码到二进制——编译全流程<a class="headerlink" href="#7-c" title="Permanent link">&para;</a></h2>
+<h3 id="_21">🏪 生活场景：出版一本书的过程<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>手稿（C 源码）           → 你写的 .c 文件
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    ↓ 预处理器（cpp）
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>去掉批注、展开引用         → .i 文件（纯 C，没有 #include #define）
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>    ↓ 编译器（cc1）
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>翻译成汇编               → .s 文件（人类可读的汇编指令）
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>    ↓ 汇编器（as）
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a>翻译成机器码             → .o 文件（二进制，不可读）
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a>    ↓ 链接器（ld）
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a>合并多个 .o + 库 → 可执行 → a.out / program.exe
+</code></pre></div>
+<h3 id="_22">💻 手动走一遍全流程<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>cat<span class="w"> </span>&gt;<span class="w"> </span>hello.c<span class="w"> </span><span class="s">&lt;&lt; &#39;EOF&#39;</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="s">#include &lt;stdio.h&gt;</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="s">#define MSG &quot;Hello, World!\n&quot;</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="s">int main() {</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="s">    printf(MSG);</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="s">    return 0;</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="s">}</span>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="s">EOF</span>
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="c1"># 1. 预处理（Preprocessing）</span>
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>gcc<span class="w"> </span>-E<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>hello.i
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>wc<span class="w"> </span>-l<span class="w"> </span>hello.i<span class="w">       </span><span class="c1"># 可能 800+ 行！stdio.h 被展开了</span>
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>tail<span class="w"> </span>hello.i<span class="w">        </span><span class="c1"># 最后才是你的代码</span>
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a><span class="c1"># 2. 编译（Compilation）—— C → 汇编</span>
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>gcc<span class="w"> </span>-S<span class="w"> </span>-masm<span class="o">=</span>intel<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>hello.s
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>cat<span class="w"> </span>hello.s<span class="w">         </span><span class="c1"># 看到了熟悉的 push/mov/call/ret</span>
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="c1"># 3. 汇编（Assembly）—— 汇编 → 机器码</span>
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>gcc<span class="w"> </span>-c<span class="w"> </span>hello.c<span class="w"> </span>-o<span class="w"> </span>hello.o
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>xxd<span class="w"> </span>hello.o<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w">  </span><span class="c1"># 全是十六进制字节——这就是 CPU 吃的</span>
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="c1"># 4. 链接（Linking）—— 合并目标文件</span>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a>gcc<span class="w"> </span>hello.o<span class="w"> </span>-o<span class="w"> </span>hello
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a>./hello<span class="w">             </span><span class="c1"># Hello, World!</span>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a>
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a><span class="c1"># 5. 看可执行文件的段</span>
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>objdump<span class="w"> </span>-d<span class="w"> </span>hello<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-50<span class="w">    </span><span class="c1"># 反汇编</span>
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a>readelf<span class="w"> </span>-S<span class="w"> </span>hello<span class="w">               </span><span class="c1"># 查看 section 头部</span>
+</code></pre></div>
+<h3 id="_23">⚠️ 安全关键：编译选项如何影响漏洞<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1"># 不同保护级别下的编译</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>gcc<span class="w"> </span>vuln.c<span class="w"> </span>-o<span class="w"> </span>vuln_no_prot<span class="w">                    </span><span class="c1"># 最弱保护</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>gcc<span class="w"> </span>vuln.c<span class="w"> </span>-o<span class="w"> </span>vuln_default<span class="w">                    </span><span class="c1"># 默认：NX + ASLR</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>gcc<span class="w"> </span>vuln.c<span class="w"> </span>-fstack-protector<span class="w"> </span>-o<span class="w"> </span>vuln_canary<span class="w">   </span><span class="c1"># 加栈金丝雀</span>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>gcc<span class="w"> </span>vuln.c<span class="w"> </span>-O2<span class="w"> </span>-o<span class="w"> </span>vuln_O2<span class="w">                     </span><span class="c1"># 优化可能消除漏洞！</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="c1"># 攻击实验用（全关）:</span>
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>gcc<span class="w"> </span>-fno-stack-protector<span class="w"> </span>-z<span class="w"> </span>execstack<span class="w"> </span>-no-pie<span class="w"> </span>-o<span class="w"> </span>vuln<span class="w"> </span>vuln.c
+</code></pre></div>
+<hr />
+<h2 id="8">8. 操作系统管的三件事<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="_24">🏪 生活场景：物业公司管理写字楼<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h3>
+<p>一栋写字楼里有很多公司（进程）。物业公司（操作系统）管三件事：</p>
+<p><strong>1. 进程管理 = 排班表</strong></p>
+<p>谁在哪个办公室、用多久。100 家公司要共享 20 间会议室——物业安排时间段，每家轮流用 30 分钟（时间片轮转）。安排得合理，每家都以为自己独占了会议室。</p>
+<p><strong>2. 内存管理 = 分配办公区</strong></p>
+<p>每家公司以为自己租了整层——但实际上一层的空间被分割给不同的公司了。物业通过"虚拟内存"给每家公司一个假象：你有 0x0000 到 0xFFFF 全部地址空间。实际上是共享物理内存。</p>
+<p><strong>3. 文件系统 = 档案管理</strong></p>
+<p>文件存在哪（磁盘上的哪个扇区）、怎么找（目录树→inode→数据块）、谁能看（权限 rwx）。</p>
+<h3 id="_25">🔍 虚拟内存——最重要的安全概念之一<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>每个进程以为自己独占 4GB（32位）或 128TB（64位）的地址空间：
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>进程 A 的内存视图:                    进程 B 的内存视图:
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>┌──────────────────────┐              ┌──────────────────────┐
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>│ 0x7fffffffffff       │              │ 0x7fffffffffff       │
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>│       栈              │              │       栈              │
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>│        ↓              │              │        ↓              │
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>│                      │              │                      │
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>│        ↑              │              │        ↑              │
+<a id="__codelineno-21-10" name="__codelineno-21-10" href="#__codelineno-21-10"></a>│       堆              │              │       堆              │
+<a id="__codelineno-21-11" name="__codelineno-21-11" href="#__codelineno-21-11"></a>│ 0x000000000000       │              │ 0x000000000000       │
+<a id="__codelineno-21-12" name="__codelineno-21-12" href="#__codelineno-21-12"></a>└──────────────────────┘              └──────────────────────┘
+<a id="__codelineno-21-13" name="__codelineno-21-13" href="#__codelineno-21-13"></a>      (以为自己独占)                        (以为自己独占)
+<a id="__codelineno-21-14" name="__codelineno-21-14" href="#__codelineno-21-14"></a>
+<a id="__codelineno-21-15" name="__codelineno-21-15" href="#__codelineno-21-15"></a>实际物理内存: [A的页] [B的页] [A的页] [空闲] [B的页] ...
+<a id="__codelineno-21-16" name="__codelineno-21-16" href="#__codelineno-21-16"></a>                    ↑ 混在一起存放，MMU 负责翻译
+</code></pre></div>
+<p><strong>安全意义：</strong>
+- 每个进程有独立的地址空间——进程 A 不能直接读进程 B 的内存
+- <strong>但漏洞可以打破这个隔离：</strong> 内核漏洞 → 读其他进程；共享内存配置错误 → 跨进程泄露
+- ASLR（地址空间布局随机化）——每次运行，栈、堆、库的基址随机偏移，让攻击者猜不到地址
+- 32 位 ASLR 因为地址空间小（4GB），随机性不够，相对容易被暴力破解</p>
+<hr />
+<h2 id="9-cpu">9. 🧪 动手：写一个 CPU 模拟器<a class="headerlink" href="#9-cpu" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>这个实验让你真正理解"CPU 就是不断取指令→译码→执行的循环"。</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1"># cpu_sim.py —— 一个极简的 CPU 模拟器</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="c1"># 支持的指令: mov reg, val / add reg, reg / jmp addr / cmp / je / hlt</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a><span class="k">class</span><span class="w"> </span><span class="nc">TinyCPU</span><span class="p">:</span>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a>    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">regs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;A&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;B&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;C&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>  <span class="c1"># 寄存器</span>
+<a id="__codelineno-22-7" name="__codelineno-22-7" href="#__codelineno-22-7"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">flags</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;zero&#39;</span><span class="p">:</span> <span class="kc">False</span><span class="p">}</span>           <span class="c1"># 标志位</span>
+<a id="__codelineno-22-8" name="__codelineno-22-8" href="#__codelineno-22-8"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">mem</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">256</span>                    <span class="c1"># 内存 256 字节</span>
+<a id="__codelineno-22-9" name="__codelineno-22-9" href="#__codelineno-22-9"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pc</span> <span class="o">=</span> <span class="mi">0</span>                             <span class="c1"># 程序计数器（=RIP）</span>
+<a id="__codelineno-22-10" name="__codelineno-22-10" href="#__codelineno-22-10"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-22-11" name="__codelineno-22-11" href="#__codelineno-22-11"></a>
+<a id="__codelineno-22-12" name="__codelineno-22-12" href="#__codelineno-22-12"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">load</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">program</span><span class="p">):</span>
+<a id="__codelineno-22-13" name="__codelineno-22-13" href="#__codelineno-22-13"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;把程序加载到内存&quot;&quot;&quot;</span>
+<a id="__codelineno-22-14" name="__codelineno-22-14" href="#__codelineno-22-14"></a>        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">byte</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">program</span><span class="p">):</span>
+<a id="__codelineno-22-15" name="__codelineno-22-15" href="#__codelineno-22-15"></a>            <span class="bp">self</span><span class="o">.</span><span class="n">mem</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">byte</span>
+<a id="__codelineno-22-16" name="__codelineno-22-16" href="#__codelineno-22-16"></a>
+<a id="__codelineno-22-17" name="__codelineno-22-17" href="#__codelineno-22-17"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">fetch</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-22-18" name="__codelineno-22-18" href="#__codelineno-22-18"></a><span class="w">        </span><span class="sd">&quot;&quot;&quot;取指：从 PC 指向的地址读一个字节&quot;&quot;&quot;</span>
+<a id="__codelineno-22-19" name="__codelineno-22-19" href="#__codelineno-22-19"></a>        <span class="n">opcode</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">mem</span><span class="p">[</span><span class="bp">self</span><span class="o">.</span><span class="n">pc</span><span class="p">]</span>
+<a id="__codelineno-22-20" name="__codelineno-22-20" href="#__codelineno-22-20"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">pc</span> <span class="o">+=</span> <span class="mi">1</span>
+<a id="__codelineno-22-21" name="__codelineno-22-21" href="#__codelineno-22-21"></a>        <span class="k">return</span> <span class="n">opcode</span>
+<a id="__codelineno-22-22" name="__codelineno-22-22" href="#__codelineno-22-22"></a>
+<a id="__codelineno-22-23" name="__codelineno-22-23" href="#__codelineno-22-23"></a>    <span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<a id="__codelineno-22-24" name="__codelineno-22-24" href="#__codelineno-22-24"></a>        <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">True</span>
+<a id="__codelineno-22-25" name="__codelineno-22-25" href="#__codelineno-22-25"></a>        <span class="k">while</span> <span class="bp">self</span><span class="o">.</span><span class="n">running</span><span class="p">:</span>
+<a id="__codelineno-22-26" name="__codelineno-22-26" href="#__codelineno-22-26"></a>            <span class="n">op</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<a id="__codelineno-22-27" name="__codelineno-22-27" href="#__codelineno-22-27"></a>
+<a id="__codelineno-22-28" name="__codelineno-22-28" href="#__codelineno-22-28"></a>            <span class="k">if</span> <span class="n">op</span> <span class="o">==</span> <span class="mh">0x01</span><span class="p">:</span>       <span class="c1"># mov reg, val</span>
+<a id="__codelineno-22-29" name="__codelineno-22-29" href="#__codelineno-22-29"></a>                <span class="n">reg</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<a id="__codelineno-22-30" name="__codelineno-22-30" href="#__codelineno-22-30"></a>                <span class="n">val</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<a id="__codelineno-22-31" name="__codelineno-22-31" href="#__codelineno-22-31"></a>                <span class="n">name</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="n">reg</span><span class="p">)</span>
+<a id="__codelineno-22-32" name="__codelineno-22-32" href="#__codelineno-22-32"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">regs</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">val</span>
+<a id="__codelineno-22-33" name="__codelineno-22-33" href="#__codelineno-22-33"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  mov </span><span class="si">{</span><span class="n">name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">val</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-34" name="__codelineno-22-34" href="#__codelineno-22-34"></a>
+<a id="__codelineno-22-35" name="__codelineno-22-35" href="#__codelineno-22-35"></a>            <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="mh">0x02</span><span class="p">:</span>     <span class="c1"># add regA, regB</span>
+<a id="__codelineno-22-36" name="__codelineno-22-36" href="#__codelineno-22-36"></a>                <span class="n">ra</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">())</span>
+<a id="__codelineno-22-37" name="__codelineno-22-37" href="#__codelineno-22-37"></a>                <span class="n">rb</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">())</span>
+<a id="__codelineno-22-38" name="__codelineno-22-38" href="#__codelineno-22-38"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">regs</span><span class="p">[</span><span class="n">ra</span><span class="p">]</span> <span class="o">+=</span> <span class="bp">self</span><span class="o">.</span><span class="n">regs</span><span class="p">[</span><span class="n">rb</span><span class="p">]</span>
+<a id="__codelineno-22-39" name="__codelineno-22-39" href="#__codelineno-22-39"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  add </span><span class="si">{</span><span class="n">ra</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="n">rb</span><span class="si">}</span><span class="s2">  → </span><span class="si">{</span><span class="n">ra</span><span class="si">}</span><span class="s2">=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">regs</span><span class="p">[</span><span class="n">ra</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-40" name="__codelineno-22-40" href="#__codelineno-22-40"></a>
+<a id="__codelineno-22-41" name="__codelineno-22-41" href="#__codelineno-22-41"></a>            <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="mh">0x03</span><span class="p">:</span>     <span class="c1"># cmp regA, regB</span>
+<a id="__codelineno-22-42" name="__codelineno-22-42" href="#__codelineno-22-42"></a>                <span class="n">ra</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">())</span>
+<a id="__codelineno-22-43" name="__codelineno-22-43" href="#__codelineno-22-43"></a>                <span class="n">rb</span> <span class="o">=</span> <span class="nb">chr</span><span class="p">(</span><span class="nb">ord</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)</span> <span class="o">+</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">())</span>
+<a id="__codelineno-22-44" name="__codelineno-22-44" href="#__codelineno-22-44"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">regs</span><span class="p">[</span><span class="n">ra</span><span class="p">]</span> <span class="o">==</span> <span class="bp">self</span><span class="o">.</span><span class="n">regs</span><span class="p">[</span><span class="n">rb</span><span class="p">])</span>
+<a id="__codelineno-22-45" name="__codelineno-22-45" href="#__codelineno-22-45"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  cmp </span><span class="si">{</span><span class="n">ra</span><span class="si">}</span><span class="s2">,</span><span class="si">{</span><span class="n">rb</span><span class="si">}</span><span class="s2">  zero=</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-46" name="__codelineno-22-46" href="#__codelineno-22-46"></a>
+<a id="__codelineno-22-47" name="__codelineno-22-47" href="#__codelineno-22-47"></a>            <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="mh">0x04</span><span class="p">:</span>     <span class="c1"># je addr (相等就跳)</span>
+<a id="__codelineno-22-48" name="__codelineno-22-48" href="#__codelineno-22-48"></a>                <span class="n">addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<a id="__codelineno-22-49" name="__codelineno-22-49" href="#__codelineno-22-49"></a>                <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">flags</span><span class="p">[</span><span class="s1">&#39;zero&#39;</span><span class="p">]:</span>
+<a id="__codelineno-22-50" name="__codelineno-22-50" href="#__codelineno-22-50"></a>                    <span class="bp">self</span><span class="o">.</span><span class="n">pc</span> <span class="o">=</span> <span class="n">addr</span>
+<a id="__codelineno-22-51" name="__codelineno-22-51" href="#__codelineno-22-51"></a>                    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  je </span><span class="si">{</span><span class="n">addr</span><span class="si">}</span><span class="s2">  ← 跳了！&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-52" name="__codelineno-22-52" href="#__codelineno-22-52"></a>
+<a id="__codelineno-22-53" name="__codelineno-22-53" href="#__codelineno-22-53"></a>            <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="mh">0x05</span><span class="p">:</span>     <span class="c1"># jmp addr (无条件跳)</span>
+<a id="__codelineno-22-54" name="__codelineno-22-54" href="#__codelineno-22-54"></a>                <span class="n">addr</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">fetch</span><span class="p">()</span>
+<a id="__codelineno-22-55" name="__codelineno-22-55" href="#__codelineno-22-55"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">pc</span> <span class="o">=</span> <span class="n">addr</span>
+<a id="__codelineno-22-56" name="__codelineno-22-56" href="#__codelineno-22-56"></a>                <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  jmp </span><span class="si">{</span><span class="n">addr</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-57" name="__codelineno-22-57" href="#__codelineno-22-57"></a>
+<a id="__codelineno-22-58" name="__codelineno-22-58" href="#__codelineno-22-58"></a>            <span class="k">elif</span> <span class="n">op</span> <span class="o">==</span> <span class="mh">0xFF</span><span class="p">:</span>     <span class="c1"># hlt (停机)</span>
+<a id="__codelineno-22-59" name="__codelineno-22-59" href="#__codelineno-22-59"></a>                <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  hlt — 程序结束&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-60" name="__codelineno-22-60" href="#__codelineno-22-60"></a>                <span class="bp">self</span><span class="o">.</span><span class="n">running</span> <span class="o">=</span> <span class="kc">False</span>
+<a id="__codelineno-22-61" name="__codelineno-22-61" href="#__codelineno-22-61"></a>
+<a id="__codelineno-22-62" name="__codelineno-22-62" href="#__codelineno-22-62"></a>        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">最终寄存器状态: </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">regs</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-63" name="__codelineno-22-63" href="#__codelineno-22-63"></a>
+<a id="__codelineno-22-64" name="__codelineno-22-64" href="#__codelineno-22-64"></a><span class="c1"># === 运行一个测试程序 ===</span>
+<a id="__codelineno-22-65" name="__codelineno-22-65" href="#__codelineno-22-65"></a><span class="c1"># 程序: A=5; B=3; A=A+B; 如果 A==8 就跳到末尾; B=99(应该被跳过); 结束</span>
+<a id="__codelineno-22-66" name="__codelineno-22-66" href="#__codelineno-22-66"></a><span class="n">program</span> <span class="o">=</span> <span class="p">[</span>
+<a id="__codelineno-22-67" name="__codelineno-22-67" href="#__codelineno-22-67"></a>    <span class="mh">0x01</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span>    <span class="c1"># mov A, 5</span>
+<a id="__codelineno-22-68" name="__codelineno-22-68" href="#__codelineno-22-68"></a>    <span class="mh">0x01</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span>    <span class="c1"># mov B, 3</span>
+<a id="__codelineno-22-69" name="__codelineno-22-69" href="#__codelineno-22-69"></a>    <span class="mh">0x02</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>    <span class="c1"># add A, B  → A=8</span>
+<a id="__codelineno-22-70" name="__codelineno-22-70" href="#__codelineno-22-70"></a>    <span class="mh">0x03</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span>    <span class="c1"># cmp A, B  → not equal</span>
+<a id="__codelineno-22-71" name="__codelineno-22-71" href="#__codelineno-22-71"></a>    <span class="mh">0x04</span><span class="p">,</span> <span class="mi">14</span><span class="p">,</span>      <span class="c1"># je 14 (如果相等就跳到地址14)</span>
+<a id="__codelineno-22-72" name="__codelineno-22-72" href="#__codelineno-22-72"></a>    <span class="mh">0x01</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">99</span><span class="p">,</span>   <span class="c1"># mov B, 99 (没跳，B=99)</span>
+<a id="__codelineno-22-73" name="__codelineno-22-73" href="#__codelineno-22-73"></a>    <span class="mh">0xFF</span><span class="p">,</span>          <span class="c1"># hlt</span>
+<a id="__codelineno-22-74" name="__codelineno-22-74" href="#__codelineno-22-74"></a><span class="p">]</span>
+<a id="__codelineno-22-75" name="__codelineno-22-75" href="#__codelineno-22-75"></a><span class="n">cpu</span> <span class="o">=</span> <span class="n">TinyCPU</span><span class="p">()</span>
+<a id="__codelineno-22-76" name="__codelineno-22-76" href="#__codelineno-22-76"></a><span class="n">cpu</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">program</span><span class="p">)</span>
+<a id="__codelineno-22-77" name="__codelineno-22-77" href="#__codelineno-22-77"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 程序执行追踪 ===</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-22-78" name="__codelineno-22-78" href="#__codelineno-22-78"></a><span class="n">cpu</span><span class="o">.</span><span class="n">run</span><span class="p">()</span>
+<a id="__codelineno-22-79" name="__codelineno-22-79" href="#__codelineno-22-79"></a><span class="c1"># 预期: A=8, B=99（没有跳，因为 A(8) != B(3)）</span>
+</code></pre></div>
+<h3 id="_26">🧪 扩展实验<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h3>
+<ol>
+<li>把 <code>cmp A, B</code> 改成 <code>cmp A, A</code>（比较 A 和自己）。je 会跳吗？B 最后是多少？</li>
+<li>给 CPU 加上 <code>sub</code> 指令（opcode 0x06）</li>
+<li>加一个"栈"——一个数组 + SP 寄存器，实现 push/pop/call/ret</li>
+</ol>
+<hr />
+<h2 id="_27">📝 复习自检<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能说出冯诺依曼结构的五个部件（CPU/内存/I-O/总线/……）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能说出 RIP、RSP、RBP、RAX 分别是干嘛的，以及安全意义上谁最重要（RIP）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能画出函数调用时栈帧的完整变化图，标注 call 压入了什么、ret 弹出了什么</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释 <code>call</code> = <code>push RIP; jmp func</code>、<code>ret</code> = <code>pop RIP</code>、<code>leave</code> = <code>mov RSP,RBP; pop RBP</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能看懂简单的汇编：<code>mov eax, [rbp-4]</code>、<code>cmp DWORD PTR [rbp-4], 10</code>、<code>jle .L2</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道 64 位的前 6 个参数用哪些寄存器传（RDI/RSI/RDX/RCX/R8/R9）、32 位全用栈</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道虚拟内存是什么概念，以及 ASLR 是干什么的</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释：为啥在栈上的 buf 里写太多数据，最终能控制 RIP</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能走一遍 gcc -E → -S → -c → 链接的完整流程</li>
+</ul>
+<hr />
+<h2 id="_28">🎬 推荐视频<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>视频</th>
+<th>平台</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.bilibili.com/">CSAPP·机器级表示</a></td>
+<td>B站</td>
+<td>搜索 "CSAPP 第三章"，经典教材配套</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1AnB8YxEw7/">计算机组成原理-透视版</a></td>
+<td>B站</td>
+<td>图解风格，直观理解</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1ekpdewERs/">三小时速通数字逻辑与计算机体系结构</a></td>
+<td>B站</td>
+<td>速通型，快速建立全景</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>最推荐的做法：</strong> 学完本章后，自己写一个简短的 C 函数，<code>gcc -S -O0</code> 看汇编，逐行对照本章第 6 节的指令速查表。</p>
+</blockquote>
+<hr />
+<h2 id="_29">🔗 知识串联<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>本章的栈帧 + call/ret → 《07-二进制安全》栈溢出攻击的全部基础
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>本章的寄存器传参      → ROP 链中 pop rdi; ret 的作用（设置函数参数）
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>本章的虚拟内存        → ASLR 原理 + ret2libc 中的地址泄露
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>本章的编译全流程      → 不同编译选项（-fno-stack-protector）的安全影响
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a>本章的 CPU 模拟器     → 加深&quot;取指→译码→执行&quot;这个计算机最基本的循环
+</code></pre></div>
+<hr />
+<blockquote>
+<p>💬 <strong>读完用一句话记下来：</strong> "程序执行就是 CPU 不断取指令→执行→取下一条的循环。call = push RIP + jmp，ret = pop RIP。如果栈上的返回地址被覆盖，CPU 在 ret 时就会跳到攻击者指定的地方。控制 RIP = 控制一切。"</p>
+</blockquote>
+<h3 id="04-md">下一步：打开 <code>04-网络协议-数据如何传输.md</code><a class="headerlink" href="#04-md" title="Permanent link">&para;</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

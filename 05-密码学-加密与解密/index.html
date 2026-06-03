@@ -1,0 +1,2052 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="从零开始的网络空间安全学习笔记">
+      
+      
+        <meta name="author" content="我自己">
+      
+      
+        <link rel="canonical" href="https://king-sw-0106.github.io/security-kb/05-%E5%AF%86%E7%A0%81%E5%AD%A6-%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86/">
+      
+      
+        <link rel="prev" href="../04-%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93/">
+      
+      
+        <link rel="next" href="../06-Web%E5%AE%89%E5%85%A8-%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>🟡 层3-A 密码学 - 网安知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#05" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="网安知识库" class="md-header__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            网安知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🟡 层3-A 密码学
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="网安知识库" class="md-nav__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    网安知识库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏠 起点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-%E7%9B%AE%E5%BD%95%E4%B8%8E%E8%BF%9B%E5%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 目录与进度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-C%E8%AF%AD%E8%A8%80-%E6%8C%87%E9%92%88%E4%B8%8E%E5%86%85%E5%AD%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-A C语言指针与内存
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-Python-%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-B Python安全工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB-%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层1 计算机体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层2 网络协议
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-A 密码学
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-A 密码学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 📌 对称加密——用同一把钥匙
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 📌 对称加密——用同一把钥匙">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：你家的防盗门
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 AES——现代对称加密的标准
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 分组密码与工作模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-aes-cryptography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Python 实现 AES 加密/解密（推荐用 cryptography 库）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📌 非对称加密——公钥和私钥
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 📌 非对称加密——公钥和私钥">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：街头的邮政信箱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 RSA 的数学原理——两句话版
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsa_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 RSA 密钥生成与加解密流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-rsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Python 实现 RSA（教学版——不要在生产环境用！）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#https" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 为什么 HTTPS 用混合加密？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 📌 哈希函数——数据的指纹
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 📌 哈希函数——数据的指纹">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：文件的电子指纹
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 哈希的五个核心特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 常见哈希算法对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手感受"雪崩效应"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 网安中的哈希应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 数字签名与证书——互联网信任体系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 数字签名与证书——互联网信任体系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：签合同按手印
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 签名的完整流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 证书链——"我凭什么相信这个公钥是你的？"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 常见密码攻击
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 常见密码攻击">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 密码学的两条黄金法则
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 🧪 Python 密码学综合实验
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 🧪 Python 密码学综合实验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-rsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 1：感受 RSA 的"慢"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-https" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 2：模拟 HTTPS 的混合加密
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐视频
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#06-web-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步：打开 06-Web安全-漏洞与防御.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Web%E5%AE%89%E5%85%A8-%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-B Web安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8-%E5%86%85%E5%AD%98%E6%94%BB%E5%87%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-C 二进制安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98-%E4%BB%8E%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%88%B0%E6%8F%90%E6%9D%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟢 层4 渗透实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 📌 对称加密——用同一把钥匙
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 📌 对称加密——用同一把钥匙">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：你家的防盗门
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#aes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 AES——现代对称加密的标准
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 分组密码与工作模式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-aes-cryptography" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Python 实现 AES 加密/解密（推荐用 cryptography 库）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📌 非对称加密——公钥和私钥
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 📌 非对称加密——公钥和私钥">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：街头的邮政信箱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 RSA 的数学原理——两句话版
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#rsa_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 RSA 密钥生成与加解密流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-rsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 Python 实现 RSA（教学版——不要在生产环境用！）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#https" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 为什么 HTTPS 用混合加密？
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 📌 哈希函数——数据的指纹
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 📌 哈希函数——数据的指纹">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：文件的电子指纹
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 哈希的五个核心特性
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 常见哈希算法对比
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手感受"雪崩效应"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 网安中的哈希应用
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 数字签名与证书——互联网信任体系
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 数字签名与证书——互联网信任体系">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：签合同按手印
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 签名的完整流程
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 证书链——"我凭什么相信这个公钥是你的？"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 常见密码攻击
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 常见密码攻击">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 密码学的两条黄金法则
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-python" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 🧪 Python 密码学综合实验
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 🧪 Python 密码学综合实验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-rsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 1：感受 RSA 的"慢"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-https" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 2：模拟 HTTPS 的混合加密
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐视频
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#06-web-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步：打开 06-Web安全-漏洞与防御.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="05">05 · 密码学——加密与解密的数学<a class="headerlink" href="#05" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>⏪ 前置知识：</strong> 网络协议（04）——理解 HTTPS/TLS 后，密码学就有了具体应用场景
+<strong>⏩ 学完后解锁：</strong> 深入理解 HTTPS 证书体系、CTF 密码学题目
+<strong>⏱ 预计用时：</strong> 4-5 小时（建议分 2-3 天）
+<strong>🎯 核心目标：</strong> 理解对称加密、非对称加密、哈希三种机制的本质区别和各自用途</p>
+</blockquote>
+<hr />
+<h2 id="_1">🚪 门前检查<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>在开始本章之前，你必须能回答：</strong></p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道 TCP 和 HTTP 分别在哪一层（04§1、04§2、04§4）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 理解 HTTPS 中 TLS 握手的基本流程——"先验证证书，再交换密钥，最后加密通信"（04§5）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能用 Python 的 <code>bytes</code> 和 <code>str</code> 做编码转换（02§2）</li>
+</ul>
+<hr />
+<h2 id="_2">📊 本章进度<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>知识点</th>
+<th style="text-align: center;">预计用时</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>5.1</td>
+<td>📌 对称加密——AES 是怎么工作的</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>5.2</td>
+<td>📌 非对称加密——RSA 的数学魔术</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>5.3</td>
+<td>📌 哈希函数——数据的指纹</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>5.4</td>
+<td>数字签名与证书——互联网信任体系</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>5.5</td>
+<td>常见密码攻击——从理论到实践</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>5.6</td>
+<td>🧪 Python 密码学实验</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1">1. 📌 对称加密——用同一把钥匙<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="_3">🏪 生活场景：你家的防盗门<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>你家大门用的是一把钥匙。<strong>出门时用这把钥匙锁门，回家时用同一把钥匙开门。</strong> 这就是对称加密——加密和解密用同一把密钥。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>加密: 明文 + 密钥 → 密文
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>解密: 密文 + 密钥 → 明文
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>出门: 家里财物(明文) + 钥匙(密钥) → 锁上的门(密文)
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>回家: 锁上的门(密文) + 钥匙(密钥) → 家里财物(明文)
+</code></pre></div>
+<p><strong>核心问题：钥匙怎么给对方？</strong> 如果你们面对面，你可以直接把钥匙交给他。但在互联网上，你怎么"递"一把钥匙给一个远在千里之外的人？发微信？发邮件？——这些渠道本身就不安全，如果有人偷看，钥匙就泄露了。</p>
+<p>这就是为什么对称加密不能单独用于互联网通信——你需要一个安全的"钥匙传递"方案。这是 §2 非对称加密要解决的问题。</p>
+<h3 id="aes">🔍 AES——现代对称加密的标准<a class="headerlink" href="#aes" title="Permanent link">&para;</a></h3>
+<p>AES（Advanced Encryption Standard，高级加密标准）是由比利时密码学家设计的，经过全球专家 5 年公开竞赛评选出来的。<strong>你手机、电脑、路由器、银行卡里的加密，几乎都是 AES。</strong></p>
+<p>AES 的基本参数：</p>
+<table>
+<thead>
+<tr>
+<th>参数</th>
+<th>AES-128</th>
+<th>AES-256</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>密钥长度</td>
+<td>16 字节（128 位）</td>
+<td>32 字节（256 位）</td>
+</tr>
+<tr>
+<td>暴力破解难度</td>
+<td>2^128 次尝试</td>
+<td>2^256 次尝试</td>
+</tr>
+<tr>
+<td>破解需要时间</td>
+<td>即使全世界的计算机一起算，也需要数十亿年</td>
+<td>比 128 位更难</td>
+</tr>
+</tbody>
+</table>
+<p><strong>AES 不是靠"算法保密"来保证安全的——算法是公开的，安全性完全依赖密钥。</strong> 全世界都知道你家门锁的原理（锁芯怎么转），但只有你有那把钥匙。</p>
+<h3 id="_4">🔍 分组密码与工作模式<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>AES 是分组密码——每次处理 16 字节（128 位）的数据块。如果数据超过 16 字节，需要决定"怎么把多个块连起来"。这就是<strong>工作模式</strong>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>ECB 模式（电子密码本）——千万不要用！
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>┌─────────────────────────────────────────────┐
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│ 原始图片（一个企鹅的像素）                     │
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│  ┌────┬────┐                                │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  │ ☀  │ ☀  │ ← 两个块内容相同                 │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│  │ ☀  │ ☁  │                                │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│  └────┴────┘                                │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│                                             │
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│ ECB 加密后:                                  │
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│  ┌────┬────┐                                │
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│  │ @# │ @# │ ← 相同的块→相同的密文！            │
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│  │ @# │ $% │   企鹅的轮廓还能看出来！            │
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│  └────┴────┘                                │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│                                             │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│ → 这是一个真实存在的问题！                      │
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│   有人用 ECB 模式加密过企鹅图片，加密后轮廓清晰可见  │
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>└─────────────────────────────────────────────┘
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>
+<a id="__codelineno-1-19" name="__codelineno-1-19" href="#__codelineno-1-19"></a>CBC 模式（密码块链接）——比 ECB 好：
+<a id="__codelineno-1-20" name="__codelineno-1-20" href="#__codelineno-1-20"></a>  每个明文块先跟前一个密文块 XOR，再加密。
+<a id="__codelineno-1-21" name="__codelineno-1-21" href="#__codelineno-1-21"></a>  第一个块没有&quot;前一个密文块&quot;，所以用一个随机 IV（初始化向量）。
+<a id="__codelineno-1-22" name="__codelineno-1-22" href="#__codelineno-1-22"></a>  即使两个块内容一样，密文也不同。
+<a id="__codelineno-1-23" name="__codelineno-1-23" href="#__codelineno-1-23"></a>
+<a id="__codelineno-1-24" name="__codelineno-1-24" href="#__codelineno-1-24"></a>CTR/GCM 模式——现代推荐：
+<a id="__codelineno-1-25" name="__codelineno-1-25" href="#__codelineno-1-25"></a>  GCM 除了加密，还提供&quot;完整性验证&quot;——
+<a id="__codelineno-1-26" name="__codelineno-1-26" href="#__codelineno-1-26"></a>  如果密文在传输中被改了，解密时能发现。
+</code></pre></div>
+<h3 id="python-aes-cryptography">💻 Python 实现 AES 加密/解密（推荐用 cryptography 库）<a class="headerlink" href="#python-aes-cryptography" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># pip install cryptography</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.primitives.ciphers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cipher</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">modes</span>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.backends</span><span class="w"> </span><span class="kn">import</span> <span class="n">default_backend</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="c1"># 生成随机的 32 字节密钥（AES-256）</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="c1"># 生成随机的 16 字节 IV（用于 CBC 模式）</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="n">iv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="k">def</span><span class="w"> </span><span class="nf">aes_encrypt</span><span class="p">(</span><span class="n">plaintext</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">iv</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a>    <span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span><span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">modes</span><span class="o">.</span><span class="n">CBC</span><span class="p">(</span><span class="n">iv</span><span class="p">),</span> <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">())</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>    <span class="n">encryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encryptor</span><span class="p">()</span>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a>    <span class="c1"># AES-CBC 要求数据长度是 16 的倍数，需要填充</span>
+<a id="__codelineno-2-16" name="__codelineno-2-16" href="#__codelineno-2-16"></a>    <span class="n">pad_len</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">plaintext</span><span class="p">)</span> <span class="o">%</span> <span class="mi">16</span><span class="p">)</span>
+<a id="__codelineno-2-17" name="__codelineno-2-17" href="#__codelineno-2-17"></a>    <span class="n">padded</span> <span class="o">=</span> <span class="n">plaintext</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">pad_len</span><span class="p">]</span> <span class="o">*</span> <span class="n">pad_len</span><span class="p">)</span>  <span class="c1"># PKCS7 填充</span>
+<a id="__codelineno-2-18" name="__codelineno-2-18" href="#__codelineno-2-18"></a>    <span class="k">return</span> <span class="n">encryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span> <span class="o">+</span> <span class="n">encryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+<a id="__codelineno-2-19" name="__codelineno-2-19" href="#__codelineno-2-19"></a>
+<a id="__codelineno-2-20" name="__codelineno-2-20" href="#__codelineno-2-20"></a><span class="k">def</span><span class="w"> </span><span class="nf">aes_decrypt</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">key</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">,</span> <span class="n">iv</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">bytes</span><span class="p">:</span>
+<a id="__codelineno-2-21" name="__codelineno-2-21" href="#__codelineno-2-21"></a>    <span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span><span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">modes</span><span class="o">.</span><span class="n">CBC</span><span class="p">(</span><span class="n">iv</span><span class="p">),</span> <span class="n">backend</span><span class="o">=</span><span class="n">default_backend</span><span class="p">())</span>
+<a id="__codelineno-2-22" name="__codelineno-2-22" href="#__codelineno-2-22"></a>    <span class="n">decryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decryptor</span><span class="p">()</span>
+<a id="__codelineno-2-23" name="__codelineno-2-23" href="#__codelineno-2-23"></a>    <span class="n">padded</span> <span class="o">=</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">)</span> <span class="o">+</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+<a id="__codelineno-2-24" name="__codelineno-2-24" href="#__codelineno-2-24"></a>
+<a id="__codelineno-2-25" name="__codelineno-2-25" href="#__codelineno-2-25"></a>    <span class="c1"># 去掉 PKCS7 填充</span>
+<a id="__codelineno-2-26" name="__codelineno-2-26" href="#__codelineno-2-26"></a>    <span class="n">pad_len</span> <span class="o">=</span> <span class="n">padded</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+<a id="__codelineno-2-27" name="__codelineno-2-27" href="#__codelineno-2-27"></a>    <span class="k">return</span> <span class="n">padded</span><span class="p">[:</span><span class="o">-</span><span class="n">pad_len</span><span class="p">]</span>
+<a id="__codelineno-2-28" name="__codelineno-2-28" href="#__codelineno-2-28"></a>
+<a id="__codelineno-2-29" name="__codelineno-2-29" href="#__codelineno-2-29"></a><span class="c1"># === 测试 ===</span>
+<a id="__codelineno-2-30" name="__codelineno-2-30" href="#__codelineno-2-30"></a><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;转账 100 元给小明&quot;</span>
+<a id="__codelineno-2-31" name="__codelineno-2-31" href="#__codelineno-2-31"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;原文: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-32" name="__codelineno-2-32" href="#__codelineno-2-32"></a>
+<a id="__codelineno-2-33" name="__codelineno-2-33" href="#__codelineno-2-33"></a><span class="n">encrypted</span> <span class="o">=</span> <span class="n">aes_encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">)</span>
+<a id="__codelineno-2-34" name="__codelineno-2-34" href="#__codelineno-2-34"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密文: </span><span class="si">{</span><span class="n">encrypted</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-35" name="__codelineno-2-35" href="#__codelineno-2-35"></a>
+<a id="__codelineno-2-36" name="__codelineno-2-36" href="#__codelineno-2-36"></a><span class="n">decrypted</span> <span class="o">=</span> <span class="n">aes_decrypt</span><span class="p">(</span><span class="n">encrypted</span><span class="p">,</span> <span class="n">key</span><span class="p">,</span> <span class="n">iv</span><span class="p">)</span>
+<a id="__codelineno-2-37" name="__codelineno-2-37" href="#__codelineno-2-37"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;解密: </span><span class="si">{</span><span class="n">decrypted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-2-38" name="__codelineno-2-38" href="#__codelineno-2-38"></a>
+<a id="__codelineno-2-39" name="__codelineno-2-39" href="#__codelineno-2-39"></a><span class="c1"># 如果用错误的密钥？试试看！</span>
+<a id="__codelineno-2-40" name="__codelineno-2-40" href="#__codelineno-2-40"></a><span class="n">wrong_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-2-41" name="__codelineno-2-41" href="#__codelineno-2-41"></a><span class="k">try</span><span class="p">:</span>
+<a id="__codelineno-2-42" name="__codelineno-2-42" href="#__codelineno-2-42"></a>    <span class="n">wrong_result</span> <span class="o">=</span> <span class="n">aes_decrypt</span><span class="p">(</span><span class="n">encrypted</span><span class="p">,</span> <span class="n">wrong_key</span><span class="p">,</span> <span class="n">iv</span><span class="p">)</span>
+<a id="__codelineno-2-43" name="__codelineno-2-43" href="#__codelineno-2-43"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;用错密钥的结果: </span><span class="si">{</span><span class="n">wrong_result</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>  <span class="c1"># 乱码，或者解密失败</span>
+<a id="__codelineno-2-44" name="__codelineno-2-44" href="#__codelineno-2-44"></a><span class="k">except</span><span class="p">:</span>
+<a id="__codelineno-2-45" name="__codelineno-2-45" href="#__codelineno-2-45"></a>    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;用错密钥 → 解密失败或得到乱码&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="2">2. 📌 非对称加密——公钥和私钥<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="_5">🏪 生活场景：街头的邮政信箱<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<p>对称加密的问题：你得先把钥匙给对方。但怎么安全地把钥匙递过去呢？</p>
+<p><strong>非对称加密的解法：</strong></p>
+<p>街角有一个邮政信箱。信箱上有一条缝——任何人都可以往里面投信，不需要钥匙。但只有邮递员有一把钥匙能打开信箱取信。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>公钥 = 信箱的投递口
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  → 公开的、谁都可以拿到
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  → 只能用来加密（投信进去）
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  → 不能用来解密（信投进去了就拿不出来了）
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>私钥 = 邮递员的钥匙
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>  → 绝对保密、只有一个人有
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>  → 能打开投进去的信（解密）
+</code></pre></div>
+<p><strong>所以在互联网上：</strong>
+1. 百度把公钥公开在网站上："这是我的公钥，大家随便拿！"
+2. 你用百度的公钥加密你的信息，发给百度
+3. 只有百度有私钥，所以只有百度能解密
+4. 中间人即使截获了密文和公钥，也解不开——公钥只能加密不能解密！</p>
+<h3 id="rsa">🔍 RSA 的数学原理——两句话版<a class="headerlink" href="#rsa" title="Permanent link">&para;</a></h3>
+<p><strong>RSA 的安全性基于一个事实：两个大质数相乘很容易，但把乘积分解回两个质数极其困难。</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>比如：我给你 3233，让你分解成两个质数的乘积。
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>你可以试出来：3233 = 61 × 53（5 分钟）
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>但如果我给你一个 600 位的数字？
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>全世界所有的计算机一起算，需要的时间比宇宙的年龄还长。
+</code></pre></div>
+<h3 id="rsa_1">🔍 RSA 密钥生成与加解密流程<a class="headerlink" href="#rsa_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>生成密钥对：
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>  ① 选两个大质数 p 和 q（实际程序用几百位的质数）
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>  ② n = p × q               （n 是公开的）
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>  ③ φ(n) = (p-1) × (q-1)   （φ(n) 是秘密的——因为需要知道 p 和 q）
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>  ④ 选 e = 65537            （常用的公钥指数，素数，够大）
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>  ⑤ 算 d = e⁻¹ mod φ(n)    （私钥指数——只有知道 φ(n) 才能算出来）
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>公钥 = (e, n)    &quot;用 e 和 n 加密&quot;
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>私钥 = (d, n)    &quot;用 d 和 n 解密&quot;
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>加密: 密文 = (明文 ^ e) mod n
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>解密: 明文 = (密文 ^ d) mod n
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>
+<a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>验证: (明文 ^ e) ^ d = 明文 ^ (e×d) = 明文 ^ 1 = 明文  (mod n)
+<a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>      因为 e × d ≡ 1 (mod φ(n))，根据欧拉定理成立
+</code></pre></div>
+<h3 id="python-rsa">💻 Python 实现 RSA（教学版——不要在生产环境用！）<a class="headerlink" href="#python-rsa" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">math</span>
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="c1"># ===== 生成密钥（用很小的质数来演示） =====</span>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">p</span><span class="p">,</span> <span class="n">q</span> <span class="o">=</span> <span class="mi">61</span><span class="p">,</span> <span class="mi">53</span>                    <span class="c1"># 实际要用几百位的质数！</span>
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">n</span> <span class="o">=</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span>                         <span class="c1"># n = 3233</span>
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a><span class="n">phi</span> <span class="o">=</span> <span class="p">(</span><span class="n">p</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">q</span> <span class="o">-</span> <span class="mi">1</span><span class="p">)</span>          <span class="c1"># phi = 3120</span>
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a><span class="n">e</span> <span class="o">=</span> <span class="mi">17</span>                            <span class="c1"># 公钥指数</span>
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a><span class="c1"># 计算私钥 d：d = e 在 mod phi 下的乘法逆元</span>
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a><span class="c1"># 即 e × d ≡ 1 (mod phi)</span>
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a><span class="n">d</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">e</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="n">phi</span><span class="p">)</span>               <span class="c1"># Python 3.8+ 支持 pow(x, -1, mod)</span>
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;公钥: (e=</span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">, n=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;私钥: (d=</span><span class="si">{</span><span class="n">d</span><span class="si">}</span><span class="s2">, n=</span><span class="si">{</span><span class="n">n</span><span class="si">}</span><span class="s2">)&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a><span class="c1"># 输出: 公钥: (e=17, n=3233)</span>
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a><span class="c1">#       私钥: (d=2753, n=3233)</span>
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a><span class="c1"># ===== 加密 =====</span>
+<a id="__codelineno-6-18" name="__codelineno-6-18" href="#__codelineno-6-18"></a><span class="n">message</span> <span class="o">=</span> <span class="mi">123</span>                     <span class="c1"># 实际消息要分块，每个块 &lt; n</span>
+<a id="__codelineno-6-19" name="__codelineno-6-19" href="#__codelineno-6-19"></a><span class="n">ciphertext</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>   <span class="c1"># 123^17 mod 3233</span>
+<a id="__codelineno-6-20" name="__codelineno-6-20" href="#__codelineno-6-20"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;原文: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2"> → 密文: </span><span class="si">{</span><span class="n">ciphertext</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-21" name="__codelineno-6-21" href="#__codelineno-6-21"></a>
+<a id="__codelineno-6-22" name="__codelineno-6-22" href="#__codelineno-6-22"></a><span class="c1"># ===== 解密 =====</span>
+<a id="__codelineno-6-23" name="__codelineno-6-23" href="#__codelineno-6-23"></a><span class="n">decrypted</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>  <span class="c1"># cipher^2753 mod 3233</span>
+<a id="__codelineno-6-24" name="__codelineno-6-24" href="#__codelineno-6-24"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密文: </span><span class="si">{</span><span class="n">ciphertext</span><span class="si">}</span><span class="s2"> → 解密: </span><span class="si">{</span><span class="n">decrypted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-6-25" name="__codelineno-6-25" href="#__codelineno-6-25"></a>
+<a id="__codelineno-6-26" name="__codelineno-6-26" href="#__codelineno-6-26"></a><span class="c1"># ===== 验证：用公钥加密的信息不能用公钥解密 =====</span>
+<a id="__codelineno-6-27" name="__codelineno-6-27" href="#__codelineno-6-27"></a><span class="n">try_wrong</span> <span class="o">=</span> <span class="nb">pow</span><span class="p">(</span><span class="n">ciphertext</span><span class="p">,</span> <span class="n">e</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
+<a id="__codelineno-6-28" name="__codelineno-6-28" href="#__codelineno-6-28"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;用公钥尝试解密: </span><span class="si">{</span><span class="n">try_wrong</span><span class="si">}</span><span class="s2">  ← 不是原文！失败了！&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="https">🔥 为什么 HTTPS 用混合加密？<a class="headerlink" href="#https" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>纯用非对称加密（RSA）加密所有数据:
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>  RSA 比 AES 慢大约 1000-10000 倍
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>  一个网页 100KB，用 RSA 加密 → 加载要好几秒
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>混合加密（实际做法）:
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>  ① 握手阶段: 用 RSA/ECDH 安全传输一个&quot;会话密钥&quot;（几十字节就够了）
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a>  ② 数据传输: 用 AES + 会话密钥加密所有数据（极快）
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a>这样既解决了&quot;钥匙怎么给对方&quot;的问题，
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a>又不会因为非对称加密太慢而卡死。
+</code></pre></div>
+<hr />
+<h2 id="3">3. 📌 哈希函数——数据的指纹<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="_6">🏪 生活场景：文件的电子指纹<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>你去银行办业务，柜员要核实你的身份。你掏出身份证，柜员拿机器一扫，系统里显示出你的预留指纹——比对通过。</p>
+<p><strong>哈希函数就是给数据生成"指纹"。</strong> 你把任意长度的一段数据喂给它，它吐出一段固定长度的"摘要"（hash值）。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>文件: 1GB 的电影 → SHA-256 → 64 个十六进制字符
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>文件: &quot;hello&quot;  → SHA-256 → 64 个十六进制字符
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>同一个文件，每次哈希结果一样
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>修改一个比特，结果面目全非
+</code></pre></div>
+<h3 id="_7">🔍 哈希的五个核心特性<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>① 固定长度输出   → 输入可以 1 字节，也可以 1GB，输出长度不变
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>② 单向性         → 有哈希值算不出原文
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>③ 雪崩效应       → 改输入 1 bit，输出彻底不同
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>④ 抗碰撞         → 找不到两个不同输入有相同的哈希（理想情况）
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>⑤ 快速计算       → 比加密算法快得多
+</code></pre></div>
+<h3 id="_8">🔍 常见哈希算法对比<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>算法</th>
+<th style="text-align: center;">输出</th>
+<th style="text-align: center;">安全性</th>
+<th style="text-align: center;">速度</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>MD5</td>
+<td style="text-align: center;">128bit</td>
+<td style="text-align: center;">❌ 已破解</td>
+<td style="text-align: center;">极快</td>
+<td>仅用于校验非安全场景</td>
+</tr>
+<tr>
+<td>SHA-1</td>
+<td style="text-align: center;">160bit</td>
+<td style="text-align: center;">❌ 已破解</td>
+<td style="text-align: center;">快</td>
+<td>Git 仍用但已准备迁移</td>
+</tr>
+<tr>
+<td>SHA-256</td>
+<td style="text-align: center;">256bit</td>
+<td style="text-align: center;">✅ 安全</td>
+<td style="text-align: center;">较快</td>
+<td>当前主流，密码存储/区块链</td>
+</tr>
+<tr>
+<td>SHA-512</td>
+<td style="text-align: center;">512bit</td>
+<td style="text-align: center;">✅ 安全</td>
+<td style="text-align: center;">较快</td>
+<td>更高安全需求</td>
+</tr>
+<tr>
+<td>bcrypt</td>
+<td style="text-align: center;">可变</td>
+<td style="text-align: center;">✅ 安全</td>
+<td style="text-align: center;"><strong>慢</strong></td>
+<td>专为密码存储设计</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_9">💻 动手感受"雪崩效应"<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">hashlib</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="k">def</span><span class="w"> </span><span class="nf">show_hash</span><span class="p">(</span><span class="n">label</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>    <span class="n">h</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">label</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">h</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="n">show_hash</span><span class="p">(</span><span class="s2">&quot;hello&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;hello&quot;</span><span class="p">)</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a><span class="n">show_hash</span><span class="p">(</span><span class="s2">&quot;Hello&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;Hello&quot;</span><span class="p">)</span>    <span class="c1"># 首字母大写</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a><span class="n">show_hash</span><span class="p">(</span><span class="s2">&quot;hellp&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;hellp&quot;</span><span class="p">)</span>    <span class="c1"># 改最后一个字母</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="n">show_hash</span><span class="p">(</span><span class="s2">&quot;hello.&quot;</span><span class="p">,</span> <span class="sa">b</span><span class="s2">&quot;hello.&quot;</span><span class="p">)</span>  <span class="c1"># 加一个点</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>hello:  2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>Hello:  185f8db32271fe25f561a6fc938b2e264306ec304eda518007d1764826381969
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>hellp:  b6e6f7aa751f613d0c2c3aff0fdedaeb6e6f4d3bf9d7b6eef1016e96a1f5bd53
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>hello.: d42e59630dfbf47e32be95eaae4acd1c0f01cfd0e5d21cef854d59e5452d3a23
+</code></pre></div>
+<p><strong>四个哈希值完全不同！改一个 bit，整个指纹变了。</strong> 这就是雪崩效应。</p>
+<h3 id="_10">🔍 网安中的哈希应用<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>① 密码存储: 数据库不存 &quot;password123&quot;，存 bcrypt(password123)
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>   即使数据库泄露，攻击者也拿不到密码原文
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>② 文件校验: 下载 Kali Linux 的 ISO 后，算 SHA256，
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>   跟官网公布的对比——确保文件没有被篡改过
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>③ 数字签名: 因为哈希比原文短得多，
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>   所以签名时先哈希再对摘要签名，高效
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>④ 区块链: 每个区块包含前一个区块的哈希，
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>   改了任何一个区块 → 后面所有区块的哈希全变 → 立即被发现
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a>
+<a id="__codelineno-12-13" name="__codelineno-12-13" href="#__codelineno-12-13"></a>⑤ 取证: 对硬盘镜像做哈希 → 生成唯一指纹
+<a id="__codelineno-12-14" name="__codelineno-12-14" href="#__codelineno-12-14"></a>   → 证明数据在分析过程中没有被改动
+</code></pre></div>
+<hr />
+<h2 id="4">4. 数字签名与证书——互联网信任体系<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="_11">🏪 生活场景：签合同按手印<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<p>你要签一份合同。你在签名处按了一个手印。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>签名过程: 合同内容 → 你在上面按手印 → 签字完成
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>验证过程: 谁拿到这份合同，都可以拿你的公开指纹样本比对这个手印
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>         → 一致 = 确认是你签的、内容没被改过
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>         → 不一致 = 要么不是你签的、要么合同被人掉了包
+</code></pre></div>
+<p><strong>数字签名 = 合同内容（哈希）+ 你的手印（用私钥加密哈希值）</strong></p>
+<h3 id="_12">🔍 签名的完整流程<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>发送方（你）签名:
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>  ┌──────────┐     哈希      ┌──────────┐    用私钥加密    ┌──────────┐
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>  │ 原文件    │ ──────────→ │ 摘要(短)   │ ────────────→ │  签名     │
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>  └──────────┘              └──────────┘                └──────────┘
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>  发送给接收方: [原文件] + [签名]
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>接收方验证:
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>  ┌──────────┐     哈希      ┌──────────┐
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>  │ 原文件    │ ──────────→ │ 摘要1     │
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>  └──────────┘              └──────────┘     比较 摘要1 == 摘要2？
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>                                              ↓
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>  ┌──────────┐   用公钥解密    ┌──────────┐    相等 = 验证通过！
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a>  │ 签名      │ ──────────→ │ 摘要2     │    不等 = 被篡改或假冒
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>  └──────────┘              └──────────┘
+</code></pre></div>
+<p><strong>签名同时实现了两个功能：</strong>
+- 身份认证：私钥只有你有 → 签名证明"这个东西是你发的"
+- 完整性验证：内容改了哈希就对不上 → 签名证明"内容没人动过"</p>
+<h3 id="_13">🔍 证书链——"我凭什么相信这个公钥是你的？"<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<p>一个关键问题：你怎么知道你拿到的公钥真的是百度的，而不是中间人伪造的？</p>
+<p>比如你在咖啡厅连了 WiFi。中间人拦截了你的请求，说"我就是百度，这是我的公钥！"——他给的是他自己的公钥。你用它加密了你的密码发过去，他用他的私钥解密，看到了你的密码。</p>
+<p><strong>数字证书解决这个问题。</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>根 CA 证书（预装在你手机/电脑里，操作系统出厂时就信任）
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>  │  比如: DigiCert, Let&#39;s Encrypt, GlobalSign
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>  │
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>  └→ 签发了 中间 CA 证书
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>        │  &quot;我验证过这家公司，它的公钥是真的&quot;
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>        │
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>        └→ 签发了 baidu.com 的 SSL 证书
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>              &quot;百度公司的 baidu.com 域名的公钥是 XXXX&quot;
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>浏览器拿到 baidu.com 的证书后:
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>  → 看是谁签发的 → 中间 CA
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>  → 中间 CA 是谁签发的 → 根 CA
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>  → 根 CA 在操作系统的信任列表里 → 信任！
+</code></pre></div>
+<p><strong>网安意义：</strong>
+- 如果攻击者在你电脑上装了自签名的根证书 → 他就能伪造任何网站的证书 → 中间人解密所有 HTTPS 流量
+- 这就是为什么 BurpSuite 抓 HTTPS 包需要你在浏览器里安装它的 CA 证书</p>
+<hr />
+<h2 id="5">5. 常见密码攻击<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>攻击</th>
+<th>原理</th>
+<th>生活类比</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>暴力破解</td>
+<td>试所有可能的密钥</td>
+<td>0000→0001→...→9999 试行李箱密码</td>
+</tr>
+<tr>
+<td>字典攻击</td>
+<td>用常见密码列表试</td>
+<td>用 "password123,admin,123456..." 挨个尝试</td>
+</tr>
+<tr>
+<td>彩虹表</td>
+<td>预计算大量哈希→原文的对照表</td>
+<td>考试前把答案抄好，考场上直接查表</td>
+</tr>
+<tr>
+<td>频率分析</td>
+<td>密文中出现次数最多的字符可能对应原文高频字母</td>
+<td>英文里 e 出现最频繁——看谁最频繁</td>
+</tr>
+<tr>
+<td>中间人攻击</td>
+<td>截获通信，对双方各冒充对方</td>
+<td>假快递员在你和卖家之间传话，两边都骗</td>
+</tr>
+<tr>
+<td>重放攻击</td>
+<td>截获合法请求，重复发送</td>
+<td>录下你开门禁的"嘀"，再播一次</td>
+</tr>
+<tr>
+<td>边信道攻击</td>
+<td>不破算法，利用功耗/时间/电磁泄露</td>
+<td>听保险柜转盘的声音判断密码</td>
+</tr>
+<tr>
+<td>哈希碰撞</td>
+<td>找到两个不同输入有相同的哈希值</td>
+<td>伪造一份合同，哈希值和原合同一样</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_14">🔥 密码学的两条黄金法则<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p><strong>1. 永远不要自己发明加密算法。</strong> 你以为加了点"花样"就更安全——实际上只是给自己制造了一种虚假的安全感。用 AES-GCM、Curve25519、SHA-256。这些算法经全球密码学家分析了几十年。</p>
+<p><strong>2. 实现正确 ≠ 算法安全。</strong> 你用对了 AES-GCM，但密钥写在代码里上传了 GitHub——等于裸奔。算法是安全的，人是漏洞。</p>
+</blockquote>
+<hr />
+<h2 id="6-python">6. 🧪 Python 密码学综合实验<a class="headerlink" href="#6-python" title="Permanent link">&para;</a></h2>
+<h3 id="1-rsa">实验 1：感受 RSA 的"慢"<a class="headerlink" href="#1-rsa" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">time</span>
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.primitives.asymmetric</span><span class="w"> </span><span class="kn">import</span> <span class="n">rsa</span>
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.primitives.ciphers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cipher</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">modes</span>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a><span class="c1"># 生成 RSA 密钥（这个操作很慢，可能要好几秒）</span>
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;生成 RSA-2048 密钥对...&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a><span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span><span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span> <span class="n">key_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">)</span>
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;RSA 密钥生成耗时: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a><span class="c1"># AES 加密 1MB 数据</span>
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a><span class="n">data</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">1024</span> <span class="o">*</span> <span class="mi">1024</span><span class="p">)</span>  <span class="c1"># 1MB 随机数据</span>
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a><span class="n">key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a><span class="n">iv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a><span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span><span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">key</span><span class="p">),</span> <span class="n">modes</span><span class="o">.</span><span class="n">CBC</span><span class="p">(</span><span class="n">iv</span><span class="p">))</span>
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a><span class="n">encryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encryptor</span><span class="p">()</span>
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a><span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a><span class="c1"># PKCS7 填充</span>
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a><span class="n">pad_len</span> <span class="o">=</span> <span class="mi">16</span> <span class="o">-</span> <span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="o">%</span> <span class="mi">16</span><span class="p">)</span>
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a><span class="n">padded</span> <span class="o">=</span> <span class="n">data</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">([</span><span class="n">pad_len</span><span class="p">]</span> <span class="o">*</span> <span class="n">pad_len</span><span class="p">)</span>
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a><span class="n">encryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">padded</span><span class="p">)</span>
+<a id="__codelineno-16-25" name="__codelineno-16-25" href="#__codelineno-16-25"></a><span class="n">encryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+<a id="__codelineno-16-26" name="__codelineno-16-26" href="#__codelineno-16-26"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;AES-256 加密 1MB 数据耗时: </span><span class="si">{</span><span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.4f</span><span class="si">}</span><span class="s2"> 秒&quot;</span><span class="p">)</span>
+<a id="__codelineno-16-27" name="__codelineno-16-27" href="#__codelineno-16-27"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;→ AES 比 RSA 快几百到上千倍&quot;</span><span class="p">)</span>
+</code></pre></div>
+<h3 id="2-https">实验 2：模拟 HTTPS 的混合加密<a class="headerlink" href="#2-https" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.primitives.ciphers</span><span class="w"> </span><span class="kn">import</span> <span class="n">Cipher</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">modes</span>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.primitives.asymmetric</span><span class="w"> </span><span class="kn">import</span> <span class="n">rsa</span><span class="p">,</span> <span class="n">padding</span>
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a><span class="kn">from</span><span class="w"> </span><span class="nn">cryptography.hazmat.primitives</span><span class="w"> </span><span class="kn">import</span> <span class="n">hashes</span>
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a><span class="c1"># 1. 服务器生成 RSA 密钥对</span>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;=== 模拟 HTTPS 握手 ===&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a><span class="n">server_private</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span><span class="mi">65537</span><span class="p">,</span> <span class="mi">2048</span><span class="p">)</span>
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a><span class="n">server_public</span> <span class="o">=</span> <span class="n">server_private</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>
+<a id="__codelineno-17-11" name="__codelineno-17-11" href="#__codelineno-17-11"></a><span class="c1"># 2. 客户端生成会话密钥（AES 密钥）</span>
+<a id="__codelineno-17-12" name="__codelineno-17-12" href="#__codelineno-17-12"></a><span class="n">session_key</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>  <span class="c1"># AES-256 密钥</span>
+<a id="__codelineno-17-13" name="__codelineno-17-13" href="#__codelineno-17-13"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;客户端生成会话密钥: </span><span class="si">{</span><span class="n">session_key</span><span class="o">.</span><span class="n">hex</span><span class="p">()[:</span><span class="mi">32</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-14" name="__codelineno-17-14" href="#__codelineno-17-14"></a>
+<a id="__codelineno-17-15" name="__codelineno-17-15" href="#__codelineno-17-15"></a><span class="c1"># 3. 用服务器公钥加密会话密钥 → 传给服务器</span>
+<a id="__codelineno-17-16" name="__codelineno-17-16" href="#__codelineno-17-16"></a><span class="n">encrypted_key</span> <span class="o">=</span> <span class="n">server_public</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
+<a id="__codelineno-17-17" name="__codelineno-17-17" href="#__codelineno-17-17"></a>    <span class="n">session_key</span><span class="p">,</span>
+<a id="__codelineno-17-18" name="__codelineno-17-18" href="#__codelineno-17-18"></a>    <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span><span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-17-19" name="__codelineno-17-19" href="#__codelineno-17-19"></a><span class="p">)</span>
+<a id="__codelineno-17-20" name="__codelineno-17-20" href="#__codelineno-17-20"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;用 RSA 公钥加密会话密钥: </span><span class="si">{</span><span class="n">encrypted_key</span><span class="o">.</span><span class="n">hex</span><span class="p">()[:</span><span class="mi">64</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-21" name="__codelineno-17-21" href="#__codelineno-17-21"></a>
+<a id="__codelineno-17-22" name="__codelineno-17-22" href="#__codelineno-17-22"></a><span class="c1"># 4. 服务器用私钥解密 → 得到会话密钥</span>
+<a id="__codelineno-17-23" name="__codelineno-17-23" href="#__codelineno-17-23"></a><span class="n">decrypted_key</span> <span class="o">=</span> <span class="n">server_private</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
+<a id="__codelineno-17-24" name="__codelineno-17-24" href="#__codelineno-17-24"></a>    <span class="n">encrypted_key</span><span class="p">,</span>
+<a id="__codelineno-17-25" name="__codelineno-17-25" href="#__codelineno-17-25"></a>    <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span><span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span> <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span> <span class="n">label</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
+<a id="__codelineno-17-26" name="__codelineno-17-26" href="#__codelineno-17-26"></a><span class="p">)</span>
+<a id="__codelineno-17-27" name="__codelineno-17-27" href="#__codelineno-17-27"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;服务器解密得到会话密钥: </span><span class="si">{</span><span class="n">decrypted_key</span><span class="o">.</span><span class="n">hex</span><span class="p">()[:</span><span class="mi">32</span><span class="p">]</span><span class="si">}</span><span class="s2">...&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-28" name="__codelineno-17-28" href="#__codelineno-17-28"></a><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;密钥匹配: </span><span class="si">{</span><span class="n">session_key</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="n">decrypted_key</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-17-29" name="__codelineno-17-29" href="#__codelineno-17-29"></a>
+<a id="__codelineno-17-30" name="__codelineno-17-30" href="#__codelineno-17-30"></a><span class="c1"># 5. 之后用 AES + 会话密钥通信</span>
+<a id="__codelineno-17-31" name="__codelineno-17-31" href="#__codelineno-17-31"></a><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;用户支付密码的哈希值&quot;</span>
+<a id="__codelineno-17-32" name="__codelineno-17-32" href="#__codelineno-17-32"></a><span class="n">iv</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">urandom</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+<a id="__codelineno-17-33" name="__codelineno-17-33" href="#__codelineno-17-33"></a><span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span><span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">session_key</span><span class="p">),</span> <span class="n">modes</span><span class="o">.</span><span class="n">CBC</span><span class="p">(</span><span class="n">iv</span><span class="p">))</span>
+<a id="__codelineno-17-34" name="__codelineno-17-34" href="#__codelineno-17-34"></a><span class="n">encryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encryptor</span><span class="p">()</span>
+<a id="__codelineno-17-35" name="__codelineno-17-35" href="#__codelineno-17-35"></a><span class="c1"># ... 后续通信都用 AES + session_key</span>
+</code></pre></div>
+<hr />
+<h2 id="_15">📝 复习自检<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能说清楚对称加密和非对称加密的核心区别（密钥数量、速度、用途）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释为什么 HTTPS 用混合加密——"非对称传密钥、对称传数据"</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能说出哈希的三个关键特性：单向、定长、雪崩效应</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释数字签名的过程：哈希 + 用私钥加密哈希值</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道 MD5 和 SHA-1 为什么不能用了（已找到碰撞）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道"永远不要自己发明加密算法"这条铁律</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能用 Python 的 cryptography 库完成 AES 加密/解密</li>
+</ul>
+<hr />
+<h2 id="_16">🎬 推荐视频<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>视频</th>
+<th>平台</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.bilibili.com/">《图解密码技术》配套视频</a></td>
+<td>B站</td>
+<td>搜索"图解密码技术 结城浩"，动画极生动</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/">RSA 加密原理动画</a></td>
+<td>B站</td>
+<td>搜索"RSA 加密 原理 动画"</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/">SHA-256 工作原理</a></td>
+<td>B站</td>
+<td>搜索"SHA256 工作原理 可视化"</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>推荐读物：</strong> 《图解密码技术》（结城浩）——用漫画和日常类比讲密码学，几乎没有公式，极其适合入门。</p>
+</blockquote>
+<hr />
+<h2 id="_17">🔗 知识串联<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>对称/非对称加密 → 《04-网络协议》HTTPS/TLS 握手：RSA/ECDH 传密钥 + AES 传数据
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>哈希函数       → 《06-Web安全》密码存储用 bcrypt（基于哈希）
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>                → 《08-渗透实战》密码破解用 hashcat（字典+彩虹表）
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>数字签名/证书   → 《08-渗透实战》HTTPS 中间人解密的核心原理
+</code></pre></div>
+<hr />
+<blockquote>
+<p>💬 <strong>读完用一句话记下来：</strong> "对称快但钥匙不好给，非对称好给钥匙但慢——所以实际混着用。哈希是单向指纹，能验证不能还原。数字签名 = 哈希 + 私钥加密，证明'这确实是我发的、没人改过'。"</p>
+</blockquote>
+<h3 id="06-web-md">下一步：打开 <code>06-Web安全-漏洞与防御.md</code><a class="headerlink" href="#06-web-md" title="Permanent link">&para;</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

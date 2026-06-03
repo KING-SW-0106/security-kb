@@ -1,0 +1,2359 @@
+
+<!doctype html>
+<html lang="zh" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="从零开始的网络空间安全学习笔记">
+      
+      
+        <meta name="author" content="我自己">
+      
+      
+        <link rel="canonical" href="https://king-sw-0106.github.io/security-kb/04-%E7%BD%91%E7%BB%9C%E5%8D%8F%E8%AE%AE-%E6%95%B0%E6%8D%AE%E5%A6%82%E4%BD%95%E4%BC%A0%E8%BE%93/">
+      
+      
+        <link rel="prev" href="../03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB-%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C/">
+      
+      
+        <link rel="next" href="../05-%E5%AF%86%E7%A0%81%E5%AD%A6-%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>🔴 层2 网络协议 - 网安知识库</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#04" class="md-skip">
+          跳转至
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="页眉">
+    <a href=".." title="网安知识库" class="md-header__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            网安知识库
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              🔴 层2 网络协议
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换暗色模式"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="切换暗色模式" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="切换亮色模式"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="切换亮色模式" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 7a5 5 0 0 1 5 5 5 5 0 0 1-5 5 5 5 0 0 1-5-5 5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3 3 3 0 0 0 3 3 3 3 0 0 0 3-3 3 3 0 0 0-3-3m0-7 2.39 3.42C13.65 5.15 12.84 5 12 5s-1.65.15-2.39.42zM3.34 7l4.16-.35A7.2 7.2 0 0 0 5.94 8.5c-.44.74-.69 1.5-.83 2.29zm.02 10 1.76-3.77a7.131 7.131 0 0 0 2.38 4.14zM20.65 7l-1.77 3.79a7.02 7.02 0 0 0-2.38-4.15zm-.01 10-4.14.36c.59-.51 1.12-1.14 1.54-1.86.42-.73.69-1.5.83-2.29zM12 22l-2.41-3.44c.74.27 1.55.44 2.41.44.82 0 1.63-.17 2.37-.44z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="搜索" placeholder="搜索" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="查找">
+        
+          <a href="javascript:void(0)" class="md-search__icon md-icon" title="分享" aria-label="分享" data-clipboard data-clipboard-text="" data-md-component="search-share" tabindex="-1">
+            
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9a3 3 0 0 0-3 3 3 3 0 0 0 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.15c-.05.21-.08.43-.08.66 0 1.61 1.31 2.91 2.92 2.91s2.92-1.3 2.92-2.91A2.92 2.92 0 0 0 18 16.08"/></svg>
+          </a>
+        
+        <button type="reset" class="md-search__icon md-icon" title="清空当前内容" aria-label="清空当前内容" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            正在初始化搜索引擎
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="导航栏" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="网安知识库" class="md-nav__button md-logo" aria-label="网安知识库" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    网安知识库
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🏠 起点
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00-%E7%9B%AE%E5%BD%95%E4%B8%8E%E8%BF%9B%E5%BA%A6/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    📊 目录与进度
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-C%E8%AF%AD%E8%A8%80-%E6%8C%87%E9%92%88%E4%B8%8E%E5%86%85%E5%AD%98/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-A C语言指针与内存
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-Python-%E5%AE%89%E5%85%A8%E5%B7%A5%E5%85%B7%E9%80%9F%E9%80%9A/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层0-B Python安全工具
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%BD%93%E7%B3%BB-%E7%A8%8B%E5%BA%8F%E5%A6%82%E4%BD%95%E8%BF%90%E8%A1%8C/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层1 计算机体系
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层2 网络协议
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🔴 层2 网络协议
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 📌 分层模型——为什么网络要分层？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 📌 分层模型——为什么网络要分层？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：寄一个快递包裹
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcpip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 TCP/IP 四层模型（实际使用的）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 数据封装过程——一层套一层
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手看：你的数据包长什么样
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📌 TCP——可靠传输的秘密
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 📌 TCP——可靠传输的秘密">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：打电话预约餐厅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 三次握手（建立连接）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 四次挥手（断开连接）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 TCP 的可靠性机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手看 TCP 状态
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-udp-icmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. UDP 与 ICMP——不需要握手的协议
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. UDP 与 ICMP——不需要握手的协议">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：发微信消息 vs 寄挂号信
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 UDP 头——极简设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 ICMP——网络的诊断工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-httpweb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📌 HTTP——Web 的通用语言
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📌 HTTP——Web 的通用语言">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：在餐厅扫码点餐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 HTTP 请求格式（逐字节解读）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 HTTP 响应格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 状态码速查（安全方向）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 用 Python 手动构造各种 HTTP 请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-https-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. HTTPS 与 TLS——加密传输
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. HTTPS 与 TLS——加密传输">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：明信片 vs 密码锁快递箱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 TLS 握手的核心过程
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-dns-arp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 📌 DNS 与 ARP——网络世界的电话本
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 📌 DNS 与 ARP——网络世界的电话本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：打 114 查号台
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-baiducom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 DNS 查询的完整过程（你的浏览器输入 baidu.com 后）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arp-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 ARP——局域网里的"谁是这个 IP？"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-wireshark-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🧪 Wireshark 实战——30 分钟抓包实验
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🧪 Wireshark 实战——30 分钟抓包实验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wireshark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 Wireshark
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-http-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 1：抓一次 HTTP 请求的全貌（15 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tcp-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 2：看 TCP 三次握手（10 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-http-vs-https5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 3：对比 HTTP vs HTTPS（5 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 家庭网络拓扑——你的数据出门经过了什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 家庭网络拓扑——你的数据出门经过了什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：你出门上班的路线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#baiducom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 你的手机访问 baidu.com 的完整路线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nat-1-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NAT（网络地址转换）——你家只有 1 个公网 IP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐视频
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#05-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步：打开 05-密码学-加密与解密.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-%E5%AF%86%E7%A0%81%E5%AD%A6-%E5%8A%A0%E5%AF%86%E4%B8%8E%E8%A7%A3%E5%AF%86/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-A 密码学
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-Web%E5%AE%89%E5%85%A8-%E6%BC%8F%E6%B4%9E%E4%B8%8E%E9%98%B2%E5%BE%A1/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-B Web安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-%E4%BA%8C%E8%BF%9B%E5%88%B6%E5%AE%89%E5%85%A8-%E5%86%85%E5%AD%98%E6%94%BB%E5%87%BB/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟡 层3-C 二进制安全
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-%E6%B8%97%E9%80%8F%E5%AE%9E%E6%88%98-%E4%BB%8E%E4%BF%A1%E6%81%AF%E6%94%B6%E9%9B%86%E5%88%B0%E6%8F%90%E6%9D%83/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    🟢 层4 渗透实战
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="目录">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      目录
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🚪 门前检查
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📊 本章进度
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        1. 📌 分层模型——为什么网络要分层？
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. 📌 分层模型——为什么网络要分层？">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：寄一个快递包裹
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcpip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 TCP/IP 四层模型（实际使用的）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 数据封装过程——一层套一层
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手看：你的数据包长什么样
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2. 📌 TCP——可靠传输的秘密
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. 📌 TCP——可靠传输的秘密">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：打电话预约餐厅
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 三次握手（建立连接）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 四次挥手（断开连接）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 TCP 的可靠性机制
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tcp_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 动手看 TCP 状态
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-udp-icmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3. UDP 与 ICMP——不需要握手的协议
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. UDP 与 ICMP——不需要握手的协议">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：发微信消息 vs 寄挂号信
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#udp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 UDP 头——极简设计
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#icmp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 ICMP——网络的诊断工具
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-httpweb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        4. 📌 HTTP——Web 的通用语言
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. 📌 HTTP——Web 的通用语言">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_9" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：在餐厅扫码点餐
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 HTTP 请求格式（逐字节解读）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#http_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 HTTP 响应格式
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#_10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 状态码速查（安全方向）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#python-http" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        💻 用 Python 手动构造各种 HTTP 请求
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-https-tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        5. HTTPS 与 TLS——加密传输
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. HTTPS 与 TLS——加密传输">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vs_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：明信片 vs 密码锁快递箱
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tls" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 TLS 握手的核心过程
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-dns-arp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        6. 📌 DNS 与 ARP——网络世界的电话本
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. 📌 DNS 与 ARP——网络世界的电话本">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#114" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：打 114 查号台
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#dns-baiducom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 DNS 查询的完整过程（你的浏览器输入 baidu.com 后）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#arp-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 ARP——局域网里的"谁是这个 IP？"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-wireshark-30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        7. 🧪 Wireshark 实战——30 分钟抓包实验
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. 🧪 Wireshark 实战——30 分钟抓包实验">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#wireshark" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        安装 Wireshark
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#1-http-15" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 1：抓一次 HTTP 请求的全貌（15 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-tcp-10" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 2：看 TCP 三次握手（10 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3-http-vs-https5" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        实验 3：对比 HTTP vs HTTPS（5 分钟）
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        8. 家庭网络拓扑——你的数据出门经过了什么
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. 家庭网络拓扑——你的数据出门经过了什么">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_11" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🏪 生活场景：你出门上班的路线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#baiducom" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔍 你的手机访问 baidu.com 的完整路线
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nat-1-ip" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NAT（网络地址转换）——你家只有 1 个公网 IP
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_12" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        📝 复习自检
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_13" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🎬 推荐视频
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_14" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        🔗 知识串联
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="🔗 知识串联">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#05-md" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        下一步：打开 05-密码学-加密与解密.md
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="04">04 · 网络协议——数据如何传输<a class="headerlink" href="#04" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>⏪ 前置知识：</strong> 计算机体系（03）——了解内存和 CPU 后更容易理解数据封装和协议栈
+<strong>⏩ 学完后解锁：</strong> 密码学（05）、Web安全（06）、渗透实战（08）
+<strong>⏱ 预计用时：</strong> 5-6 小时（建议分 3-4 天学完，配 Wireshark 实验）
+<strong>🎯 核心目标：</strong> 理解数据在网络上是如何打包、寻址、传输的，能抓包分析 HTTP 请求</p>
+</blockquote>
+<hr />
+<h2 id="_1">🚪 门前检查<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><strong>在开始本章之前，你必须能回答：</strong></p>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道内存地址是什么概念——"地址"是一个编号，通过它可以找到数据（01§1）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 了解"栈"的 LIFO（后进先出）概念（01§4）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能用 Python 写简单代码，知道 <code>import</code> 怎么用（02§1）</li>
+</ul>
+<blockquote>
+<p>如果装了 Wireshark 最好——但先别急着装，学到 §7 再装。</p>
+</blockquote>
+<hr />
+<h2 id="_2">📊 本章进度<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>#</th>
+<th>知识点</th>
+<th style="text-align: center;">预计用时</th>
+<th style="text-align: center;">状态</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>4.1</td>
+<td>📌 分层模型——OSI 与 TCP/IP</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>4.2</td>
+<td>📌 TCP——可靠传输的秘密</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>4.3</td>
+<td>UDP 与 ICMP——轻量级协议</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>4.4</td>
+<td>📌 HTTP——Web 的通用语言</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>4.5</td>
+<td>HTTPS 与 TLS——加密的通道</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>4.6</td>
+<td>📌 DNS 与 ARP——名字到地址的翻译</td>
+<td style="text-align: center;">45 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>4.7</td>
+<td>🧪 Wireshark 实战 30 分钟抓包</td>
+<td style="text-align: center;">60 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+<tr>
+<td>4.8</td>
+<td>家庭网络拓扑——你的数据出门经过了什么</td>
+<td style="text-align: center;">30 分钟</td>
+<td style="text-align: center;">⬜</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="1">1. 📌 分层模型——为什么网络要分层？<a class="headerlink" href="#1" title="Permanent link">&para;</a></h2>
+<h3 id="_3">🏪 生活场景：寄一个快递包裹<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h3>
+<p>你在淘宝上卖了一本书，要去快递站寄给买家。整个过程天然是分层的：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>第 5 层（应用层）：你写了一封感谢信夹在书里
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    → 发货人关心的是&quot;信的内容&quot;。快递员不需要知道信里写了什么。
+<a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
+<a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>第 4 层（传输层）：你把书和信装进纸箱，快递员贴上快递单
+<a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    → 快递单上有单号，快递公司用它来追踪包裹是否丢失。如果丢了，凭单号重发。
+<a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>
+<a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>第 3 层（网络层）：快递站的分拣中心看收件地址&quot;广东省深圳市……&quot;
+<a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>    → 分拣员只看城市和区，决定包裹走陆运还是空运——不管纸箱里是书还是手机。
+<a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>
+<a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>第 2 层（链路层）：货车司机拉着你的包裹在高速上跑
+<a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    → 司机只负责把货从 A 点运到 B 点，不关心包裹里是什么、收件人是谁。
+<a id="__codelineno-0-12" name="__codelineno-0-12" href="#__codelineno-0-12"></a>
+<a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a>第 1 层（物理层）：高速公路的路面、车道线、信号灯
+<a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a>    → 这是&quot;物理基础&quot;，所有车辆都在上面跑。
+</code></pre></div>
+<p><strong>每一层只对上层的"内容"负责，不管下层的"运输细节"。</strong> 快递分拣员不需要知道书里写了什么。网络路由器不需要知道你发的 HTTP 请求里是什么 URL。</p>
+<h3 id="tcpip">🔍 TCP/IP 四层模型（实际使用的）<a class="headerlink" href="#tcpip" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>┌─────────────────────────────────────────────────────────────┐
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>│  层             做什么                  数据单元      类比      │
+<a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>├─────────────────────────────────────────────────────────────┤
+<a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>│  应用层         你写的程序              数据          信的内容  │
+<a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>│  HTTP/FTP/DNS   浏览器/微信/邮件                            │
+<a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>├─────────────────────────────────────────────────────────────┤
+<a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>│  传输层         端口号 + 可靠性          段(Segment)   快递单  │
+<a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>│  TCP/UDP        TCP保证不丢件                              │
+<a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>├─────────────────────────────────────────────────────────────┤
+<a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>│  网络层         IP地址 + 路由            包(Packet)    地址标签│
+<a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>│  IP             全球寻址                                  │
+<a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>├─────────────────────────────────────────────────────────────┤
+<a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>│  网络接口层      MAC地址 + 电信号         帧(Frame)     货车    │
+<a id="__codelineno-1-14" name="__codelineno-1-14" href="#__codelineno-1-14"></a>│  Ethernet/WiFi  局域网传输                                │
+<a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a>└─────────────────────────────────────────────────────────────┘
+</code></pre></div>
+<h3 id="_4">🔍 数据封装过程——一层套一层<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h3>
+<p>你要发送 "Hello" 给 <code>www.baidu.com</code> 的 80 端口：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>应用层:    [GET / HTTP/1.1                   ]  ← 浏览器生成
+<a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>              ↓ 交给传输层：&quot;帮我可靠地发给 80 端口&quot;
+<a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>传输层:    [TCP头: 源端口54321→目的端口80    | GET /... ]  ← 加了端口
+<a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>              ↓ 交给网络层：&quot;帮我发到 110.242.68.66&quot;
+<a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>网络层:   [IP头: 源IP→110.242.68.66         | TCP头 | GET /... ]
+<a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a>              ↓ 交给链路层：&quot;帮我从这块网卡发出去&quot;
+<a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a>链路层:  [MAC头: 源MAC→网关MAC              | IP头 | TCP头 | GET | FCS校验]
+<a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a>              ↓ 网卡转成电信号/光信号
+<a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a>物理层:  ~~~~~~~~ 0101010100101 ~~~~~~~~→  网线/光纤/WiFi
+</code></pre></div>
+<p><strong>接收方一层层剥皮：</strong> 链路层剥 MAC 头 → 网络层剥 IP 头 → 传输层剥 TCP 头 → 应用层得到原始 HTTP 请求。</p>
+<h3 id="_5">💻 动手看：你的数据包长什么样<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># 用 curl 发一个请求，同时看详细过程</span>
+<a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>curl<span class="w"> </span>-v<span class="w"> </span>http://httpbin.org/get
+<a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="c1"># -v (verbose) 会打印：</span>
+<a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="c1"># * Trying 3.94.158.129:80...          ← 网络层：DNS→IP</span>
+<a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a><span class="c1"># * Connected to httpbin.org            ← 传输层：TCP 连接建立</span>
+<a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="c1"># &gt; GET /get HTTP/1.1                   ← 应用层：HTTP 请求</span>
+<a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="c1"># &gt; Host: httpbin.org</span>
+<a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="c1"># &gt; User-Agent: curl/8.0.1</span>
+<a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="c1"># ...</span>
+<a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a><span class="c1"># &lt; HTTP/1.1 200 OK                     ← 应用层：HTTP 响应</span>
+</code></pre></div>
+<hr />
+<h2 id="2-tcp">2. 📌 TCP——可靠传输的秘密<a class="headerlink" href="#2-tcp" title="Permanent link">&para;</a></h2>
+<h3 id="_6">🏪 生活场景：打电话预约餐厅<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h3>
+<p>你打电话给一家餐厅预约晚餐：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>你: &quot;喂？你好，请问是 XX 餐厅吗？&quot;              ← SYN
+<a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>餐厅: &quot;是的，请问有什么可以帮您？&quot;              ← SYN+ACK
+<a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>你: &quot;我想预约今晚 7 点，3 个人。&quot;                ← ACK + 数据
+<a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>餐厅: &quot;好的，已登记。晚上见。&quot;                  ← ACK + 数据
+<a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a>你: &quot;好的，再见。&quot;                              ← FIN
+<a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>餐厅: &quot;好的再见。&quot;                              ← FIN+ACK
+<a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>你: &quot;拜。&quot;                                      ← ACK
+</code></pre></div>
+<p>这就是 TCP 连接的全过程——<strong>三次握手建连接 + 数据传输 + 四次挥手断连接。</strong></p>
+<p>每一步对方都确认"收到了"（ACK）。如果你说了一句对方没应答，你会再问一遍"你听到了吗？"（超时重传）。这就是"可靠传输"——TCP 保证数据不丢、不乱序。</p>
+<h3 id="_7">🔍 三次握手（建立连接）<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>客户端                                          服务器
+<a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>   │                                               │
+<a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>   │── SYN (seq=x, flag=SYN) ──────────────────→│  ① &quot;在吗？&quot;
+<a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a>   │   客户端随机选一个起始序号 x                    │     SYN = Synchronize
+<a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>   │                                               │
+<a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>   │←─ SYN+ACK (seq=y, ack=x+1, flag=SYN│ACK) ──│  ② &quot;在的，收到你的请求&quot;
+<a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>   │   服务器选自己的起始序号 y                      │     ACK = Acknowledge
+<a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>   │   ack=x+1 表示&quot;x 之前的我都收到了&quot;              │
+<a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>   │                                               │
+<a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>   │── ACK (ack=y+1, flag=ACK) ────────────────→│  ③ &quot;好的，开始传数据吧&quot;
+<a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>   │   客户端确认收到了服务器的起始序号              │     此时连接建立（ESTABLISHED）
+<a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>   │                                               │
+<a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>   │&lt;═══════ 数据传输（PSH, ACK） ════════&gt;      │
+</code></pre></div>
+<p><strong>为什么是三次而不是两次？</strong> 假设网络很差，客户端发了一个 SYN，卡在路上 30 秒。客户端以为丢了，又发了一个新的 SYN。然后旧的 SYN 突然到了服务器——如果是两次握手，服务器直接就"连接建立"了，等着收数据。但客户端根本不知道这个旧连接的存在！服务器的资源被浪费了。</p>
+<p><strong>为什么不是四次？</strong> 因为服务端的 SYN 和 ACK 可以合并在一起发——SYN+ACK 一个包就够了。</p>
+<p><strong>网安意义：SYN Flood 攻击。</strong> 攻击者发送大量 SYN，但不回应最后的 ACK。服务器为每个半连接分配资源，最终资源耗尽，无法接受新连接。——这就是 DDoS 攻击中最经典的一种。</p>
+<h3 id="_8">🔍 四次挥手（断开连接）<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>客户端                                          服务器
+<a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>   │                                               │
+<a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>   │── FIN (flag=FIN│ACK) ────────────────────→│  ① &quot;我说完了&quot;
+<a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>   │   客户端没有数据要发了                        │
+<a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a>   │                                               │
+<a id="__codelineno-6-6" name="__codelineno-6-6" href="#__codelineno-6-6"></a>   │←─ ACK ───────────────────────────────────│  ② &quot;知道了&quot;
+<a id="__codelineno-6-7" name="__codelineno-6-7" href="#__codelineno-6-7"></a>   │   服务器确认收到了 FIN                        │  (但服务器可能还有数据要发)
+<a id="__codelineno-6-8" name="__codelineno-6-8" href="#__codelineno-6-8"></a>   │                                               │
+<a id="__codelineno-6-9" name="__codelineno-6-9" href="#__codelineno-6-9"></a>   │   ... 服务器继续发剩余数据 ...                  │
+<a id="__codelineno-6-10" name="__codelineno-6-10" href="#__codelineno-6-10"></a>   │                                               │
+<a id="__codelineno-6-11" name="__codelineno-6-11" href="#__codelineno-6-11"></a>   │←─ FIN (flag=FIN│ACK) ────────────────────│  ③ &quot;我也说完了&quot;
+<a id="__codelineno-6-12" name="__codelineno-6-12" href="#__codelineno-6-12"></a>   │   服务器也没有数据要发了                       │
+<a id="__codelineno-6-13" name="__codelineno-6-13" href="#__codelineno-6-13"></a>   │                                               │
+<a id="__codelineno-6-14" name="__codelineno-6-14" href="#__codelineno-6-14"></a>   │── ACK ──────────────────────────────────→│  ④ &quot;好的，拜拜&quot;
+<a id="__codelineno-6-15" name="__codelineno-6-15" href="#__codelineno-6-15"></a>   │   客户端进入 TIME_WAIT，等 2MSL（约60秒）       │
+<a id="__codelineno-6-16" name="__codelineno-6-16" href="#__codelineno-6-16"></a>   │   防止最后的 ACK 丢失 + 让旧连接的包消失        │
+<a id="__codelineno-6-17" name="__codelineno-6-17" href="#__codelineno-6-17"></a>   │   60 秒后完全关闭                              │
+</code></pre></div>
+<p><strong>为什么是四次不是三次？</strong> 因为 TCP 是全双工的——双方都可以独立决定"我不发了"。服务器收到 FIN 后可能还有数据要传，所以 ACK 和 FIN 必须分开。</p>
+<h3 id="tcp">🔍 TCP 的可靠性机制<a class="headerlink" href="#tcp" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>确认应答 (ACK):     每收到一个包，回复 ACK&quot;收到了&quot;
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>超时重传:           发出去 N 秒没收到 ACK → 自动重发
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>流量控制 (滑动窗口): 接收方告诉发送方&quot;我还能接收多少&quot;
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>                      → 防止发送方把接收方&quot;淹死&quot;
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a>拥塞控制:           如果丢包率高，自动降低发送速率
+<a id="__codelineno-7-6" name="__codelineno-7-6" href="#__codelineno-7-6"></a>                      → 所有人都慢一点，避免网络拥堵
+</code></pre></div>
+<h3 id="tcp_1">💻 动手看 TCP 状态<a class="headerlink" href="#tcp_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="c1"># 看本机所有 TCP 连接</span>
+<a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>netstat<span class="w"> </span>-tlnp<span class="w">      </span><span class="c1"># Linux/Mac</span>
+<a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>netstat<span class="w"> </span>-an<span class="w">        </span><span class="c1"># Windows</span>
+<a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>
+<a id="__codelineno-8-5" name="__codelineno-8-5" href="#__codelineno-8-5"></a><span class="c1"># 过滤看 TIME_WAIT 状态（四次挥手最后阶段）</span>
+<a id="__codelineno-8-6" name="__codelineno-8-6" href="#__codelineno-8-6"></a>netstat<span class="w"> </span>-an<span class="w"> </span><span class="p">|</span><span class="w"> </span>grep<span class="w"> </span>TIME_WAIT
+<a id="__codelineno-8-7" name="__codelineno-8-7" href="#__codelineno-8-7"></a><span class="c1"># 每个连接关闭后会在 TIME_WAIT 状态待约 60 秒</span>
+<a id="__codelineno-8-8" name="__codelineno-8-8" href="#__codelineno-8-8"></a>
+<a id="__codelineno-8-9" name="__codelineno-8-9" href="#__codelineno-8-9"></a><span class="c1"># 手动建立和关闭一个 TCP 连接</span>
+<a id="__codelineno-8-10" name="__codelineno-8-10" href="#__codelineno-8-10"></a>nc<span class="w"> </span>-v<span class="w"> </span>www.baidu.com<span class="w"> </span><span class="m">80</span><span class="w">   </span><span class="c1"># TCP 连接</span>
+<a id="__codelineno-8-11" name="__codelineno-8-11" href="#__codelineno-8-11"></a>GET<span class="w"> </span>/<span class="w"> </span>HTTP/1.1<span class="w">           </span><span class="c1"># 输入 HTTP 请求</span>
+<a id="__codelineno-8-12" name="__codelineno-8-12" href="#__codelineno-8-12"></a>Host:<span class="w"> </span>www.baidu.com
+<a id="__codelineno-8-13" name="__codelineno-8-13" href="#__codelineno-8-13"></a><span class="w">                         </span><span class="c1"># 按两次回车</span>
+<a id="__codelineno-8-14" name="__codelineno-8-14" href="#__codelineno-8-14"></a><span class="c1"># Ctrl+C 断开 → 四次挥手</span>
+</code></pre></div>
+<hr />
+<h2 id="3-udp-icmp">3. UDP 与 ICMP——不需要握手的协议<a class="headerlink" href="#3-udp-icmp" title="Permanent link">&para;</a></h2>
+<h3 id="vs">🏪 生活场景：发微信消息 vs 寄挂号信<a class="headerlink" href="#vs" title="Permanent link">&para;</a></h3>
+<p><strong>UDP = 发微信消息。</strong> 发出去就发出去了——不确认对方收到没，不关心顺序。一句话丢了就丢了。**适用于：视频通话（丢几帧无所谓）、游戏（速度更重要）、DNS 查询（一个包就能完成）。</p>
+<p><strong>TCP = 寄挂号信。</strong> 要回执、要签收、要追踪。丢了重新寄。**适用于：网页、邮件、文件传输——丢一个字节都不行。</p>
+<h3 id="udp">🔍 UDP 头——极简设计<a class="headerlink" href="#udp" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>UDP 头只有 8 字节：
+<a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>┌──────────────┬──────────────┬──────────────┬──────────────┐
+<a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>│ 源端口 (2B)   │ 目的端口 (2B) │ 长度 (2B)    │ 校验和 (2B)   │
+<a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>└──────────────┴──────────────┴──────────────┴──────────────┘
+<a id="__codelineno-9-5" name="__codelineno-9-5" href="#__codelineno-9-5"></a>然后直接跟数据。
+<a id="__codelineno-9-6" name="__codelineno-9-6" href="#__codelineno-9-6"></a>
+<a id="__codelineno-9-7" name="__codelineno-9-7" href="#__codelineno-9-7"></a>TCP 头要 20-60 字节，UDP 只要 8 字节 —— 因为什么都没管。
+</code></pre></div>
+<h3 id="icmp">🔍 ICMP——网络的诊断工具<a class="headerlink" href="#icmp" title="Permanent link">&para;</a></h3>
+<p>ping 和 traceroute 用的就是 ICMP。它不是用来传数据的，是用来"问路"和"测速"的。</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a><span class="c1"># ping: 发 ICMP Echo Request，对方回 Echo Reply</span>
+<a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>ping<span class="w"> </span>-c<span class="w"> </span><span class="m">4</span><span class="w"> </span>www.baidu.com
+<a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a><span class="c1"># PING www.baidu.com (110.242.68.66): 56 data bytes</span>
+<a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a><span class="c1"># 64 bytes from 110.242.68.66: icmp_seq=0 ttl=52 time=38.5 ms</span>
+<a id="__codelineno-10-5" name="__codelineno-10-5" href="#__codelineno-10-5"></a><span class="c1"># ttl 是&quot;还能经过多少个路由器&quot;——每过一个路由器减 1</span>
+<a id="__codelineno-10-6" name="__codelineno-10-6" href="#__codelineno-10-6"></a>
+<a id="__codelineno-10-7" name="__codelineno-10-7" href="#__codelineno-10-7"></a><span class="c1"># traceroute: 看数据包经过了哪些路由器</span>
+<a id="__codelineno-10-8" name="__codelineno-10-8" href="#__codelineno-10-8"></a>traceroute<span class="w"> </span>www.baidu.com<span class="w">       </span><span class="c1"># Linux/Mac</span>
+<a id="__codelineno-10-9" name="__codelineno-10-9" href="#__codelineno-10-9"></a>tracert<span class="w"> </span>www.baidu.com<span class="w">          </span><span class="c1"># Windows</span>
+<a id="__codelineno-10-10" name="__codelineno-10-10" href="#__codelineno-10-10"></a><span class="c1"># 输出每一跳的 IP 和耗时</span>
+</code></pre></div>
+<p><strong>网安意义：</strong>
+- 渗透测试信息收集阶段用 ping 判断目标是否在线
+- 用 traceroute 摸清网络拓扑
+- 某些防火墙禁 ICMP——可以用来探测防火墙策略</p>
+<hr />
+<h2 id="4-httpweb">4. 📌 HTTP——Web 的通用语言<a class="headerlink" href="#4-httpweb" title="Permanent link">&para;</a></h2>
+<h3 id="_9">🏪 生活场景：在餐厅扫码点餐<a class="headerlink" href="#_9" title="Permanent link">&para;</a></h3>
+<p>你去一家餐厅，桌上贴着二维码。整个过程就是一次 HTTP 交互：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>① 扫码 → 浏览器 GET 请求菜单页
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>  GET /menu?table_id=12 HTTP/1.1
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>  Host: order.restaurant.com
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>
+<a id="__codelineno-11-5" name="__codelineno-11-5" href="#__codelineno-11-5"></a>② 服务员（服务器）端来菜单 → HTTP 响应
+<a id="__codelineno-11-6" name="__codelineno-11-6" href="#__codelineno-11-6"></a>  HTTP/1.1 200 OK
+<a id="__codelineno-11-7" name="__codelineno-11-7" href="#__codelineno-11-7"></a>  Content-Type: text/html
+<a id="__codelineno-11-8" name="__codelineno-11-8" href="#__codelineno-11-8"></a>  [菜单页 HTML]
+<a id="__codelineno-11-9" name="__codelineno-11-9" href="#__codelineno-11-9"></a>
+<a id="__codelineno-11-10" name="__codelineno-11-10" href="#__codelineno-11-10"></a>③ 你选好了菜点&quot;下单&quot; → POST 请求
+<a id="__codelineno-11-11" name="__codelineno-11-11" href="#__codelineno-11-11"></a>  POST /order HTTP/1.1
+<a id="__codelineno-11-12" name="__codelineno-11-12" href="#__codelineno-11-12"></a>  Content-Type: application/json
+<a id="__codelineno-11-13" name="__codelineno-11-13" href="#__codelineno-11-13"></a>  {&quot;table&quot;:12, &quot;items&quot;:[{&quot;name&quot;:&quot;宫保鸡丁&quot;,&quot;qty&quot;:1}]}
+<a id="__codelineno-11-14" name="__codelineno-11-14" href="#__codelineno-11-14"></a>
+<a id="__codelineno-11-15" name="__codelineno-11-15" href="#__codelineno-11-15"></a>④ 厨房收到订单 → 200 OK
+<a id="__codelineno-11-16" name="__codelineno-11-16" href="#__codelineno-11-16"></a>  {&quot;order_id&quot;: 8842, &quot;status&quot;: &quot;cooking&quot;, &quot;eta&quot;: &quot;15min&quot;}
+<a id="__codelineno-11-17" name="__codelineno-11-17" href="#__codelineno-11-17"></a>
+<a id="__codelineno-11-18" name="__codelineno-11-18" href="#__codelineno-11-18"></a>⑤ 吃完饭你点&quot;结账&quot; → GET 请求
+<a id="__codelineno-11-19" name="__codelineno-11-19" href="#__codelineno-11-19"></a>  GET /bill?order_id=8842 HTTP/1.1
+<a id="__codelineno-11-20" name="__codelineno-11-20" href="#__codelineno-11-20"></a>
+<a id="__codelineno-11-21" name="__codelineno-11-21" href="#__codelineno-11-21"></a>⑥ 账单返回 → 你扫码支付（这是另一套流程了，涉及支付 API）
+</code></pre></div>
+<p>这 6 步就是 Web 应用的全部。每个网页、每个 App、每个 API 都在做这件事：<strong>客户端发请求 → 服务器处理 → 返回结果。</strong></p>
+<h3 id="http">🔍 HTTP 请求格式（逐字节解读）<a class="headerlink" href="#http" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>GET /api/products?id=123 HTTP/1.1       ← 请求行: 方法 URL 版本
+<a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>Host: shop.example.com                  ← 请求头(Headers)
+<a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>User-Agent: Mozilla/5.0 (Windows NT 10.0)
+<a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>Accept: application/json
+<a id="__codelineno-12-5" name="__codelineno-12-5" href="#__codelineno-12-5"></a>Accept-Language: zh-CN,zh;q=0.9
+<a id="__codelineno-12-6" name="__codelineno-12-6" href="#__codelineno-12-6"></a>Cookie: session_id=abc123xyz
+<a id="__codelineno-12-7" name="__codelineno-12-7" href="#__codelineno-12-7"></a>Authorization: Bearer eyJhbGc...
+<a id="__codelineno-12-8" name="__codelineno-12-8" href="#__codelineno-12-8"></a>Referer: https://shop.example.com/
+<a id="__codelineno-12-9" name="__codelineno-12-9" href="#__codelineno-12-9"></a>                                       ← 空行！表示头部结束
+<a id="__codelineno-12-10" name="__codelineno-12-10" href="#__codelineno-12-10"></a>                                       ← (POST 请求这里放 Body)
+</code></pre></div>
+<p><strong>安全人必须看懂的每个 Header：</strong></p>
+<table>
+<thead>
+<tr>
+<th>Header</th>
+<th>干什么的</th>
+<th>安全意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Host</td>
+<td>告诉服务器我要访问哪个网站</td>
+<td>Host 头攻击：改 Host 可能访问到其他虚拟主机</td>
+</tr>
+<tr>
+<td>User-Agent</td>
+<td>我用什么浏览器</td>
+<td>可以伪造绕过弱智的 UA 检查</td>
+</tr>
+<tr>
+<td>Cookie</td>
+<td>我的身份凭证</td>
+<td>★ 偷了 Cookie = 偷了身份</td>
+</tr>
+<tr>
+<td>Authorization</td>
+<td>Bearer Token/API Key</td>
+<td>信息泄露——Token 存前端可能被 XSS 偷</td>
+</tr>
+<tr>
+<td>Referer</td>
+<td>我从哪个页面跳过来的</td>
+<td>CSRF 防御时检查 Referer</td>
+</tr>
+<tr>
+<td>Content-Type</td>
+<td>Body 是什么格式</td>
+<td>如果服务器只检查这个来判断文件类型→文件上传绕过</td>
+</tr>
+<tr>
+<td>X-Forwarded-For</td>
+<td>原始客户端 IP（代理加的）</td>
+<td>可以伪造绕过 IP 限制</td>
+</tr>
+</tbody>
+</table>
+<h3 id="http_1">🔍 HTTP 响应格式<a class="headerlink" href="#http_1" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>HTTP/1.1 200 OK                          ← 状态行
+<a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>Server: nginx/1.24.0                     ← 服务器指纹！
+<a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>Date: Mon, 03 Jun 2026 10:30:00 GMT
+<a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>Content-Type: application/json
+<a id="__codelineno-13-5" name="__codelineno-13-5" href="#__codelineno-13-5"></a>Content-Length: 156
+<a id="__codelineno-13-6" name="__codelineno-13-6" href="#__codelineno-13-6"></a>Set-Cookie: session=xyz789; HttpOnly; Secure; SameSite=Strict
+<a id="__codelineno-13-7" name="__codelineno-13-7" href="#__codelineno-13-7"></a>                                         ← 空行
+<a id="__codelineno-13-8" name="__codelineno-13-8" href="#__codelineno-13-8"></a>{&quot;status&quot;:&quot;success&quot;, &quot;data&quot;: [...]}       ← 响应体
+</code></pre></div>
+<h3 id="_10">🔍 状态码速查（安全方向）<a class="headerlink" href="#_10" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: center;">状态码</th>
+<th>含义</th>
+<th>安全场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: center;">200</td>
+<td>正常</td>
+<td>爆破成功/注入有结果</td>
+</tr>
+<tr>
+<td style="text-align: center;">301/302</td>
+<td>重定向</td>
+<td>开放重定向漏洞（redirect 到恶意站）</td>
+</tr>
+<tr>
+<td style="text-align: center;">401</td>
+<td>没认证</td>
+<td>访问需要登录的页面</td>
+</tr>
+<tr>
+<td style="text-align: center;">403</td>
+<td>没权限</td>
+<td>目录爆破中区分"存在但禁止"和"不存在"的关键</td>
+</tr>
+<tr>
+<td style="text-align: center;">404</td>
+<td>不存在</td>
+<td>目录爆破的基础判断</td>
+</tr>
+<tr>
+<td style="text-align: center;">500</td>
+<td>服务器错误</td>
+<td>★ SQL 注入导致数据库报错会出现 500</td>
+</tr>
+</tbody>
+</table>
+<h3 id="python-http">💻 用 Python 手动构造各种 HTTP 请求<a class="headerlink" href="#python-http" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a><span class="kn">import</span><span class="w"> </span><span class="nn">requests</span>
+<a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>
+<a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a><span class="c1"># === GET: 获取信息 ===</span>
+<a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;http://httpbin.org/get&quot;</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;page&quot;</span><span class="p">:</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span> <span class="s2">&quot;limit&quot;</span><span class="p">:</span> <span class="s2">&quot;10&quot;</span><span class="p">})</span>
+<a id="__codelineno-14-5" name="__codelineno-14-5" href="#__codelineno-14-5"></a>
+<a id="__codelineno-14-6" name="__codelineno-14-6" href="#__codelineno-14-6"></a><span class="c1"># === POST: 提交数据 ===</span>
+<a id="__codelineno-14-7" name="__codelineno-14-7" href="#__codelineno-14-7"></a><span class="c1"># 表单格式</span>
+<a id="__codelineno-14-8" name="__codelineno-14-8" href="#__codelineno-14-8"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;http://httpbin.org/post&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span> <span class="s2">&quot;pass&quot;</span><span class="p">:</span> <span class="s2">&quot;123&quot;</span><span class="p">})</span>
+<a id="__codelineno-14-9" name="__codelineno-14-9" href="#__codelineno-14-9"></a><span class="c1"># JSON 格式</span>
+<a id="__codelineno-14-10" name="__codelineno-14-10" href="#__codelineno-14-10"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">post</span><span class="p">(</span><span class="s2">&quot;http://httpbin.org/post&quot;</span><span class="p">,</span> <span class="n">json</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;user&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">})</span>
+<a id="__codelineno-14-11" name="__codelineno-14-11" href="#__codelineno-14-11"></a>
+<a id="__codelineno-14-12" name="__codelineno-14-12" href="#__codelineno-14-12"></a><span class="c1"># === PUT: 更新资源 ===</span>
+<a id="__codelineno-14-13" name="__codelineno-14-13" href="#__codelineno-14-13"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">put</span><span class="p">(</span><span class="s2">&quot;http://httpbin.org/put&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="p">{</span><span class="s2">&quot;key&quot;</span><span class="p">:</span> <span class="s2">&quot;new_value&quot;</span><span class="p">})</span>
+<a id="__codelineno-14-14" name="__codelineno-14-14" href="#__codelineno-14-14"></a>
+<a id="__codelineno-14-15" name="__codelineno-14-15" href="#__codelineno-14-15"></a><span class="c1"># === DELETE: 删除 ===</span>
+<a id="__codelineno-14-16" name="__codelineno-14-16" href="#__codelineno-14-16"></a><span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">delete</span><span class="p">(</span><span class="s2">&quot;http://httpbin.org/delete&quot;</span><span class="p">)</span>
+<a id="__codelineno-14-17" name="__codelineno-14-17" href="#__codelineno-14-17"></a>
+<a id="__codelineno-14-18" name="__codelineno-14-18" href="#__codelineno-14-18"></a><span class="c1"># === 模拟各种 HTTP 方法 ===</span>
+<a id="__codelineno-14-19" name="__codelineno-14-19" href="#__codelineno-14-19"></a><span class="k">for</span> <span class="n">method</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;GET&#39;</span><span class="p">,</span> <span class="s1">&#39;POST&#39;</span><span class="p">,</span> <span class="s1">&#39;PUT&#39;</span><span class="p">,</span> <span class="s1">&#39;DELETE&#39;</span><span class="p">,</span> <span class="s1">&#39;OPTIONS&#39;</span><span class="p">,</span> <span class="s1">&#39;HEAD&#39;</span><span class="p">]:</span>
+<a id="__codelineno-14-20" name="__codelineno-14-20" href="#__codelineno-14-20"></a>    <span class="n">r</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">request</span><span class="p">(</span><span class="n">method</span><span class="p">,</span> <span class="sa">f</span><span class="s2">&quot;http://httpbin.org/</span><span class="si">{</span><span class="n">method</span><span class="o">.</span><span class="n">lower</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<a id="__codelineno-14-21" name="__codelineno-14-21" href="#__codelineno-14-21"></a>    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">method</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">status_code</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</code></pre></div>
+<hr />
+<h2 id="5-https-tls">5. HTTPS 与 TLS——加密传输<a class="headerlink" href="#5-https-tls" title="Permanent link">&para;</a></h2>
+<h3 id="vs_1">🏪 生活场景：明信片 vs 密码锁快递箱<a class="headerlink" href="#vs_1" title="Permanent link">&para;</a></h3>
+<p><strong>HTTP = 明信片。</strong> 你写了什么，途中每个经手的人（路由器管理员、WiFi 所有者、ISP 员工）都能看到。</p>
+<p><strong>HTTPS = 带密码锁的快递箱。</strong> 你上锁（加密），只有收件人知道密码。途中的快递员只能看到一个箱子，打不开。</p>
+<h3 id="tls">🔍 TLS 握手的核心过程<a class="headerlink" href="#tls" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>客户端                                          服务器
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>   │                                               │
+<a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>   │── ClientHello ────────────────────────────→│  ① &quot;你好，我支持的加密方式有
+<a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>   │   (TLS版本 + 支持的密码套件 + 随机数1)          │     AES-GCM, ECDHE-RSA...&quot;
+<a id="__codelineno-15-5" name="__codelineno-15-5" href="#__codelineno-15-5"></a>   │                                               │
+<a id="__codelineno-15-6" name="__codelineno-15-6" href="#__codelineno-15-6"></a>   │←─ ServerHello + 证书 ────────────────────│  ② &quot;好，我们用 ECDHE-RSA&quot;
+<a id="__codelineno-15-7" name="__codelineno-15-7" href="#__codelineno-15-7"></a>   │   (选定的密码套件 + 随机数2 + ★服务器证书)       │    亮出我的身份证（证书）
+<a id="__codelineno-15-8" name="__codelineno-15-8" href="#__codelineno-15-8"></a>   │                                               │
+<a id="__codelineno-15-9" name="__codelineno-15-9" href="#__codelineno-15-9"></a>   │── 验证证书 ──                                 │  ③ 浏览器检查:
+<a id="__codelineno-15-10" name="__codelineno-15-10" href="#__codelineno-15-10"></a>   │   1. 证书是受信任的 CA 发的吗？                  │     证书有效性 ✓
+<a id="__codelineno-15-11" name="__codelineno-15-11" href="#__codelineno-15-11"></a>   │   2. 证书的域名和我要访问的一致吗？               │     域名匹配 ✓
+<a id="__codelineno-15-12" name="__codelineno-15-12" href="#__codelineno-15-12"></a>   │   3. 证书过期了吗？                             │     在有效期内 ✓
+<a id="__codelineno-15-13" name="__codelineno-15-13" href="#__codelineno-15-13"></a>   │   4. CA 签名的有效性                             │     签名验证通过 ✓
+<a id="__codelineno-15-14" name="__codelineno-15-14" href="#__codelineno-15-14"></a>   │                                               │
+<a id="__codelineno-15-15" name="__codelineno-15-15" href="#__codelineno-15-15"></a>   │── 密钥交换 + 生成会话密钥 ────────────────→│  ④ 双方各自算出相同的
+<a id="__codelineno-15-16" name="__codelineno-15-16" href="#__codelineno-15-16"></a>   │   (用服务器公钥加密预主密钥)                     │     &quot;会话密钥&quot;
+<a id="__codelineno-15-17" name="__codelineno-15-17" href="#__codelineno-15-17"></a>   │                                               │
+<a id="__codelineno-15-18" name="__codelineno-15-18" href="#__codelineno-15-18"></a>   │   ←══ 此后所有通信都用会话密钥对称加密 ═══→   │
+<a id="__codelineno-15-19" name="__codelineno-15-19" href="#__codelineno-15-19"></a>   │         (AES-GCM，速度很快)                    │
+</code></pre></div>
+<p><strong>网安意义：</strong> 渗透测试中分析 HTTPS 流量需要做中间人解密——通过 BurpSuite 的代理证书把自己伪装成"可信的中间人"。</p>
+<hr />
+<h2 id="6-dns-arp">6. 📌 DNS 与 ARP——网络世界的电话本<a class="headerlink" href="#6-dns-arp" title="Permanent link">&para;</a></h2>
+<h3 id="114">🏪 生活场景：打 114 查号台<a class="headerlink" href="#114" title="Permanent link">&para;</a></h3>
+<p>你想给"百度公司"打电话。你不知道他们的号码。于是你打 114（DNS 服务器）："帮我查一下'百度公司'的电话号码。"114 查号台告诉你："110.242.68.66。"——然后你拨号过去。</p>
+<p><strong>DNS = 互联网的 114 查号台。</strong> 你把域名（www.baidu.com）给它，它把 IP 地址（110.242.68.66）返给你。</p>
+<h3 id="dns-baiducom">🔍 DNS 查询的完整过程（你的浏览器输入 baidu.com 后）<a class="headerlink" href="#dns-baiducom" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>你的电脑: &quot;www.baidu.com 的 IP 是什么？&quot;
+<a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    ↓ ① 先查自己的 hosts 文件（/etc/hosts）
+<a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    ↓ 没找到 ↓
+<a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>    ↓ ② 问本地 DNS 缓存
+<a id="__codelineno-16-5" name="__codelineno-16-5" href="#__codelineno-16-5"></a>    ↓ 没找到 ↓
+<a id="__codelineno-16-6" name="__codelineno-16-6" href="#__codelineno-16-6"></a>    ↓ ③ 问本地 DNS 服务器（你家的路由器/ISP 的 DNS）
+<a id="__codelineno-16-7" name="__codelineno-16-7" href="#__codelineno-16-7"></a>    ↓ 没找到 ↓
+<a id="__codelineno-16-8" name="__codelineno-16-8" href="#__codelineno-16-8"></a>    ↓ ④ 本地 DNS 服务器去问根 DNS：&quot; .com 的 DNS 在哪？&quot;
+<a id="__codelineno-16-9" name="__codelineno-16-9" href="#__codelineno-16-9"></a>    ↓ ⑤ 根 DNS：&quot;去问 .com 的顶级域名服务器&quot;
+<a id="__codelineno-16-10" name="__codelineno-16-10" href="#__codelineno-16-10"></a>    ↓ ⑥ .com DNS：&quot;baidu.com 的权威 DNS 是 ns1.baidu.com&quot;
+<a id="__codelineno-16-11" name="__codelineno-16-11" href="#__codelineno-16-11"></a>    ↓ ⑦ baidu.com 的权威 DNS：&quot;www.baidu.com 的 IP 是 110.242.68.66&quot;
+<a id="__codelineno-16-12" name="__codelineno-16-12" href="#__codelineno-16-12"></a>    ↓
+<a id="__codelineno-16-13" name="__codelineno-16-13" href="#__codelineno-16-13"></a>最终返回: 110.242.68.66
+</code></pre></div>
+<p><strong>整个过程的耗时通常只有几十毫秒。</strong> 因为层层缓存——你的电脑、路由器、ISP 都把上次查到的结果记下来了。</p>
+<p><strong>网安意义：</strong>
+- DNS 劫持：把域名解析到假的 IP → 你访问的"百度"其实是钓鱼站
+- DNS 隧道：把数据藏在 DNS 请求里传出去 → 绕过防火墙（因为防火墙通常允许 DNS）
+- DNS Rebinding：先返回正常 IP 绕过同源策略，再改成内网 IP 攻击内网</p>
+<h3 id="arp-ip">🔍 ARP——局域网里的"谁是这个 IP？"<a class="headerlink" href="#arp-ip" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>你的电脑（192.168.1.5）要发数据给路由器（192.168.1.1）
+<a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>
+<a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>你的电脑广播 ARP 请求:
+<a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>  &quot;FF:FF:FF:FF:FF:FF（广播地址，发给所有人！）
+<a id="__codelineno-17-5" name="__codelineno-17-5" href="#__codelineno-17-5"></a>   谁是 192.168.1.1？告诉我你的 MAC 地址。&quot;
+<a id="__codelineno-17-6" name="__codelineno-17-6" href="#__codelineno-17-6"></a>
+<a id="__codelineno-17-7" name="__codelineno-17-7" href="#__codelineno-17-7"></a>路由器回复:
+<a id="__codelineno-17-8" name="__codelineno-17-8" href="#__codelineno-17-8"></a>  &quot;是我！我的 MAC 地址是 aa:bb:cc:dd:ee:ff&quot;
+<a id="__codelineno-17-9" name="__codelineno-17-9" href="#__codelineno-17-9"></a>
+<a id="__codelineno-17-10" name="__codelineno-17-10" href="#__codelineno-17-10"></a>你的电脑记下这个映射（ARP 缓存），然后发帧过去。
+</code></pre></div>
+<p><strong>网安意义：ARP 欺骗。</strong> 攻击者在局域网里不断发"我是网关！我的 MAC 是 xx:xx:xx"——其他机器被误导，把数据发给攻击者的 MAC 地址。攻击者成了"中间人"，可以看、改、丢弃所有流量。</p>
+<hr />
+<h2 id="7-wireshark-30">7. 🧪 Wireshark 实战——30 分钟抓包实验<a class="headerlink" href="#7-wireshark-30" title="Permanent link">&para;</a></h2>
+<blockquote>
+<p><strong>这是连接理论和现实的桥梁。必须做。</strong></p>
+</blockquote>
+<h3 id="wireshark">安装 Wireshark<a class="headerlink" href="#wireshark" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a><span class="c1"># Linux</span>
+<a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>wireshark
+<a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>
+<a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a><span class="c1"># Mac</span>
+<a id="__codelineno-18-5" name="__codelineno-18-5" href="#__codelineno-18-5"></a>brew<span class="w"> </span>install<span class="w"> </span>wireshark
+<a id="__codelineno-18-6" name="__codelineno-18-6" href="#__codelineno-18-6"></a>
+<a id="__codelineno-18-7" name="__codelineno-18-7" href="#__codelineno-18-7"></a><span class="c1"># Windows</span>
+<a id="__codelineno-18-8" name="__codelineno-18-8" href="#__codelineno-18-8"></a><span class="c1"># 去 wireshark.org 下载安装包</span>
+<a id="__codelineno-18-9" name="__codelineno-18-9" href="#__codelineno-18-9"></a><span class="c1"># 安装时勾选 &quot;Install Npcap&quot;</span>
+</code></pre></div>
+<h3 id="1-http-15">实验 1：抓一次 HTTP 请求的全貌（15 分钟）<a class="headerlink" href="#1-http-15" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a><span class="c1"># 1. 打开 Wireshark，双击你的网卡开始抓包</span>
+<a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a><span class="c1"># 2. 在浏览器里打开 http://httpbin.org/get（★注意是 http 不是 https）</span>
+<a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a><span class="c1"># 3. Wireshark 里应该出现了大量包</span>
+<a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a><span class="c1"># 4. 在 Filter 栏输入: http.host == httpbin.org</span>
+<a id="__codelineno-19-5" name="__codelineno-19-5" href="#__codelineno-19-5"></a><span class="c1"># 5. 你应该能看到 GET /get HTTP/1.1 的请求</span>
+<a id="__codelineno-19-6" name="__codelineno-19-6" href="#__codelineno-19-6"></a><span class="c1"># 6. 右键这个包 → Follow → TCP Stream</span>
+<a id="__codelineno-19-7" name="__codelineno-19-7" href="#__codelineno-19-7"></a><span class="c1"># 7. 你会看到完整的一来一回：</span>
+</code></pre></div>
+<p>在 TCP Stream 窗口里你会看到类似：</p>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>GET /get HTTP/1.1
+<a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>Host: httpbin.org
+<a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>Connection: keep-alive
+<a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>User-Agent: Mozilla/5.0 ...
+<a id="__codelineno-20-5" name="__codelineno-20-5" href="#__codelineno-20-5"></a>Accept: text/html,application/xhtml+xml, ...
+<a id="__codelineno-20-6" name="__codelineno-20-6" href="#__codelineno-20-6"></a>
+<a id="__codelineno-20-7" name="__codelineno-20-7" href="#__codelineno-20-7"></a>HTTP/1.1 200 OK
+<a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a>Date: Mon, 03 Jun 2026 10:30:00 GMT
+<a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a>Content-Type: application/json
+<a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a>Content-Length: 156
+<a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a>
+<a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a>{
+<a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a>  &quot;args&quot;: {},
+<a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a>  &quot;headers&quot;: {
+<a id="__codelineno-20-15" name="__codelineno-20-15" href="#__codelineno-20-15"></a>    &quot;Host&quot;: &quot;httpbin.org&quot;,
+<a id="__codelineno-20-16" name="__codelineno-20-16" href="#__codelineno-20-16"></a>    ...
+<a id="__codelineno-20-17" name="__codelineno-20-17" href="#__codelineno-20-17"></a>  },
+<a id="__codelineno-20-18" name="__codelineno-20-18" href="#__codelineno-20-18"></a>  &quot;origin&quot;: &quot;你的IP地址&quot;,
+<a id="__codelineno-20-19" name="__codelineno-20-19" href="#__codelineno-20-19"></a>  &quot;url&quot;: &quot;http://httpbin.org/get&quot;
+<a id="__codelineno-20-20" name="__codelineno-20-20" href="#__codelineno-20-20"></a>}
+</code></pre></div>
+<p><strong>你看到了什么？</strong> 上面是请求（你发出去的），下面是响应（服务器回给你的）。中间一行空行分隔了 Headers 和 Body。</p>
+<h3 id="2-tcp-10">实验 2：看 TCP 三次握手（10 分钟）<a class="headerlink" href="#2-tcp-10" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>1. 在 Wireshark 的 Filter 栏输入: tcp.port == 80 and http.host == httpbin.org
+<a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>2. 清掉之前的抓包（Ctrl+Shift+Delete）
+<a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>3. 刷新 http://httpbin.org/get 页面
+<a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>4. 看前三个包:
+<a id="__codelineno-21-5" name="__codelineno-21-5" href="#__codelineno-21-5"></a>   [SYN]      → 你的电脑 → 服务器     &quot;在吗？&quot;（SYN flag=1）
+<a id="__codelineno-21-6" name="__codelineno-21-6" href="#__codelineno-21-6"></a>   [SYN, ACK] → 服务器 → 你的电脑     &quot;在的&quot;（SYN=1, ACK=1）
+<a id="__codelineno-21-7" name="__codelineno-21-7" href="#__codelineno-21-7"></a>   [ACK]      → 你的电脑 → 服务器     &quot;好，开始说&quot;（ACK=1）
+<a id="__codelineno-21-8" name="__codelineno-21-8" href="#__codelineno-21-8"></a>5. 点击每个包，在 Details 面板里展开 TCP 部分
+<a id="__codelineno-21-9" name="__codelineno-21-9" href="#__codelineno-21-9"></a>6. 看 seq 和 ack 号的变化
+</code></pre></div>
+<h3 id="3-http-vs-https5">实验 3：对比 HTTP vs HTTPS（5 分钟）<a class="headerlink" href="#3-http-vs-https5" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>1. 先抓 http://httpbin.org/get → Follow TCP Stream → 明文可见
+<a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>2. 再抓 https://httpbin.org/get → Follow TCP Stream → 什么都看不到！（加密了）
+</code></pre></div>
+<p><strong>这就是 HTTPS 的意义——中间的任何人都看不到你的内容。</strong></p>
+<hr />
+<h2 id="8">8. 家庭网络拓扑——你的数据出门经过了什么<a class="headerlink" href="#8" title="Permanent link">&para;</a></h2>
+<h3 id="_11">🏪 生活场景：你出门上班的路线<a class="headerlink" href="#_11" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>你的卧室（手机）→ 你家大门（WiFi路由器）→ 小区大门（ISP接入点）
+<a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>→ 城市主干道（ISP骨干网）→ 百度大厦（百度服务器）
+</code></pre></div>
+<h3 id="baiducom">🔍 你的手机访问 baidu.com 的完整路线<a class="headerlink" href="#baiducom" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>┌──────────┐    WiFi     ┌──────────┐    光猫     ┌──────────┐
+<a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>│  手机     │ ←────────→ │ 无线路由器 │ ←────────→ │  光猫     │
+<a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>│ WiFi网卡  │   802.11   │ NAT/路由  │   网线      │ 信号转换  │
+<a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>└──────────┘            └──────────┘            └──────────┘
+<a id="__codelineno-24-5" name="__codelineno-24-5" href="#__codelineno-24-5"></a>                              │
+<a id="__codelineno-24-6" name="__codelineno-24-6" href="#__codelineno-24-6"></a>                              │ PPPoE 拨号
+<a id="__codelineno-24-7" name="__codelineno-24-7" href="#__codelineno-24-7"></a>                              ▼
+<a id="__codelineno-24-8" name="__codelineno-24-8" href="#__codelineno-24-8"></a>                        ┌──────────┐
+<a id="__codelineno-24-9" name="__codelineno-24-9" href="#__codelineno-24-9"></a>                        │ ISP 接入层 │  ← 电信/联通/移动的机房
+<a id="__codelineno-24-10" name="__codelineno-24-10" href="#__codelineno-24-10"></a>                        │ 分配公网 IP │
+<a id="__codelineno-24-11" name="__codelineno-24-11" href="#__codelineno-24-11"></a>                        └──────────┘
+<a id="__codelineno-24-12" name="__codelineno-24-12" href="#__codelineno-24-12"></a>                              │
+<a id="__codelineno-24-13" name="__codelineno-24-13" href="#__codelineno-24-13"></a>                              ▼
+<a id="__codelineno-24-14" name="__codelineno-24-14" href="#__codelineno-24-14"></a>                        ┌──────────┐
+<a id="__codelineno-24-15" name="__codelineno-24-15" href="#__codelineno-24-15"></a>                        │ 骨干路由器 │  ← 全国/全球路由
+<a id="__codelineno-24-16" name="__codelineno-24-16" href="#__codelineno-24-16"></a>                        │ BGP/OSPF  │
+<a id="__codelineno-24-17" name="__codelineno-24-17" href="#__codelineno-24-17"></a>                        └──────────┘
+<a id="__codelineno-24-18" name="__codelineno-24-18" href="#__codelineno-24-18"></a>                              │
+<a id="__codelineno-24-19" name="__codelineno-24-19" href="#__codelineno-24-19"></a>                              ▼
+<a id="__codelineno-24-20" name="__codelineno-24-20" href="#__codelineno-24-20"></a>                        ┌──────────┐
+<a id="__codelineno-24-21" name="__codelineno-24-21" href="#__codelineno-24-21"></a>                        │ 百度 IDC   │
+<a id="__codelineno-24-22" name="__codelineno-24-22" href="#__codelineno-24-22"></a>                        │ 服务器集群  │
+<a id="__codelineno-24-23" name="__codelineno-24-23" href="#__codelineno-24-23"></a>                        └──────────┘
+</code></pre></div>
+<h3 id="nat-1-ip">NAT（网络地址转换）——你家只有 1 个公网 IP<a class="headerlink" href="#nat-1-ip" title="Permanent link">&para;</a></h3>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>你家所有人（手机、电脑、平板、电视）共享同一个公网 IP
+<a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>
+<a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>内网:                               外网:
+<a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>192.168.1.10:54321 →                → 你家的公网 IP:12345 → baidu.com:80
+<a id="__codelineno-25-5" name="__codelineno-25-5" href="#__codelineno-25-5"></a>192.168.1.11:54321 → 路由器做 NAT → 你家的公网 IP:12346 → baidu.com:80
+<a id="__codelineno-25-6" name="__codelineno-25-6" href="#__codelineno-25-6"></a>192.168.1.12:54321 →                → 你家的公网 IP:12347 → baidu.com:80
+<a id="__codelineno-25-7" name="__codelineno-25-7" href="#__codelineno-25-7"></a>
+<a id="__codelineno-25-8" name="__codelineno-25-8" href="#__codelineno-25-8"></a>路由器维护一张表:
+<a id="__codelineno-25-9" name="__codelineno-25-9" href="#__codelineno-25-9"></a>内网 IP:Port  ↔  外网 Port
+<a id="__codelineno-25-10" name="__codelineno-25-10" href="#__codelineno-25-10"></a>当 baidu 回复到 :12345 → 路由器查表 → 转发给 192.168.1.10:54321
+</code></pre></div>
+<p><strong>安全意义：</strong> NAT 天然提供了"入站防火墙"的效果——外网不能主动连你的内网设备（除非你在路由器上设置了端口转发）。</p>
+<hr />
+<h2 id="_12">📝 复习自检<a class="headerlink" href="#_12" title="Permanent link">&para;</a></h2>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能画出 TCP/IP 四层模型，说出每层是干什么的、数据单元叫什么</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能画出 TCP 三次握手和四次挥手，说出每次发什么包、为什么握手是三次挥手是四次</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释 SYN Flood 攻击的原理（只发 SYN 不回 ACK）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能写出 HTTP 请求的格式（请求行、Headers、空行、Body）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 知道 200、301、403、404、500 分别代表什么，安全上怎么利用它们</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能画出 TLS 握手的简化流程（ClientHello → ServerHello+证书 → 密钥交换 → 加密通信）</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能说清楚 DNS 查询的完整过程，以及 ARP 和 DNS 的区别</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能在 Wireshark 里抓一次 HTTP 包，Follow TCP Stream 看到明文内容</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> 能解释 NAT 是什么，为什么你家只有一个公网 IP 但多台设备都能上网</li>
+</ul>
+<hr />
+<h2 id="_13">🎬 推荐视频<a class="headerlink" href="#_13" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>视频</th>
+<th>平台</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="https://www.bilibili.com/">湖科大教书匠·计算机网络</a></td>
+<td>B站</td>
+<td>⭐ 口碑极好，搜索"湖科大教书匠 计算机网络"</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/">TCP三次握手动画讲解</a></td>
+<td>B站</td>
+<td>搜索"TCP 三次握手 动画"</td>
+</tr>
+<tr>
+<td><a href="https://www.bilibili.com/">Wireshark抓包从入门到精通</a></td>
+<td>B站</td>
+<td>搜索"Wireshark 教程 入门"</td>
+</tr>
+<tr>
+<td><a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP">HTTP协议详解</a></td>
+<td>MDN</td>
+<td>官方文档，最权威的 HTTP 参考</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="_14">🔗 知识串联<a class="headerlink" href="#_14" title="Permanent link">&para;</a></h2>
+<div class="highlight"><pre><span></span><code><a id="__codelineno-26-1" name="__codelineno-26-1" href="#__codelineno-26-1"></a>TCP 连接          → 《08-渗透实战》端口扫描判断 TCP 端口是否开放
+<a id="__codelineno-26-2" name="__codelineno-26-2" href="#__codelineno-26-2"></a>HTTP 请求/响应     → 《06-Web安全》所有 Web 攻击都是构造特殊 HTTP 请求
+<a id="__codelineno-26-3" name="__codelineno-26-3" href="#__codelineno-26-3"></a>HTTPS/TLS         → 《05-密码学》对称加密/非对称加密/证书的具体应用
+<a id="__codelineno-26-4" name="__codelineno-26-4" href="#__codelineno-26-4"></a>DNS/ARP           → 《08-渗透实战》中间人攻击的核心：DNS劫持/ARP欺骗
+<a id="__codelineno-26-5" name="__codelineno-26-5" href="#__codelineno-26-5"></a>Wireshark 抓包    → 贯穿全书——每次学新攻击都先用 Wireshark 看看正常流量长什么样
+</code></pre></div>
+<hr />
+<blockquote>
+<p>💬 <strong>读完用一句话记下来：</strong> "网络通信就是把数据一层层打包，加上各种地址标签（MAC→IP→端口），通过路由器和交换机送到目的地。HTTP 是明信片，HTTPS 是密码锁快递箱。DNS 帮你把名字翻译成地址，ARP 帮你在局域网找到具体是谁。每一个环节都有对应的攻击手法——理解正常流程才能理解攻击。"</p>
+</blockquote>
+<h3 id="05-md">下一步：打开 <code>05-密码学-加密与解密.md</code><a class="headerlink" href="#05-md" title="Permanent link">&para;</a></h3>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  回到页面顶部
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.instant", "navigation.tracking", "navigation.top", "navigation.indexes", "search.suggest", "search.highlight", "search.share", "content.code.copy"], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "\u5df2\u590d\u5236", "clipboard.copy": "\u590d\u5236", "search.result.more.one": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.more.other": "\u5728\u8be5\u9875\u4e0a\u8fd8\u6709 # \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.none": "\u6ca1\u6709\u627e\u5230\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.one": "\u627e\u5230 1 \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.other": "# \u4e2a\u7b26\u5408\u6761\u4ef6\u7684\u7ed3\u679c", "search.result.placeholder": "\u952e\u5165\u4ee5\u5f00\u59cb\u641c\u7d22", "search.result.term.missing": "\u7f3a\u5c11", "select.version": "\u9009\u62e9\u5f53\u524d\u7248\u672c"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>
