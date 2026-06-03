@@ -5,6 +5,7 @@
 # ============================================
 
 site_name: 网安知识库
+site_url: https://king-sw-0106.github.io/security-kb/
 site_description: 从零开始的网络空间安全学习笔记
 site_author: 我自己
 
